@@ -1,0 +1,8 @@
+*.d
+*.o
+*.opensdf
+*.sdf
+*.suo
+*/.vs/
+*/ipch/
+bin/

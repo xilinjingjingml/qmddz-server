@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<config>
+	<game_server game_id="389" server_id="389105" channel="3891050" server_key="" server_name="斗地主不洗牌至尊场">
+	<game_logic game_mode="1" max_table_size="350" base_bet="10000" enter_min_times="50" min_money="20000000"  ext_param="lc_room_mode:3|tax:400000|level:5|winMinBet:3|winMaxBet:5000|winMaxMoney:50000000|hBMode:23|ddz_game_type:2|RPGMode:1" max_table_player_num="3" relief_award="2000" relief_line="1000" max_relief_times="0" at_achieve="1"/>
+        <optional_logic idle_times="15" need_online_award="1" robot_agent_id="993891050000001" need_robot="1" robot_join_num="1" robot_leave_cond="2" room_type="0" need_short_term="0" need_round_award="0" spec_round="0" spec_round_award="0" reach_luck_draw_round="10" luck_draw_times_limit="1000"/>
+	<server_type server_type = "3891050"/>
+  </game_server>
+</config>

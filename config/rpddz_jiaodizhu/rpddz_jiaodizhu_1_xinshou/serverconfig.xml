@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="gb2312" ?>
+<config>
+	<game_server game_id="389" server_id="389201" channel="3892010" server_key="" server_name="斗地主叫地主新手场">
+	<game_logic game_mode="1" max_table_size="400" base_bet="150" enter_min_times="50" min_money="5000"  ext_param="lc_room_mode:3|maxmoney:300000|tax:500|level:1|winMinBet:3|winMaxBet:533|winMaxMoney:80000|hBMode:21|ddz_game_type:0|RPGMode:1" max_table_player_num="3" relief_award="2000" relief_line="1000" max_relief_times="0" at_achieve="1"/>
+        <optional_logic idle_times="15" need_online_award="1" robot_agent_id="993892010000001" need_robot="1" robot_join_num="2" robot_leave_cond="2" room_type="0" need_short_term="0" need_round_award="0" spec_round="0" spec_round_award="0" reach_luck_draw_round="10" luck_draw_times_limit="1000"/>
+	<server_type server_type = "3892010"/>
+  </game_server>
+</config>

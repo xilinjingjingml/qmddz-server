@@ -1,0 +1,650 @@
+message proto_gc_game_start_not{
+
+	required	int32	nGameMoney	=	1;
+	required	int32	nCardNum	=	2;
+	required	int32	nLordPos	=	3;
+	required	proto_CCard	cLordCard	=	4;
+	required	int32	nSerialID	=	5;
+}
+message proto_gc_counts_not1{
+
+	required	int32	counts_num	=	1;
+}
+message proto_sic_bet_req{
+
+	required	int32	cCellID	=	1;
+	required	int32	nAmount	=	2;
+}
+message proto_gc_task_not{
+
+	required	proto_TaskItem	task_item	=	1;
+}
+message proto_gc_two_lord_card_not{
+
+	required	int32	cLord	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+	required	int32	nLetNum	=	3;
+	required	int32	nLordLetNum	=	4;
+}
+message proto_gc_expression_not{
+
+	required	int32	expression_type	=	1;
+	required	int32	expression_num	=	2;
+}
+message proto_cg_get_redpackets_newbie_award_ack{
+
+	required	int32	cDouble	=	1;
+}
+message proto_gc_beishu_info_ack{
+
+	repeated	int32	vecBeiShuInfo	=	1;
+	repeated	int32	vecPlayerBeiShu	=	2;
+}
+message proto_gc_use_card_recode_noti{
+
+	required	int32	cChairID	=	1;
+	required	int32	cReconnection	=	2;
+}
+message proto_cg_win_doubel_req{
+
+}
+message proto_gc_card_recode_req{
+
+}
+message proto_gc_two_let_card_not{
+
+	required	int32	nLetNum	=	1;
+}
+message proto_gc_update_player_tokenmoney_not{
+
+	required	int32	ply_chairid	=	1;
+	repeated	proto_player_itemInfo	itemInfo	=	2;
+}
+message proto_gc_card_count_ack{
+
+	required	int32	counts_num	=	1;
+	repeated	proto_CCard	m_vecPutCard	=	2;
+}
+message proto_cg_regain_lose_score_req{
+
+	required	int32	nOp	=	1;
+	required	int32	nItemIndex	=	2;
+	required	int32	nItemNum	=	3;
+}
+message proto_gc_private_room_result_ack{
+
+	repeated	proto_GameStatisc	vecGameStatiscs	=	1;
+}
+message proto_gc_enable_invincible_ack{
+
+	required	int32	nRet	=	1;
+}
+message proto_cg_bet_lord_card_req{
+
+	required	int32	index	=	1;
+}
+message proto_gc_look_lord_card_item_ack{
+
+	required	int32	nRet	=	1;
+}
+message proto_stUserData{
+
+	required	int32	cChairID	=	1;
+	repeated	proto_CCard	vecHandCards	=	2;
+	repeated	proto_CCard	vecPutCards	=	3;
+}
+message proto_gc_double_score_req{
+
+	required	int32	nSerialID	=	1;
+}
+message proto_gc_game_result_not{
+
+	required	int32	bType	=	1;
+	required	int32	cDouble	=	2;
+	required	int32	cCallScore	=	3;
+	required	int32	bShowCard	=	4;
+	required	int32	nBombCount	=	5;
+	required	int32	bSpring	=	6;
+	required	int32	bReverseSpring	=	7;
+	required	int32	bRobLord	=	8;
+	repeated	proto_stUserResult	vecUserResult	=	9;
+}
+message proto_gc_user_savestar_card_noti{
+
+}
+message proto_gc_get_redpackets_award_ack{
+
+	required	int32	ret	=	1;
+	required	int32	cur_rounds	=	2;
+	required	int32	limit_rounds	=	3;
+	required	int32	nAmount	=	4;
+	required	int32	cItemtype	=	5;
+	required	int32	task_id	=	6;
+	repeated	proto_player_itemInfo	fakeItem	=	7;
+}
+message proto_gc_refresh_card_not{
+
+	required	int32	cChairID	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+}
+message proto_cg_three_draw_req_data{
+
+}
+message proto_ItemInfo{
+
+	required	int32	nItemIndex	=	1;
+	required	int64	nItemNum	=	2;
+}
+message proto_player_itemInfo{
+
+	required	int32	nItemIndex	=	1;
+	required	int32	nItemNum	=	2;
+	required	int64	nItemNum64	=	3;
+}
+message proto_cg_get_redpackets_88yuan_award_req{
+
+	required	int32	type	=	1;
+}
+message proto_gc_starsky_update_item_noti{
+
+	required	int32	stamina	=	1;
+	required	int32	match_ticket	=	2;
+	required	int32	score	=	3;
+	required	int32	savestar_card	=	4;
+}
+message proto_cg_look_lord_card_item_req{
+
+}
+message proto_cg_get_redpackets_award_req{
+
+	required	int32	type	=	1;
+}
+message proto_gc_send_dizhu_not{
+
+	required	int32	nGameMoney	=	1;
+}
+message proto_cg_complete_data_req{
+
+}
+message proto_sic_bet_update_ack{
+
+	required	int32	nBetUpdateAckTag	=	1;
+	repeated	proto_st_sic_cell	vecAmountCell	=	2;
+}
+message proto_gc_item_add_not{
+
+	required	int32	nItemIndex	=	1;
+	required	int32	nItemCount	=	2;
+}
+message proto_gc_bet_lord_card_ack{
+
+	required	int32	ret	=	1;
+	required	int32	index	=	2;
+}
+message proto_gc_replay_data_not{
+
+	repeated	proto_gc_refresh_card_not	vecChangeCards	=	1;
+}
+message proto_gc_ju_count_not{
+
+	required	int32	nJuCount	=	1;
+}
+message proto_gc_had_start_not{
+
+}
+message proto_gc_double_score_not{
+
+	required	int32	nDouble	=	1;
+	required	int32	nSerialID	=	2;
+	required	int32	cChairID	=	3;
+}
+message proto_sic_new_round_not{
+
+}
+message proto_gc_pause_game_not{
+
+	required	int32	nFlag	=	1;
+	required	int32	nMinTime	=	2;
+	required	int32	nSecTime	=	3;
+	required	int32	cChairId	=	4;
+	required	string	sNickName	=	5;
+}
+message proto_gc_private_room_result_not{
+
+	required	int32	ret	=	1;
+	repeated	proto_GameStatisc	vecGameStatiscs	=	2;
+}
+message proto_st_sic_cell{
+
+	required	int32	cCellID	=	1;
+	required	int32	nAmount	=	2;
+}
+message proto_gc_play_card_not{
+
+	required	int32	cChairID	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+	required	proto_CCardsType	cType	=	3;
+}
+message proto_gc_item_info_not{
+
+	required	int32	nItemIndex	=	1;
+	required	int32	nItemCount	=	2;
+}
+message proto_cg_private_room_result_req{
+
+}
+message proto_stUserResult{
+
+	required	int32	nChairID	=	1;
+	required	int32	nScore	=	2;
+}
+message proto_cg_starsky_season_noti{
+
+	required	int32	season	=	1;
+}
+message proto_GameStatisc{
+
+	required	int32	cChairID	=	1;
+	required	int32	nCallTimes	=	2;
+	required	int32	nLordTimes	=	3;
+	required	int32	nWinTimes	=	4;
+	required	int64	nZhanJi	=	5;
+}
+message proto_gc_two_complete_data_not{
+
+	required	int32	nGameMoney	=	1;
+	required	int32	nDouble	=	2;
+	required	int32	cLord	=	3;
+	repeated	proto_CCard	vecLordCards	=	4;
+	repeated	proto_stUserData	vecData	=	5;
+	required	int32	nLetNum	=	6;
+	required	int32	nStart	=	7;
+}
+message proto_gc_win_doubel_req{
+
+	required	int32	nAddAmount	=	1;
+	required	int32	nAddProbabily	=	2;
+}
+message proto_gc_common_not{
+
+	required	int32	nOp	=	1;
+	required	int32	cChairID	=	2;
+}
+message proto_gc_complete_data_not{
+
+	required	int32	nGameMoney	=	1;
+	required	int32	nDouble	=	2;
+	required	int32	cLord	=	3;
+	repeated	proto_CCard	vecLordCards	=	4;
+	repeated	proto_stUserData	vecData	=	5;
+}
+message proto_sic_show_result_not{
+
+}
+message proto_cg_three_draw_req_card{
+
+}
+message proto_gc_game_model{
+
+	required	int32	cModelType	=	1;
+}
+message proto_gc_magic_emoji_config_not{
+
+	repeated	proto_emojiConfig	emojiConfigs	=	1;
+}
+message proto_emojiConfig{
+
+	required	int32	cEmojiIndex	=	1;
+	required	int32	cCostType	=	2;
+	required	int32	cCostValue	=	3;
+	required	int32	nTenItemIndex	=	4;
+	required	int32	nTenItemNum	=	5;
+	required	int32	nTenEmojiNum	=	6;
+}
+message proto_gc_show_card_req{
+
+	required	int32	nSerialID	=	1;
+	required	int32	nShowCardType	=	2;
+	required	int32	nShowCardBet	=	3;
+}
+message proto_gc_extra_double_score_not{
+
+	required	int32	nDouble	=	1;
+	required	int32	nLordDouble	=	2;
+	required	int32	nSerialID	=	3;
+}
+message proto_cg_enable_invincible_req{
+
+	required	int32	nOp	=	1;
+}
+message proto_magic_emoji_noti{
+
+	required	int32	cIsError	=	1;
+	required	int32	cEmojiIndex	=	2;
+	required	int32	cFromChairID	=	3;
+	required	int32	cToChairID	=	4;
+	required	int32	cEmojiNum	=	5;
+}
+message proto_gc_task_complete_not{
+
+	required	int32	chair_id	=	1;
+	required	int32	task_status	=	2;
+}
+message proto_gc_get_card_ack{
+
+	required	int32	num	=	1;
+	repeated	proto_CCard	vecCards0	=	2;
+	repeated	proto_CCard	vecCards1	=	3;
+	repeated	proto_CCard	vecCards2	=	4;
+}
+message proto_cg_lord_card_lottery_info{
+
+}
+message proto_mj_completedata_req{
+
+}
+message proto_gc_two_show_card_not{
+
+	required	int32	cChairID	=	1;
+	required	int32	nLordPos	=	2;
+	required	proto_CCard	cLordCard	=	3;
+}
+message proto_gc_three_draw_ack_data{
+
+	required	int32	ret	=	1;
+	repeated	proto_Money_DiZhu	vecMoneyDiZhus	=	2;
+	repeated	proto_Kind_Rate	vecKindRates	=	3;
+	required	int32	nBaoDiMoney	=	4;
+	required	int32	nBaoDiRate	=	5;
+	required	float	fMinRate	=	6;
+}
+message proto_stUserResult1{
+
+	required	int32	nChairID	=	1;
+	required	int32	nScore	=	2;
+	required	int32	nJifen	=	3;
+}
+message proto_Kind_Rate{
+
+	required	string	strKind	=	1;
+	required	string	strRate	=	2;
+}
+message proto_cg_get_card_req{
+
+	required	int32	nSerialID	=	1;
+}
+message proto_gc_lord_card_lottery_info{
+
+	required	int32	fee	=	1;
+	repeated	int32	vecReward	=	2;
+}
+message proto_gc_get_lord_card_reward{
+
+	required	int32	index	=	1;
+	required	int32	money	=	2;
+}
+message proto_Money_DiZhu{
+
+	required	int64	nMoney	=	1;
+	required	int64	nDiZhu	=	2;
+}
+message proto_gc_three_draw_ack_card{
+
+	required	int32	ret	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+	repeated	float	vecRates	=	3;
+	required	int64	nMoney	=	4;
+	required	int64	nDiZhu	=	5;
+	required	float	fRate	=	6;
+}
+message proto_svr_test_not{
+
+	required	int32	cTest	=	1;
+	required	int32	nTest	=	2;
+	repeated	int32	vecTest	=	3;
+}
+message proto_gc_get_redpackets_newbie_award_not{
+
+	required	int32	nRet	=	1;
+	required	int32	nAmount	=	2;
+}
+message proto_CCard{
+
+	required	int32	m_nColor	=	1;
+	required	int32	m_nValue	=	2;
+	required	int32	m_nCard_Baovalue	=	3;
+}
+message proto_gc_lord_card_not{
+
+	required	int32	cLord	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+}
+message proto_gc_counts_not{
+
+	required	int32	counts_num	=	1;
+}
+message proto_gc_regain_lose_score_ack{
+
+	required	int32	nRet	=	1;
+	required	int32	nTime	=	2;
+	repeated	int32	nValue	=	3;
+	required	int32	nCurCount	=	4;
+	required	int32	nItemIndex	=	5;
+	required	int32	nItemNum	=	6;
+}
+message proto_cli_my_req{
+
+	required	int32	a	=	1;
+}
+message proto_sic_bet_ack{
+
+	required	int32	bAllow	=	1;
+	required	int32	cCellID	=	2;
+	required	int32	nAmountCell	=	3;
+	required	int32	nAmountCellTotal	=	4;
+}
+message proto_gc_card_count_ack1{
+
+	required	int32	counts_num	=	1;
+	repeated	proto_CCard	m_vecPutCard	=	2;
+}
+message proto_sic_bet_clear_req{
+
+}
+message proto_CCardsType{
+
+	required	int32	m_nTypeBomb	=	1;
+	required	int32	m_nTypeNum	=	2;
+	required	int32	m_nTypeValue	=	3;
+}
+message proto_sic_bet_update_req{
+
+	required	int32	nBetUpdateAckTag	=	1;
+}
+message proto_sic_bet_clear_ack{
+
+	required	int32	nBetUpdateAckTag	=	1;
+	required	int32	nAmountBack	=	2;
+	required	int32	nAmountTotal	=	3;
+}
+message proto_gc_bomb_not{
+
+	required	int32	nDouble	=	1;
+}
+message proto_cg_look_lord_card_req{
+
+}
+message proto_cg_auto_req{
+
+	required	int32	cAuto	=	1;
+}
+message proto_sic_history_req{
+
+}
+message proto_gc_auto_not{
+
+	required	int32	cChairID	=	1;
+	required	int32	cAuto	=	2;
+}
+message proto_gc_call_score_req{
+
+	required	int32	nScore	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_cg_call_score_ack{
+
+	required	int32	nScore	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_sic_show_light_cell_not{
+
+}
+message proto_gc_get_redpackets_88yuan_award_ack{
+
+	required	int32	ret	=	1;
+	required	int32	cur_rounds	=	2;
+	required	int32	limit_rounds	=	3;
+	required	int32	nAmount	=	4;
+	required	int32	cItemtype	=	5;
+	required	int32	task_id	=	6;
+}
+message proto_TaskItem{
+
+	required	int32	task_id	=	1;
+	required	string	task_desc	=	2;
+	required	string	task_mission	=	3;
+	required	int32	task_money_type	=	4;
+	required	int32	task_money	=	5;
+	required	int32	task_rate	=	6;
+}
+message proto_gc_clienttimer_not{
+
+	required	int32	chairId	=	1;
+	required	int32	sPeriod	=	2;
+}
+message proto_cg_card_count_req{
+
+}
+message proto_gc_three_draw_notify{
+
+	required	string	message	=	1;
+}
+message proto_gc_laizi_not{
+
+	required	int32	card_value	=	1;
+}
+message proto_magic_emoji_req{
+
+	required	int32	cEmojiIndex	=	1;
+	required	int32	cToChairID	=	2;
+	required	int32	cCostType	=	3;
+}
+message proto_cg_double_score_ack{
+
+	required	int32	nScore	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_gc_win_doubel_ack{
+
+	required	int32	cRet	=	1;
+	repeated	proto_ItemInfo	vecItemInfo	=	2;
+}
+message proto_sic_bet_begin_not{
+
+}
+message proto_cg_get_lord_card_reward{
+
+	required	int32	index	=	1;
+}
+message proto_gc_bet_lord_card_result_ack{
+
+	required	int32	ret	=	1;
+	required	int32	money	=	2;
+}
+message proto_svr_my_ack{
+
+	required	int32	b	=	1;
+}
+message proto_gc_get_redpackets_newbie_award_req{
+
+	required	int32	nAmount	=	1;
+	required	int32	cDouble	=	2;
+}
+message proto_gc_play_card_req{
+
+	required	int32	cAuto	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_gc_lord_card_lottery_base{
+
+	required	int32	ret	=	1;
+	required	int32	index	=	2;
+}
+message proto_cg_play_card_ack{
+
+	required	int32	nSerialID	=	1;
+	required	int32	cTimeOut	=	2;
+	repeated	proto_CCard	vecCards	=	3;
+}
+message proto_cg_beishu_info_req{
+
+}
+message proto_gc_rob_lord_req{
+
+	required	int32	cDefaultLord	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_sic_history_ack{
+
+	required	int32	bIsFounder	=	1;
+	required	int32	nPlayerMoneyBefore	=	2;
+	repeated	string	vecHistory	=	3;
+	required	int32	nChipType	=	4;
+	repeated	int32	vecChipValue	=	5;
+	required	int32	nAmountMax	=	6;
+	required	float	fNextRoundTimeWait	=	7;
+	repeated	int32	vecPeriod	=	8;
+}
+message proto_cg_rob_lord_ack{
+
+	required	int32	cRob	=	1;
+	required	int32	nSerialID	=	2;
+}
+message proto_gc_show_card_not{
+
+	required	int32	nChairID	=	1;
+	repeated	proto_CCard	vecCards	=	2;
+}
+message proto_sic_result_data_not{
+
+	repeated	int32	vecDice	=	1;
+	required	int32	nWinMoney	=	2;
+	required	int32	nPlayerMoneyAfter	=	3;
+	repeated	int32	vecWinCells	=	4;
+	repeated	int32	vecPlayerWinCells	=	5;
+	repeated	string	vecHitAward	=	6;
+	repeated	string	vecRank	=	7;
+}
+message proto_cg_show_card_ack{
+
+	required	int32	cShowCard	=	1;
+	required	int32	nSerialID	=	2;
+	required	int32	nShowCardBet	=	3;
+	required	int32	nShowCardType	=	4;
+}
+message proto_cg_send_card_ok_ack{
+
+	required	int32	nSerialID	=	1;
+}
+message proto_gc_game_result_not1{
+
+	required	int32	bType	=	1;
+	required	int32	cDouble	=	2;
+	required	int32	cCallScore	=	3;
+	required	int32	bShowCard	=	4;
+	required	int32	nBombCount	=	5;
+	required	int32	bSpring	=	6;
+	required	int32	bReverseSpring	=	7;
+	required	int32	bRobLord	=	8;
+	repeated	proto_stUserResult1	vecUserResult1	=	9;
+}

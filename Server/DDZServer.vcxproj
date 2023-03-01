@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4BBD1816-FCD5-461F-926C-5DAE0759D445}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../../../../libs/boost_1_48_0;$(SolutionDir)../../../../../../libs/hglibs;$(SolutionDir)../../../../../LobbyServer/tags/Protocol/20200907;$(SolutionDir)../../../../../../libs\hglibs\BD_Common\libprotobuf-2.5;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)Server.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)Server.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\../libs\hg../libs;$(SolutionDir)..\..\..\..\../LobbyServer\tags\Protocol\20200907;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)Server.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\packet_define.cpp" />
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\packet_define.cpp" />
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\packet_define.cpp" />
+    <ClCompile Include="..\Common\common_serialize.cpp" />
+    <ClCompile Include="..\Common\packetdefine.pb.cpp" />
+    <ClCompile Include="..\Common\Task.cpp" />
+    <ClCompile Include="ConfigManager.cpp" />
+    <ClCompile Include="DebugLog.cpp" />
+    <ClCompile Include="initCard.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pokers.cpp" />
+    <ClCompile Include="pt_cg_auto_req_handler.cpp" />
+    <ClCompile Include="pt_cg_call_score_ack_handler.cpp" />
+    <ClCompile Include="pt_cg_card_count_req_handler.cpp" />
+    <ClCompile Include="pt_cg_complete_data_req_handler.cpp" />
+    <ClCompile Include="pt_cg_double_score_ack_handler.cpp" />
+    <ClCompile Include="pt_cg_get_card_req_handler.cpp" />
+    <ClCompile Include="pt_cg_play_card_ack_handler.cpp" />
+    <ClCompile Include="pt_cg_rob_lord_ack_handler.cpp" />
+    <ClCompile Include="pt_cg_send_card_ok_ack_handler.cpp" />
+    <ClCompile Include="pt_cg_show_card_ack_handler.cpp" />
+    <ClCompile Include="sql_define.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GameTable.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Poke.cpp" />
+    <ClCompile Include="PlayerCreator.cpp" />
+    <ClCompile Include="TableCreator.cpp" />
+    <ClCompile Include="..\Common\packetdefine.cpp" />
+    <ClCompile Include="..\Common\PlayCard.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\game_define.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\IServerModule.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\opcode.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\packet_define.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\opcode.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\packet_define.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\global_define.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\opcode.h" />
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\packet_define.h" />
+    <ClInclude Include="..\Common\Task.h" />
+    <ClInclude Include="ConfigManager.h" />
+    <ClInclude Include="ddz.h" />
+    <ClInclude Include="ddz_interface.h" />
+    <ClInclude Include="DebugLog.h" />
+    <ClInclude Include="Pokers.h" />
+    <ClInclude Include="pt_cg_auto_req_handler.h" />
+    <ClInclude Include="pt_cg_call_score_ack_handler.h" />
+    <ClInclude Include="pt_cg_card_count_req_handler.h" />
+    <ClInclude Include="pt_cg_complete_data_req_handler.h" />
+    <ClInclude Include="pt_cg_double_score_ack_handler.h" />
+    <ClInclude Include="pt_cg_play_card_ack_handler.h" />
+    <ClInclude Include="pt_cg_rob_lord_ack_handler.h" />
+    <ClInclude Include="pt_cg_send_card_ok_ack_handler.h" />
+    <ClInclude Include="pt_cg_show_card_ack_handler.h" />
+    <ClInclude Include="sql_define.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="GameTable.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Poke.h" />
+    <ClInclude Include="PlayerCreator.h" />
+    <ClInclude Include="TableCreator.h" />
+    <ClInclude Include="..\Common\opcode.h" />
+    <ClInclude Include="..\Common\packetdefine.h" />
+    <ClInclude Include="..\Common\PlayCard.h" />
+    <ClInclude Include="..\Common\Rule.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

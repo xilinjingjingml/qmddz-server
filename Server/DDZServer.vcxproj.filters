@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{e323a888-49d7-45b5-98b6-e53e29d47063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{565bb775-7ee6-4f56-918f-0633f26e7b89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="handler">
+      <UniqueIdentifier>{6a9c13d7-6411-4f73-a43d-6a0c9fef4394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{32527288-9a2e-4d13-9906-026350442e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\BaseGameServer">
+      <UniqueIdentifier>{8ebaebbb-adea-4f87-ac2c-6b3a0a1d0d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\WorldServer">
+      <UniqueIdentifier>{755348b3-cbe1-4735-9d49-450be2d049df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Robot">
+      <UniqueIdentifier>{247a5019-c771-4318-8f6f-8e3a1be8bbbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol\LoginServer">
+      <UniqueIdentifier>{aa3b969d-9de8-4c24-b3ec-6c3a38f25e12}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ConfigManager.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Poke.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCreator.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="TableCreator.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\packetdefine.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\PlayCard.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_auto_req_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_call_score_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_complete_data_req_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_play_card_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_rob_lord_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_send_card_ok_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_show_card_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\Task.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_card_count_req_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_get_card_req_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_define.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugLog.cpp">
+      <Filter>Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="initCard.cpp">
+      <Filter>Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokers.cpp">
+      <Filter>Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_cg_double_score_ack_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\common_serialize.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\packetdefine.pb.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\packet_define.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\packet_define.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\packet_define.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConfigManager.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Poke.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCreator.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="TableCreator.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\opcode.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\packetdefine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\PlayCard.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Rule.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_auto_req_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_call_score_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_complete_data_req_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_play_card_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_rob_lord_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_send_card_ok_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_show_card_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\Task.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_card_count_req_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="ddz.h">
+      <Filter>Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="ddz_interface.h">
+      <Filter>Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugLog.h">
+      <Filter>Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokers.h">
+      <Filter>Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_cg_double_score_ack_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\game_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\IServerModule.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\opcode.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\BaseGameServer\packet_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\opcode.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\LoginServer\packet_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\global_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\opcode.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\../LobbyServer\tags\Protocol\20200907\WorldServer\packet_define.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile" />
+  </ItemGroup>
+</Project>

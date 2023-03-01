@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "gb2312"?>
+<--!
+	roomnum 进入的房间数
+	plynum  每个房间进入的用户数
+	222.160.236.241
+	8691
+        firsttableid 起初桌子ID
+-->
+<config 
+listenip="127.0.0.1" 
+listenport="10132" 
+robotagentid="993891060000001"
+robotbeginid="993891060000002"
+plynum="200"
+robot_type="3"
+RuleType="0"
+DebugLevel="1"
+PingTime="5000"
+ReadyTime="1000"
+ReadyTimeOut="15000"
+CallScoreTime="2000"
+RobLordTime="2000"
+PlayCardTime="3000"
+LeaveTableTime="2000"
+TestRobot="0"
+ChatTime="200000"
+UserRobot="0"
+BetterForPlayer="1"
+NotCallScore="75"
+/>

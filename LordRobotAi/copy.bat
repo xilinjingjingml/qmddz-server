@@ -1,0 +1,1 @@
+copy ..\Release\*.dll C:\Windows\System32 /y
