@@ -13,15 +13,21 @@
 # DEBUG can be set to YES to include debug info, or NO otherwise
 DEBUG := YES
 OUTPUT	:= ../bin/RPDDZRobot
+
+PROTOCOL_DIR := ../../../LobbyServer/branches/LobbyServer_qmmj/Protocol
+LIBS_DIR := ../../../../libs
+
+
+
 DEFS	:= 
 INCS	:= -I./ \
-	-I../../../../../LobbyServer/tags/Protocol/20200622 \
-	-I../../../../../../libs/hglibs \
-	-I../../../../../../libs/boost_1_48_0 \
+	-I$(PROTOCOL_DIR) \
+	-I$(LIBS_DIR)/hglibs \
+	-I$(LIBS_DIR)/boost_1_48_0 \
 	-I/usr/include/mysql \
-	-I../../../../../../libs/hglibs/BD_BaseHelper/sqlite
+	-I$(LIBS_DIR)/hglibs/BD_BaseHelper/sqlite
 
-LIBS	:= -L../../../../../../libs/libraries -lbd_basehelper -ldl -lpthread \
+LIBS	:= -L$(LIBS_DIR)/libraries -lbd_basehelper -ldl -lpthread \
 	-L/usr/include/mysql -lmysqlclient -lboost_system-s
 
 #**********************************************************

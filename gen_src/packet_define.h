@@ -85,6 +85,7 @@ NET_PACKET(pt_gc_call_score_req)
 {
 	int nScore;			//叫分基础
 	int nSerialID;		//消息序列
+	int nCallMode;      //叫分模式 0
 };
 NET_PACKET(pt_cg_call_score_ack)
 {
@@ -1227,11 +1228,11 @@ NET_PUT(pt_gc_get_card_ack)
 
 NET_GET(pt_gc_call_score_req)
 {
-	return is >> pt.opcode >> pt.nScore >> pt.nSerialID;
+	return is >> pt.opcode >> pt.nScore >> pt.nSerialID >> pt.nCallMode;
 }
 NET_PUT(pt_gc_call_score_req)
 {
-	return os << pt.opcode << pt.nScore << pt.nSerialID;
+	return os << pt.opcode << pt.nScore << pt.nSerialID << pt.nCallMode;
 }
 NET_GET(pt_cg_call_score_ack)
 {
@@ -1849,7 +1850,7 @@ NET_GET(pt_gc_win_doubel_req)
 }
 NET_PUT(pt_gc_win_doubel_req)
 {
-	return os << pt.opcode << pt.nAddAmount << ptg.nAddProbabily;
+	return os << pt.opcode << pt.nAddAmount << pt.nAddProbabily;
 }
 NET_PACKET(pt_cg_win_doubel_req)
 {
@@ -1873,6 +1874,250 @@ NET_GET(pt_gc_win_doubel_ack)
 	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
 }
 NET_PUT(pt_gc_win_doubel_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(TocashItemInfo)
+{
+	char cChairID; // 座位号
+	int nItemChange; // 当次提现道具变化数量
+};
+NET_GET(TocashItemInfo)
+{
+	return is >> pt.cChairID >> pt.nItemChange;
+}
+NET_PUT(TocashItemInfo)
+{
+	return os << pt.cChairID << pt.nItemChange;
+}
+NET_PACKET(pt_gc_baiyuan_tocash_item_not)
+{
+	char cType; // 0 通知 1 炸弹 2 结算
+	vector<TocashItemInfo> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_tocash_item_not)
+{
+	return is >> pt.opcode >> pt.cType >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_tocash_item_not)
+{
+	return os << pt.opcode << pt.cType << pt.vecItemInfo;
+}
+NET_PACKET(item_info)
+{
+	int	nItemId;
+	int nItemNum;
+};
+NET_GET(item_info)
+{
+	return is >> pt.nItemId >> pt.nItemNum;
+}
+NET_PUT(item_info)
+{
+	return os << pt.nItemId << pt.nItemNum;
+}
+NET_PACKET(pt_gc_baiyuan_hb_round_not)
+{
+	int nCurRound; // 当前局数
+	int nLimitRound; // 总局数
+};
+NET_GET(pt_gc_baiyuan_hb_round_not)
+{
+	return is >> pt.opcode >> pt.nCurRound >> pt.nLimitRound;
+}
+NET_PUT(pt_gc_baiyuan_hb_round_not)
+{
+	return os << pt.opcode << pt.nCurRound << pt.nLimitRound;
+}
+NET_PACKET(pt_gc_baiyuan_hb_round_award_not)
+{
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_hb_round_award_not)
+{
+	return is >> pt.opcode >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_hb_round_award_not)
+{
+	return os << pt.opcode << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_hb_round_award_req)
+{
+};
+NET_GET(pt_cg_baiyuan_hb_round_award_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_hb_round_award_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_hb_round_award_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_hb_round_award_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_hb_round_award_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(pt_gc_baiyuan_win_double_not)
+{
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_win_double_not)
+{
+	return is >> pt.opcode >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_win_double_not)
+{
+	return os << pt.opcode << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_win_double_req)
+{
+};
+NET_GET(pt_cg_baiyuan_win_double_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_win_double_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_win_double_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_win_double_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_win_double_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(pt_gc_baiyuan_regain_lose_not)
+{
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_regain_lose_not)
+{
+	return is >> pt.opcode >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_regain_lose_not)
+{
+	return os << pt.opcode << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_regain_lose_req)
+{
+};
+NET_GET(pt_cg_baiyuan_regain_lose_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_regain_lose_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_regain_lose_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_regain_lose_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_regain_lose_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(pt_gc_baiyuan_luck_welfare_not)
+{
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_luck_welfare_not)
+{
+	return is >> pt.opcode >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_luck_welfare_not)
+{
+	return os << pt.opcode << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_luck_welfare_req)
+{
+};
+NET_GET(pt_cg_baiyuan_luck_welfare_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_luck_welfare_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_luck_welfare_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_luck_welfare_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_luck_welfare_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_can_bankruptcy_defend_req)
+{
+};
+NET_GET(pt_cg_baiyuan_can_bankruptcy_defend_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_can_bankruptcy_defend_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_can_bankruptcy_defend_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_can_bankruptcy_defend_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_can_bankruptcy_defend_ack)
+{
+	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
+}
+NET_PACKET(pt_cg_baiyuan_bankruptcy_defend_req)
+{
+};
+NET_GET(pt_cg_baiyuan_bankruptcy_defend_req)
+{
+	return is >> pt.opcode;
+}
+NET_PUT(pt_cg_baiyuan_bankruptcy_defend_req)
+{
+	return os << pt.opcode;
+}
+NET_PACKET(pt_gc_baiyuan_bankruptcy_defend_ack)
+{
+	char cRet; // 0成功
+	vector<item_info> vecItemInfo;
+};
+NET_GET(pt_gc_baiyuan_bankruptcy_defend_ack)
+{
+	return is >> pt.opcode >> pt.cRet >> pt.vecItemInfo;
+}
+NET_PUT(pt_gc_baiyuan_bankruptcy_defend_ack)
 {
 	return os << pt.opcode << pt.cRet << pt.vecItemInfo;
 }

@@ -14,6 +14,7 @@ pt_gc_play_card_not_handler::~pt_gc_play_card_not_handler(void)
 
 void pt_gc_play_card_not_handler::handler( const pt_gc_play_card_not& noti,CUserSession* session )
 {
+	session->set_chat_time(0);
 	int chair, i, size = noti.vecCards.size();
 	SERVER_LOG("pt_gc_play_card_not_handler:cChairID = %d, guid=%lld, session->chair_id=%d, size =%d", noti.cChairID, session->ply_guid(), session->chair_id(), size);
 

@@ -13,9 +13,9 @@ pt_gc_call_score_req_handler::~pt_gc_call_score_req_handler(void)
 {
 }
 
-void pt_gc_call_score_req_handler::handler( const pt_gc_call_score_req& req, CUserSession* session )
+void pt_gc_call_score_req_handler::handler(const pt_gc_call_score_req& req, CUserSession* session)
 {
-	SERVER_LOG("pt_gc_call_score_req_handler:nScore = %d, guid:%lld",req.nScore, session->ply_guid());
+	SERVER_LOG("pt_gc_call_score_req_handler:nScore = %d, guid:%lld", req.nScore, session->ply_guid());
 
 	Robot* robot = session->getRobot();
 	int nScore = req.nScore;
@@ -45,9 +45,30 @@ void pt_gc_call_score_req_handler::handler( const pt_gc_call_score_req& req, CUs
 		nScore = -1;//不叫
 	}
 
+	// 百元赛叫分逻辑
+	if (req.nCallMode == 3) {
+		if (nScore == 8) {
+			nScore = 3;
+		}
+		else if (nScore == 4) {
+			nScore = 1;
+		}
+	}
+
 	getPlayerCallScore(robot->lord_robot_, nScore, DOWN_PLAYER);
 	getPlayerCallScore(robot->lord_robot_, nScore, UP_PLAYER);
-	nScore = callScore(robot->lord_robot_);	
+	nScore = callScore(robot->lord_robot_);
+
+	
+	// 百元赛叫分逻辑
+	if (req.nCallMode == 3) {
+		if (nScore == 3) {
+			nScore = 8;
+		} else if (nScore == 1 || nScore == 2){
+			nScore = 4;
+		}
+	}
+	
 	if(nScore == -1)
 	{
 		nScore = 0;
@@ -60,6 +81,7 @@ void pt_gc_call_score_req_handler::handler( const pt_gc_call_score_req& req, CUs
 			nScore = 0;
 		}		
 	}
+
 
 	curTime = leaf::GetCurTime() - curTime;
 	SERVER_LOG("cg_call_score_handler:  score=%d,time=%d", nScore, curTime);

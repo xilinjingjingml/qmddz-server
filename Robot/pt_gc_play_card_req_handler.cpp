@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "ConfigManager.h"
 #include "pt_gc_play_card_req_handler.h"
 #include "RobotManager.h"
 #include "UserSession.h"
@@ -35,7 +36,8 @@ void pt_gc_play_card_req_handler::handler( const pt_gc_play_card_req& req, CUser
 	robot->lord_robot_->outs[0] = -1;
 	robot->lord_robot_->laizi[0] = -1;
 
-	if(takeOut(robot->lord_robot_, robot->lord_robot_->outs, robot->lord_robot_->laizi) == 0)
+	bool mustBomb = g_nMustBomb == 1 && (session->chair_id() == robot->lord_ || (session->chair_id() + robot->lord_robot_->game.pre_playernum + 1) % 3 == robot->lord_);
+	if(takeOut(robot->lord_robot_, robot->lord_robot_->outs, robot->lord_robot_->laizi, mustBomb) == 0)
 	{
 		robot->lord_robot_->outs[0] = -1;
 		SERVER_LOG("pt_gc_play_card_req_handler:pass");

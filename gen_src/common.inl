@@ -3,13 +3,21 @@
 #pragma once
 
 #include "stdafx.h"
-void CopyFrom(pt_gc_game_start_not& pt , const proto_gc_game_start_not& proto);
+void CopyFrom(pt_cg_baiyuan_win_double_req& pt , const proto_cg_baiyuan_win_double_req& proto);
 
-void CopyTo(const pt_gc_game_start_not& pt, proto_gc_game_start_not& proto);
+void CopyTo(const pt_cg_baiyuan_win_double_req& pt, proto_cg_baiyuan_win_double_req& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_start_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_win_double_req& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_game_start_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_win_double_req& msg);
+
+void CopyFrom(pt_gc_call_score_req& pt , const proto_gc_call_score_req& proto);
+
+void CopyTo(const pt_gc_call_score_req& pt, proto_gc_call_score_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_call_score_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_call_score_req& msg);
 
 void CopyFrom(pt_gc_counts_not1& pt , const proto_gc_counts_not1& proto);
 
@@ -26,14 +34,6 @@ void CopyTo(const pt_sic_bet_req& pt, proto_sic_bet_req& proto);
 void ReadPacketFromProto(CInputStream& is,pt_sic_bet_req& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_bet_req& msg);
-
-void CopyFrom(pt_gc_task_not& pt , const proto_gc_task_not& proto);
-
-void CopyTo(const pt_gc_task_not& pt, proto_gc_task_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_task_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_task_not& msg);
 
 void CopyFrom(pt_gc_two_lord_card_not& pt , const proto_gc_two_lord_card_not& proto);
 
@@ -59,30 +59,6 @@ void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_newbie_award_ack&
 
 void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_newbie_award_ack& msg);
 
-void CopyFrom(pt_gc_beishu_info_ack& pt , const proto_gc_beishu_info_ack& proto);
-
-void CopyTo(const pt_gc_beishu_info_ack& pt, proto_gc_beishu_info_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_beishu_info_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_beishu_info_ack& msg);
-
-void CopyFrom(pt_gc_use_card_recode_noti& pt , const proto_gc_use_card_recode_noti& proto);
-
-void CopyTo(const pt_gc_use_card_recode_noti& pt, proto_gc_use_card_recode_noti& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_use_card_recode_noti& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_use_card_recode_noti& msg);
-
-void CopyFrom(pt_cg_win_doubel_req& pt , const proto_cg_win_doubel_req& proto);
-
-void CopyTo(const pt_cg_win_doubel_req& pt, proto_cg_win_doubel_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_win_doubel_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_win_doubel_req& msg);
-
 void CopyFrom(pt_gc_card_recode_req& pt , const proto_gc_card_recode_req& proto);
 
 void CopyTo(const pt_gc_card_recode_req& pt, proto_gc_card_recode_req& proto);
@@ -91,85 +67,29 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_card_recode_req& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_card_recode_req& msg);
 
-void CopyFrom(pt_gc_two_let_card_not& pt , const proto_gc_two_let_card_not& proto);
+void CopyFrom(pt_gc_bomb_not& pt , const proto_gc_bomb_not& proto);
 
-void CopyTo(const pt_gc_two_let_card_not& pt, proto_gc_two_let_card_not& proto);
+void CopyTo(const pt_gc_bomb_not& pt, proto_gc_bomb_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_let_card_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_bomb_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_two_let_card_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_bomb_not& msg);
 
-void CopyFrom(pt_gc_update_player_tokenmoney_not& pt , const proto_gc_update_player_tokenmoney_not& proto);
+void CopyFrom(pt_gc_beishu_info_ack& pt , const proto_gc_beishu_info_ack& proto);
 
-void CopyTo(const pt_gc_update_player_tokenmoney_not& pt, proto_gc_update_player_tokenmoney_not& proto);
+void CopyTo(const pt_gc_beishu_info_ack& pt, proto_gc_beishu_info_ack& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_update_player_tokenmoney_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_beishu_info_ack& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_update_player_tokenmoney_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_beishu_info_ack& msg);
 
-void CopyFrom(pt_gc_card_count_ack& pt , const proto_gc_card_count_ack& proto);
+void CopyFrom(pt_cg_private_room_result_req& pt , const proto_cg_private_room_result_req& proto);
 
-void CopyTo(const pt_gc_card_count_ack& pt, proto_gc_card_count_ack& proto);
+void CopyTo(const pt_cg_private_room_result_req& pt, proto_cg_private_room_result_req& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack& msg);
+void ReadPacketFromProto(CInputStream& is,pt_cg_private_room_result_req& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack& msg);
-
-void CopyFrom(pt_cg_regain_lose_score_req& pt , const proto_cg_regain_lose_score_req& proto);
-
-void CopyTo(const pt_cg_regain_lose_score_req& pt, proto_cg_regain_lose_score_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_regain_lose_score_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_regain_lose_score_req& msg);
-
-void CopyFrom(pt_gc_private_room_result_ack& pt , const proto_gc_private_room_result_ack& proto);
-
-void CopyTo(const pt_gc_private_room_result_ack& pt, proto_gc_private_room_result_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_ack& msg);
-
-void CopyFrom(pt_gc_enable_invincible_ack& pt , const proto_gc_enable_invincible_ack& proto);
-
-void CopyTo(const pt_gc_enable_invincible_ack& pt, proto_gc_enable_invincible_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_enable_invincible_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_enable_invincible_ack& msg);
-
-void CopyFrom(pt_cg_bet_lord_card_req& pt , const proto_cg_bet_lord_card_req& proto);
-
-void CopyTo(const pt_cg_bet_lord_card_req& pt, proto_cg_bet_lord_card_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_bet_lord_card_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_bet_lord_card_req& msg);
-
-void CopyFrom(pt_gc_look_lord_card_item_ack& pt , const proto_gc_look_lord_card_item_ack& proto);
-
-void CopyTo(const pt_gc_look_lord_card_item_ack& pt, proto_gc_look_lord_card_item_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_look_lord_card_item_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_look_lord_card_item_ack& msg);
-
-void CopyFrom(stUserData& pt , const proto_stUserData& proto);
-
-void CopyTo(const stUserData& pt, proto_stUserData& proto);
-
-void ReadPacketFromProto(CInputStream& is,stUserData& msg);
-
-void SendPacketToProto(COutputStream& os, const stUserData& msg);
-
-void CopyFrom(pt_gc_double_score_req& pt , const proto_gc_double_score_req& proto);
-
-void CopyTo(const pt_gc_double_score_req& pt, proto_gc_double_score_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_double_score_req& msg);
+void SendPacketToProto(COutputStream& os, const pt_cg_private_room_result_req& msg);
 
 void CopyFrom(pt_gc_game_result_not& pt , const proto_gc_game_result_not& proto);
 
@@ -187,21 +107,13 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_user_savestar_card_noti& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_user_savestar_card_noti& msg);
 
-void CopyFrom(pt_gc_get_redpackets_award_ack& pt , const proto_gc_get_redpackets_award_ack& proto);
+void CopyFrom(pt_gc_counts_not& pt , const proto_gc_counts_not& proto);
 
-void CopyTo(const pt_gc_get_redpackets_award_ack& pt, proto_gc_get_redpackets_award_ack& proto);
+void CopyTo(const pt_gc_counts_not& pt, proto_gc_counts_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_award_ack& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_counts_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_award_ack& msg);
-
-void CopyFrom(pt_gc_refresh_card_not& pt , const proto_gc_refresh_card_not& proto);
-
-void CopyTo(const pt_gc_refresh_card_not& pt, proto_gc_refresh_card_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_refresh_card_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_refresh_card_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_counts_not& msg);
 
 void CopyFrom(pt_cg_three_draw_req_data& pt , const proto_cg_three_draw_req_data& proto);
 
@@ -219,53 +131,29 @@ void ReadPacketFromProto(CInputStream& is,ItemInfo& msg);
 
 void SendPacketToProto(COutputStream& os, const ItemInfo& msg);
 
-void CopyFrom(player_itemInfo& pt , const proto_player_itemInfo& proto);
+void CopyFrom(pt_gc_baiyuan_regain_lose_not& pt , const proto_gc_baiyuan_regain_lose_not& proto);
 
-void CopyTo(const player_itemInfo& pt, proto_player_itemInfo& proto);
+void CopyTo(const pt_gc_baiyuan_regain_lose_not& pt, proto_gc_baiyuan_regain_lose_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,player_itemInfo& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_regain_lose_not& msg);
 
-void SendPacketToProto(COutputStream& os, const player_itemInfo& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_regain_lose_not& msg);
 
-void CopyFrom(pt_cg_get_redpackets_88yuan_award_req& pt , const proto_cg_get_redpackets_88yuan_award_req& proto);
+void CopyFrom(pt_gc_two_complete_data_not& pt , const proto_gc_two_complete_data_not& proto);
 
-void CopyTo(const pt_cg_get_redpackets_88yuan_award_req& pt, proto_cg_get_redpackets_88yuan_award_req& proto);
+void CopyTo(const pt_gc_two_complete_data_not& pt, proto_gc_two_complete_data_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_88yuan_award_req& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_complete_data_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_88yuan_award_req& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_two_complete_data_not& msg);
 
-void CopyFrom(pt_gc_starsky_update_item_noti& pt , const proto_gc_starsky_update_item_noti& proto);
+void CopyFrom(pt_magic_emoji_noti& pt , const proto_magic_emoji_noti& proto);
 
-void CopyTo(const pt_gc_starsky_update_item_noti& pt, proto_gc_starsky_update_item_noti& proto);
+void CopyTo(const pt_magic_emoji_noti& pt, proto_magic_emoji_noti& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_starsky_update_item_noti& msg);
+void ReadPacketFromProto(CInputStream& is,pt_magic_emoji_noti& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_starsky_update_item_noti& msg);
-
-void CopyFrom(pt_cg_look_lord_card_item_req& pt , const proto_cg_look_lord_card_item_req& proto);
-
-void CopyTo(const pt_cg_look_lord_card_item_req& pt, proto_cg_look_lord_card_item_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_item_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_item_req& msg);
-
-void CopyFrom(pt_cg_get_redpackets_award_req& pt , const proto_cg_get_redpackets_award_req& proto);
-
-void CopyTo(const pt_cg_get_redpackets_award_req& pt, proto_cg_get_redpackets_award_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_award_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_award_req& msg);
-
-void CopyFrom(pt_gc_send_dizhu_not& pt , const proto_gc_send_dizhu_not& proto);
-
-void CopyTo(const pt_gc_send_dizhu_not& pt, proto_gc_send_dizhu_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_send_dizhu_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_send_dizhu_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_magic_emoji_noti& msg);
 
 void CopyFrom(pt_cg_complete_data_req& pt , const proto_cg_complete_data_req& proto);
 
@@ -283,85 +171,13 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_bet_update_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_ack& msg);
 
-void CopyFrom(pt_gc_item_add_not& pt , const proto_gc_item_add_not& proto);
+void CopyFrom(Kind_Rate& pt , const proto_Kind_Rate& proto);
 
-void CopyTo(const pt_gc_item_add_not& pt, proto_gc_item_add_not& proto);
+void CopyTo(const Kind_Rate& pt, proto_Kind_Rate& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_item_add_not& msg);
+void ReadPacketFromProto(CInputStream& is,Kind_Rate& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_item_add_not& msg);
-
-void CopyFrom(pt_gc_bet_lord_card_ack& pt , const proto_gc_bet_lord_card_ack& proto);
-
-void CopyTo(const pt_gc_bet_lord_card_ack& pt, proto_gc_bet_lord_card_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_bet_lord_card_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_ack& msg);
-
-void CopyFrom(pt_gc_replay_data_not& pt , const proto_gc_replay_data_not& proto);
-
-void CopyTo(const pt_gc_replay_data_not& pt, proto_gc_replay_data_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_replay_data_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_replay_data_not& msg);
-
-void CopyFrom(pt_gc_ju_count_not& pt , const proto_gc_ju_count_not& proto);
-
-void CopyTo(const pt_gc_ju_count_not& pt, proto_gc_ju_count_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_ju_count_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_ju_count_not& msg);
-
-void CopyFrom(pt_gc_had_start_not& pt , const proto_gc_had_start_not& proto);
-
-void CopyTo(const pt_gc_had_start_not& pt, proto_gc_had_start_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_had_start_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_had_start_not& msg);
-
-void CopyFrom(pt_gc_double_score_not& pt , const proto_gc_double_score_not& proto);
-
-void CopyTo(const pt_gc_double_score_not& pt, proto_gc_double_score_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_double_score_not& msg);
-
-void CopyFrom(pt_sic_new_round_not& pt , const proto_sic_new_round_not& proto);
-
-void CopyTo(const pt_sic_new_round_not& pt, proto_sic_new_round_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_sic_new_round_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_sic_new_round_not& msg);
-
-void CopyFrom(pt_gc_pause_game_not& pt , const proto_gc_pause_game_not& proto);
-
-void CopyTo(const pt_gc_pause_game_not& pt, proto_gc_pause_game_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_pause_game_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_pause_game_not& msg);
-
-void CopyFrom(pt_gc_private_room_result_not& pt , const proto_gc_private_room_result_not& proto);
-
-void CopyTo(const pt_gc_private_room_result_not& pt, proto_gc_private_room_result_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_not& msg);
-
-void CopyFrom(st_sic_cell& pt , const proto_st_sic_cell& proto);
-
-void CopyTo(const st_sic_cell& pt, proto_st_sic_cell& proto);
-
-void ReadPacketFromProto(CInputStream& is,st_sic_cell& msg);
-
-void SendPacketToProto(COutputStream& os, const st_sic_cell& msg);
+void SendPacketToProto(COutputStream& os, const Kind_Rate& msg);
 
 void CopyFrom(pt_gc_play_card_not& pt , const proto_gc_play_card_not& proto);
 
@@ -371,37 +187,21 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_play_card_not& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_play_card_not& msg);
 
-void CopyFrom(pt_gc_item_info_not& pt , const proto_gc_item_info_not& proto);
+void CopyFrom(pt_gc_baiyuan_win_double_ack& pt , const proto_gc_baiyuan_win_double_ack& proto);
 
-void CopyTo(const pt_gc_item_info_not& pt, proto_gc_item_info_not& proto);
+void CopyTo(const pt_gc_baiyuan_win_double_ack& pt, proto_gc_baiyuan_win_double_ack& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_item_info_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_win_double_ack& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_item_info_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_win_double_ack& msg);
 
-void CopyFrom(pt_cg_private_room_result_req& pt , const proto_cg_private_room_result_req& proto);
+void CopyFrom(Money_DiZhu& pt , const proto_Money_DiZhu& proto);
 
-void CopyTo(const pt_cg_private_room_result_req& pt, proto_cg_private_room_result_req& proto);
+void CopyTo(const Money_DiZhu& pt, proto_Money_DiZhu& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_cg_private_room_result_req& msg);
+void ReadPacketFromProto(CInputStream& is,Money_DiZhu& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_cg_private_room_result_req& msg);
-
-void CopyFrom(stUserResult& pt , const proto_stUserResult& proto);
-
-void CopyTo(const stUserResult& pt, proto_stUserResult& proto);
-
-void ReadPacketFromProto(CInputStream& is,stUserResult& msg);
-
-void SendPacketToProto(COutputStream& os, const stUserResult& msg);
-
-void CopyFrom(pt_cg_starsky_season_noti& pt , const proto_cg_starsky_season_noti& proto);
-
-void CopyTo(const pt_cg_starsky_season_noti& pt, proto_cg_starsky_season_noti& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_starsky_season_noti& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_starsky_season_noti& msg);
+void SendPacketToProto(COutputStream& os, const Money_DiZhu& msg);
 
 void CopyFrom(GameStatisc& pt , const proto_GameStatisc& proto);
 
@@ -410,14 +210,6 @@ void CopyTo(const GameStatisc& pt, proto_GameStatisc& proto);
 void ReadPacketFromProto(CInputStream& is,GameStatisc& msg);
 
 void SendPacketToProto(COutputStream& os, const GameStatisc& msg);
-
-void CopyFrom(pt_gc_two_complete_data_not& pt , const proto_gc_two_complete_data_not& proto);
-
-void CopyTo(const pt_gc_two_complete_data_not& pt, proto_gc_two_complete_data_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_complete_data_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_two_complete_data_not& msg);
 
 void CopyFrom(pt_gc_win_doubel_req& pt , const proto_gc_win_doubel_req& proto);
 
@@ -451,77 +243,13 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_show_result_not& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_show_result_not& msg);
 
-void CopyFrom(pt_cg_three_draw_req_card& pt , const proto_cg_three_draw_req_card& proto);
+void CopyFrom(pt_sic_bet_update_req& pt , const proto_sic_bet_update_req& proto);
 
-void CopyTo(const pt_cg_three_draw_req_card& pt, proto_cg_three_draw_req_card& proto);
+void CopyTo(const pt_sic_bet_update_req& pt, proto_sic_bet_update_req& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_cg_three_draw_req_card& msg);
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_update_req& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_cg_three_draw_req_card& msg);
-
-void CopyFrom(pt_gc_game_model& pt , const proto_gc_game_model& proto);
-
-void CopyTo(const pt_gc_game_model& pt, proto_gc_game_model& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_model& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_game_model& msg);
-
-void CopyFrom(pt_gc_magic_emoji_config_not& pt , const proto_gc_magic_emoji_config_not& proto);
-
-void CopyTo(const pt_gc_magic_emoji_config_not& pt, proto_gc_magic_emoji_config_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_magic_emoji_config_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_magic_emoji_config_not& msg);
-
-void CopyFrom(emojiConfig& pt , const proto_emojiConfig& proto);
-
-void CopyTo(const emojiConfig& pt, proto_emojiConfig& proto);
-
-void ReadPacketFromProto(CInputStream& is,emojiConfig& msg);
-
-void SendPacketToProto(COutputStream& os, const emojiConfig& msg);
-
-void CopyFrom(pt_gc_show_card_req& pt , const proto_gc_show_card_req& proto);
-
-void CopyTo(const pt_gc_show_card_req& pt, proto_gc_show_card_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_show_card_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_show_card_req& msg);
-
-void CopyFrom(pt_gc_extra_double_score_not& pt , const proto_gc_extra_double_score_not& proto);
-
-void CopyTo(const pt_gc_extra_double_score_not& pt, proto_gc_extra_double_score_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_extra_double_score_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_extra_double_score_not& msg);
-
-void CopyFrom(pt_cg_enable_invincible_req& pt , const proto_cg_enable_invincible_req& proto);
-
-void CopyTo(const pt_cg_enable_invincible_req& pt, proto_cg_enable_invincible_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_enable_invincible_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_enable_invincible_req& msg);
-
-void CopyFrom(pt_magic_emoji_noti& pt , const proto_magic_emoji_noti& proto);
-
-void CopyTo(const pt_magic_emoji_noti& pt, proto_magic_emoji_noti& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_magic_emoji_noti& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_magic_emoji_noti& msg);
-
-void CopyFrom(pt_gc_task_complete_not& pt , const proto_gc_task_complete_not& proto);
-
-void CopyTo(const pt_gc_task_complete_not& pt, proto_gc_task_complete_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_task_complete_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_task_complete_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_req& msg);
 
 void CopyFrom(pt_gc_get_card_ack& pt , const proto_gc_get_card_ack& proto);
 
@@ -531,6 +259,14 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_get_card_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_get_card_ack& msg);
 
+void CopyFrom(pt_cg_beishu_info_req& pt , const proto_cg_beishu_info_req& proto);
+
+void CopyTo(const pt_cg_beishu_info_req& pt, proto_cg_beishu_info_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_beishu_info_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_beishu_info_req& msg);
+
 void CopyFrom(pt_cg_lord_card_lottery_info& pt , const proto_cg_lord_card_lottery_info& proto);
 
 void CopyTo(const pt_cg_lord_card_lottery_info& pt, proto_cg_lord_card_lottery_info& proto);
@@ -538,62 +274,6 @@ void CopyTo(const pt_cg_lord_card_lottery_info& pt, proto_cg_lord_card_lottery_i
 void ReadPacketFromProto(CInputStream& is,pt_cg_lord_card_lottery_info& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_cg_lord_card_lottery_info& msg);
-
-void CopyFrom(pt_mj_completedata_req& pt , const proto_mj_completedata_req& proto);
-
-void CopyTo(const pt_mj_completedata_req& pt, proto_mj_completedata_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_mj_completedata_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_mj_completedata_req& msg);
-
-void CopyFrom(pt_gc_two_show_card_not& pt , const proto_gc_two_show_card_not& proto);
-
-void CopyTo(const pt_gc_two_show_card_not& pt, proto_gc_two_show_card_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_show_card_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_two_show_card_not& msg);
-
-void CopyFrom(pt_gc_three_draw_ack_data& pt , const proto_gc_three_draw_ack_data& proto);
-
-void CopyTo(const pt_gc_three_draw_ack_data& pt, proto_gc_three_draw_ack_data& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_data& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_data& msg);
-
-void CopyFrom(stUserResult1& pt , const proto_stUserResult1& proto);
-
-void CopyTo(const stUserResult1& pt, proto_stUserResult1& proto);
-
-void ReadPacketFromProto(CInputStream& is,stUserResult1& msg);
-
-void SendPacketToProto(COutputStream& os, const stUserResult1& msg);
-
-void CopyFrom(Kind_Rate& pt , const proto_Kind_Rate& proto);
-
-void CopyTo(const Kind_Rate& pt, proto_Kind_Rate& proto);
-
-void ReadPacketFromProto(CInputStream& is,Kind_Rate& msg);
-
-void SendPacketToProto(COutputStream& os, const Kind_Rate& msg);
-
-void CopyFrom(pt_cg_get_card_req& pt , const proto_cg_get_card_req& proto);
-
-void CopyTo(const pt_cg_get_card_req& pt, proto_cg_get_card_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_card_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_get_card_req& msg);
-
-void CopyFrom(pt_gc_lord_card_lottery_info& pt , const proto_gc_lord_card_lottery_info& proto);
-
-void CopyTo(const pt_gc_lord_card_lottery_info& pt, proto_gc_lord_card_lottery_info& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_info& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_info& msg);
 
 void CopyFrom(pt_gc_get_lord_card_reward& pt , const proto_gc_get_lord_card_reward& proto);
 
@@ -603,37 +283,13 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_get_lord_card_reward& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_get_lord_card_reward& msg);
 
-void CopyFrom(Money_DiZhu& pt , const proto_Money_DiZhu& proto);
+void CopyFrom(TocashItemInfo& pt , const proto_TocashItemInfo& proto);
 
-void CopyTo(const Money_DiZhu& pt, proto_Money_DiZhu& proto);
+void CopyTo(const TocashItemInfo& pt, proto_TocashItemInfo& proto);
 
-void ReadPacketFromProto(CInputStream& is,Money_DiZhu& msg);
+void ReadPacketFromProto(CInputStream& is,TocashItemInfo& msg);
 
-void SendPacketToProto(COutputStream& os, const Money_DiZhu& msg);
-
-void CopyFrom(pt_gc_three_draw_ack_card& pt , const proto_gc_three_draw_ack_card& proto);
-
-void CopyTo(const pt_gc_three_draw_ack_card& pt, proto_gc_three_draw_ack_card& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_card& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_card& msg);
-
-void CopyFrom(pt_svr_test_not& pt , const proto_svr_test_not& proto);
-
-void CopyTo(const pt_svr_test_not& pt, proto_svr_test_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_svr_test_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_svr_test_not& msg);
-
-void CopyFrom(pt_gc_get_redpackets_newbie_award_not& pt , const proto_gc_get_redpackets_newbie_award_not& proto);
-
-void CopyTo(const pt_gc_get_redpackets_newbie_award_not& pt, proto_gc_get_redpackets_newbie_award_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_not& msg);
+void SendPacketToProto(COutputStream& os, const TocashItemInfo& msg);
 
 void CopyFrom(CCard& pt , const proto_CCard& proto);
 
@@ -642,22 +298,6 @@ void CopyTo(const CCard& pt, proto_CCard& proto);
 void ReadPacketFromProto(CInputStream& is,CCard& msg);
 
 void SendPacketToProto(COutputStream& os, const CCard& msg);
-
-void CopyFrom(pt_gc_lord_card_not& pt , const proto_gc_lord_card_not& proto);
-
-void CopyTo(const pt_gc_lord_card_not& pt, proto_gc_lord_card_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_not& msg);
-
-void CopyFrom(pt_gc_counts_not& pt , const proto_gc_counts_not& proto);
-
-void CopyTo(const pt_gc_counts_not& pt, proto_gc_counts_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_counts_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_counts_not& msg);
 
 void CopyFrom(pt_gc_regain_lose_score_ack& pt , const proto_gc_regain_lose_score_ack& proto);
 
@@ -675,30 +315,6 @@ void ReadPacketFromProto(CInputStream& is,pt_cli_my_req& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_cli_my_req& msg);
 
-void CopyFrom(pt_sic_bet_ack& pt , const proto_sic_bet_ack& proto);
-
-void CopyTo(const pt_sic_bet_ack& pt, proto_sic_bet_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_ack& msg);
-
-void CopyFrom(pt_gc_card_count_ack1& pt , const proto_gc_card_count_ack1& proto);
-
-void CopyTo(const pt_gc_card_count_ack1& pt, proto_gc_card_count_ack1& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack1& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack1& msg);
-
-void CopyFrom(pt_sic_bet_clear_req& pt , const proto_sic_bet_clear_req& proto);
-
-void CopyTo(const pt_sic_bet_clear_req& pt, proto_sic_bet_clear_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_req& msg);
-
 void CopyFrom(CCardsType& pt , const proto_CCardsType& proto);
 
 void CopyTo(const CCardsType& pt, proto_CCardsType& proto);
@@ -707,37 +323,13 @@ void ReadPacketFromProto(CInputStream& is,CCardsType& msg);
 
 void SendPacketToProto(COutputStream& os, const CCardsType& msg);
 
-void CopyFrom(pt_sic_bet_update_req& pt , const proto_sic_bet_update_req& proto);
+void CopyFrom(pt_cg_baiyuan_regain_lose_req& pt , const proto_cg_baiyuan_regain_lose_req& proto);
 
-void CopyTo(const pt_sic_bet_update_req& pt, proto_sic_bet_update_req& proto);
+void CopyTo(const pt_cg_baiyuan_regain_lose_req& pt, proto_cg_baiyuan_regain_lose_req& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_update_req& msg);
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_regain_lose_req& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_req& msg);
-
-void CopyFrom(pt_sic_bet_clear_ack& pt , const proto_sic_bet_clear_ack& proto);
-
-void CopyTo(const pt_sic_bet_clear_ack& pt, proto_sic_bet_clear_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_ack& msg);
-
-void CopyFrom(pt_gc_bomb_not& pt , const proto_gc_bomb_not& proto);
-
-void CopyTo(const pt_gc_bomb_not& pt, proto_gc_bomb_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_bomb_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_bomb_not& msg);
-
-void CopyFrom(pt_cg_look_lord_card_req& pt , const proto_cg_look_lord_card_req& proto);
-
-void CopyTo(const pt_cg_look_lord_card_req& pt, proto_cg_look_lord_card_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_req& msg);
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_regain_lose_req& msg);
 
 void CopyFrom(pt_cg_auto_req& pt , const proto_cg_auto_req& proto);
 
@@ -755,29 +347,13 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_history_req& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_history_req& msg);
 
-void CopyFrom(pt_gc_auto_not& pt , const proto_gc_auto_not& proto);
+void CopyFrom(pt_cg_play_card_ack& pt , const proto_cg_play_card_ack& proto);
 
-void CopyTo(const pt_gc_auto_not& pt, proto_gc_auto_not& proto);
+void CopyTo(const pt_cg_play_card_ack& pt, proto_cg_play_card_ack& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_auto_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_cg_play_card_ack& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_auto_not& msg);
-
-void CopyFrom(pt_gc_call_score_req& pt , const proto_gc_call_score_req& proto);
-
-void CopyTo(const pt_gc_call_score_req& pt, proto_gc_call_score_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_call_score_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_call_score_req& msg);
-
-void CopyFrom(pt_cg_call_score_ack& pt , const proto_cg_call_score_ack& proto);
-
-void CopyTo(const pt_cg_call_score_ack& pt, proto_cg_call_score_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_call_score_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_call_score_ack& msg);
+void SendPacketToProto(COutputStream& os, const pt_cg_play_card_ack& msg);
 
 void CopyFrom(pt_sic_show_light_cell_not& pt , const proto_sic_show_light_cell_not& proto);
 
@@ -787,38 +363,6 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_show_light_cell_not& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_show_light_cell_not& msg);
 
-void CopyFrom(pt_gc_get_redpackets_88yuan_award_ack& pt , const proto_gc_get_redpackets_88yuan_award_ack& proto);
-
-void CopyTo(const pt_gc_get_redpackets_88yuan_award_ack& pt, proto_gc_get_redpackets_88yuan_award_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_88yuan_award_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_88yuan_award_ack& msg);
-
-void CopyFrom(TaskItem& pt , const proto_TaskItem& proto);
-
-void CopyTo(const TaskItem& pt, proto_TaskItem& proto);
-
-void ReadPacketFromProto(CInputStream& is,TaskItem& msg);
-
-void SendPacketToProto(COutputStream& os, const TaskItem& msg);
-
-void CopyFrom(pt_gc_clienttimer_not& pt , const proto_gc_clienttimer_not& proto);
-
-void CopyTo(const pt_gc_clienttimer_not& pt, proto_gc_clienttimer_not& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_clienttimer_not& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_clienttimer_not& msg);
-
-void CopyFrom(pt_cg_card_count_req& pt , const proto_cg_card_count_req& proto);
-
-void CopyTo(const pt_cg_card_count_req& pt, proto_cg_card_count_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_card_count_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_card_count_req& msg);
-
 void CopyFrom(pt_gc_three_draw_notify& pt , const proto_gc_three_draw_notify& proto);
 
 void CopyTo(const pt_gc_three_draw_notify& pt, proto_gc_three_draw_notify& proto);
@@ -827,13 +371,13 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_notify& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_notify& msg);
 
-void CopyFrom(pt_gc_laizi_not& pt , const proto_gc_laizi_not& proto);
+void CopyFrom(pt_gc_two_let_card_not& pt , const proto_gc_two_let_card_not& proto);
 
-void CopyTo(const pt_gc_laizi_not& pt, proto_gc_laizi_not& proto);
+void CopyTo(const pt_gc_two_let_card_not& pt, proto_gc_two_let_card_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_laizi_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_let_card_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_laizi_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_two_let_card_not& msg);
 
 void CopyFrom(pt_magic_emoji_req& pt , const proto_magic_emoji_req& proto);
 
@@ -843,13 +387,13 @@ void ReadPacketFromProto(CInputStream& is,pt_magic_emoji_req& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_magic_emoji_req& msg);
 
-void CopyFrom(pt_cg_double_score_ack& pt , const proto_cg_double_score_ack& proto);
+void CopyFrom(pt_gc_lord_card_not& pt , const proto_gc_lord_card_not& proto);
 
-void CopyTo(const pt_cg_double_score_ack& pt, proto_cg_double_score_ack& proto);
+void CopyTo(const pt_gc_lord_card_not& pt, proto_gc_lord_card_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_cg_double_score_ack& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_cg_double_score_ack& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_not& msg);
 
 void CopyFrom(pt_gc_win_doubel_ack& pt , const proto_gc_win_doubel_ack& proto);
 
@@ -859,13 +403,13 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_win_doubel_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_win_doubel_ack& msg);
 
-void CopyFrom(pt_sic_bet_begin_not& pt , const proto_sic_bet_begin_not& proto);
+void CopyFrom(pt_gc_baiyuan_luck_welfare_not& pt , const proto_gc_baiyuan_luck_welfare_not& proto);
 
-void CopyTo(const pt_sic_bet_begin_not& pt, proto_sic_bet_begin_not& proto);
+void CopyTo(const pt_gc_baiyuan_luck_welfare_not& pt, proto_gc_baiyuan_luck_welfare_not& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_begin_not& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_luck_welfare_not& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_begin_not& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_luck_welfare_not& msg);
 
 void CopyFrom(pt_cg_get_lord_card_reward& pt , const proto_cg_get_lord_card_reward& proto);
 
@@ -883,30 +427,6 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_bet_lord_card_result_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_result_ack& msg);
 
-void CopyFrom(pt_svr_my_ack& pt , const proto_svr_my_ack& proto);
-
-void CopyTo(const pt_svr_my_ack& pt, proto_svr_my_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_svr_my_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_svr_my_ack& msg);
-
-void CopyFrom(pt_gc_get_redpackets_newbie_award_req& pt , const proto_gc_get_redpackets_newbie_award_req& proto);
-
-void CopyTo(const pt_gc_get_redpackets_newbie_award_req& pt, proto_gc_get_redpackets_newbie_award_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_req& msg);
-
-void CopyFrom(pt_gc_play_card_req& pt , const proto_gc_play_card_req& proto);
-
-void CopyTo(const pt_gc_play_card_req& pt, proto_gc_play_card_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_play_card_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_play_card_req& msg);
-
 void CopyFrom(pt_gc_lord_card_lottery_base& pt , const proto_gc_lord_card_lottery_base& proto);
 
 void CopyTo(const pt_gc_lord_card_lottery_base& pt, proto_gc_lord_card_lottery_base& proto);
@@ -914,30 +434,6 @@ void CopyTo(const pt_gc_lord_card_lottery_base& pt, proto_gc_lord_card_lottery_b
 void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_base& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_base& msg);
-
-void CopyFrom(pt_cg_play_card_ack& pt , const proto_cg_play_card_ack& proto);
-
-void CopyTo(const pt_cg_play_card_ack& pt, proto_cg_play_card_ack& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_play_card_ack& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_play_card_ack& msg);
-
-void CopyFrom(pt_cg_beishu_info_req& pt , const proto_cg_beishu_info_req& proto);
-
-void CopyTo(const pt_cg_beishu_info_req& pt, proto_cg_beishu_info_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_cg_beishu_info_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_cg_beishu_info_req& msg);
-
-void CopyFrom(pt_gc_rob_lord_req& pt , const proto_gc_rob_lord_req& proto);
-
-void CopyTo(const pt_gc_rob_lord_req& pt, proto_gc_rob_lord_req& proto);
-
-void ReadPacketFromProto(CInputStream& is,pt_gc_rob_lord_req& msg);
-
-void SendPacketToProto(COutputStream& os, const pt_gc_rob_lord_req& msg);
 
 void CopyFrom(pt_sic_history_ack& pt , const proto_sic_history_ack& proto);
 
@@ -947,13 +443,13 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_history_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_sic_history_ack& msg);
 
-void CopyFrom(pt_cg_rob_lord_ack& pt , const proto_cg_rob_lord_ack& proto);
+void CopyFrom(pt_gc_game_result_not1& pt , const proto_gc_game_result_not1& proto);
 
-void CopyTo(const pt_cg_rob_lord_ack& pt, proto_cg_rob_lord_ack& proto);
+void CopyTo(const pt_gc_game_result_not1& pt, proto_gc_game_result_not1& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_cg_rob_lord_ack& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_result_not1& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_cg_rob_lord_ack& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_game_result_not1& msg);
 
 void CopyFrom(pt_gc_show_card_not& pt , const proto_gc_show_card_not& proto);
 
@@ -987,11 +483,675 @@ void ReadPacketFromProto(CInputStream& is,pt_cg_send_card_ok_ack& msg);
 
 void SendPacketToProto(COutputStream& os, const pt_cg_send_card_ok_ack& msg);
 
-void CopyFrom(pt_gc_game_result_not1& pt , const proto_gc_game_result_not1& proto);
+void CopyFrom(pt_gc_baiyuan_bankruptcy_defend_ack& pt , const proto_gc_baiyuan_bankruptcy_defend_ack& proto);
 
-void CopyTo(const pt_gc_game_result_not1& pt, proto_gc_game_result_not1& proto);
+void CopyTo(const pt_gc_baiyuan_bankruptcy_defend_ack& pt, proto_gc_baiyuan_bankruptcy_defend_ack& proto);
 
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_result_not1& msg);
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_bankruptcy_defend_ack& msg);
 
-void SendPacketToProto(COutputStream& os, const pt_gc_game_result_not1& msg);
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_bankruptcy_defend_ack& msg);
+
+void CopyFrom(pt_gc_task_not& pt , const proto_gc_task_not& proto);
+
+void CopyTo(const pt_gc_task_not& pt, proto_gc_task_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_task_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_task_not& msg);
+
+void CopyFrom(pt_cg_get_redpackets_88yuan_award_req& pt , const proto_cg_get_redpackets_88yuan_award_req& proto);
+
+void CopyTo(const pt_cg_get_redpackets_88yuan_award_req& pt, proto_cg_get_redpackets_88yuan_award_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_88yuan_award_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_88yuan_award_req& msg);
+
+void CopyFrom(pt_gc_baiyuan_win_double_not& pt , const proto_gc_baiyuan_win_double_not& proto);
+
+void CopyTo(const pt_gc_baiyuan_win_double_not& pt, proto_gc_baiyuan_win_double_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_win_double_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_win_double_not& msg);
+
+void CopyFrom(pt_gc_use_card_recode_noti& pt , const proto_gc_use_card_recode_noti& proto);
+
+void CopyTo(const pt_gc_use_card_recode_noti& pt, proto_gc_use_card_recode_noti& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_use_card_recode_noti& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_use_card_recode_noti& msg);
+
+void CopyFrom(pt_cg_regain_lose_score_req& pt , const proto_cg_regain_lose_score_req& proto);
+
+void CopyTo(const pt_cg_regain_lose_score_req& pt, proto_cg_regain_lose_score_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_regain_lose_score_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_regain_lose_score_req& msg);
+
+void CopyFrom(pt_gc_private_room_result_ack& pt , const proto_gc_private_room_result_ack& proto);
+
+void CopyTo(const pt_gc_private_room_result_ack& pt, proto_gc_private_room_result_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_ack& msg);
+
+void CopyFrom(pt_gc_replay_data_not& pt , const proto_gc_replay_data_not& proto);
+
+void CopyTo(const pt_gc_replay_data_not& pt, proto_gc_replay_data_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_replay_data_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_replay_data_not& msg);
+
+void CopyFrom(pt_cg_bet_lord_card_req& pt , const proto_cg_bet_lord_card_req& proto);
+
+void CopyTo(const pt_cg_bet_lord_card_req& pt, proto_cg_bet_lord_card_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_bet_lord_card_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_bet_lord_card_req& msg);
+
+void CopyFrom(pt_gc_look_lord_card_item_ack& pt , const proto_gc_look_lord_card_item_ack& proto);
+
+void CopyTo(const pt_gc_look_lord_card_item_ack& pt, proto_gc_look_lord_card_item_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_look_lord_card_item_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_look_lord_card_item_ack& msg);
+
+void CopyFrom(stUserData& pt , const proto_stUserData& proto);
+
+void CopyTo(const stUserData& pt, proto_stUserData& proto);
+
+void ReadPacketFromProto(CInputStream& is,stUserData& msg);
+
+void SendPacketToProto(COutputStream& os, const stUserData& msg);
+
+void CopyFrom(pt_gc_double_score_req& pt , const proto_gc_double_score_req& proto);
+
+void CopyTo(const pt_gc_double_score_req& pt, proto_gc_double_score_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_double_score_req& msg);
+
+void CopyFrom(pt_sic_bet_ack& pt , const proto_sic_bet_ack& proto);
+
+void CopyTo(const pt_sic_bet_ack& pt, proto_sic_bet_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_ack& msg);
+
+void CopyFrom(pt_cg_look_lord_card_item_req& pt , const proto_cg_look_lord_card_item_req& proto);
+
+void CopyTo(const pt_cg_look_lord_card_item_req& pt, proto_cg_look_lord_card_item_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_item_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_item_req& msg);
+
+void CopyFrom(pt_gc_baiyuan_luck_welfare_ack& pt , const proto_gc_baiyuan_luck_welfare_ack& proto);
+
+void CopyTo(const pt_gc_baiyuan_luck_welfare_ack& pt, proto_gc_baiyuan_luck_welfare_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_luck_welfare_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_luck_welfare_ack& msg);
+
+void CopyFrom(pt_gc_get_redpackets_newbie_award_req& pt , const proto_gc_get_redpackets_newbie_award_req& proto);
+
+void CopyTo(const pt_gc_get_redpackets_newbie_award_req& pt, proto_gc_get_redpackets_newbie_award_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_req& msg);
+
+void CopyFrom(pt_gc_bet_lord_card_ack& pt , const proto_gc_bet_lord_card_ack& proto);
+
+void CopyTo(const pt_gc_bet_lord_card_ack& pt, proto_gc_bet_lord_card_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_bet_lord_card_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_ack& msg);
+
+void CopyFrom(pt_gc_double_score_not& pt , const proto_gc_double_score_not& proto);
+
+void CopyTo(const pt_gc_double_score_not& pt, proto_gc_double_score_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_double_score_not& msg);
+
+void CopyFrom(pt_sic_new_round_not& pt , const proto_sic_new_round_not& proto);
+
+void CopyTo(const pt_sic_new_round_not& pt, proto_sic_new_round_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_sic_new_round_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_sic_new_round_not& msg);
+
+void CopyFrom(st_sic_cell& pt , const proto_st_sic_cell& proto);
+
+void CopyTo(const st_sic_cell& pt, proto_st_sic_cell& proto);
+
+void ReadPacketFromProto(CInputStream& is,st_sic_cell& msg);
+
+void SendPacketToProto(COutputStream& os, const st_sic_cell& msg);
+
+void CopyFrom(pt_gc_item_info_not& pt , const proto_gc_item_info_not& proto);
+
+void CopyTo(const pt_gc_item_info_not& pt, proto_gc_item_info_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_item_info_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_item_info_not& msg);
+
+void CopyFrom(stUserResult& pt , const proto_stUserResult& proto);
+
+void CopyTo(const stUserResult& pt, proto_stUserResult& proto);
+
+void ReadPacketFromProto(CInputStream& is,stUserResult& msg);
+
+void SendPacketToProto(COutputStream& os, const stUserResult& msg);
+
+void CopyFrom(pt_cg_starsky_season_noti& pt , const proto_cg_starsky_season_noti& proto);
+
+void CopyTo(const pt_cg_starsky_season_noti& pt, proto_cg_starsky_season_noti& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_starsky_season_noti& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_starsky_season_noti& msg);
+
+void CopyFrom(pt_gc_extra_double_score_not& pt , const proto_gc_extra_double_score_not& proto);
+
+void CopyTo(const pt_gc_extra_double_score_not& pt, proto_gc_extra_double_score_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_extra_double_score_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_extra_double_score_not& msg);
+
+void CopyFrom(pt_cg_enable_invincible_req& pt , const proto_cg_enable_invincible_req& proto);
+
+void CopyTo(const pt_cg_enable_invincible_req& pt, proto_cg_enable_invincible_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_enable_invincible_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_enable_invincible_req& msg);
+
+void CopyFrom(pt_cg_get_redpackets_award_req& pt , const proto_cg_get_redpackets_award_req& proto);
+
+void CopyTo(const pt_cg_get_redpackets_award_req& pt, proto_cg_get_redpackets_award_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_award_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_award_req& msg);
+
+void CopyFrom(pt_gc_baiyuan_can_bankruptcy_defend_ack& pt , const proto_gc_baiyuan_can_bankruptcy_defend_ack& proto);
+
+void CopyTo(const pt_gc_baiyuan_can_bankruptcy_defend_ack& pt, proto_gc_baiyuan_can_bankruptcy_defend_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_can_bankruptcy_defend_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_can_bankruptcy_defend_ack& msg);
+
+void CopyFrom(pt_cg_baiyuan_luck_welfare_req& pt , const proto_cg_baiyuan_luck_welfare_req& proto);
+
+void CopyTo(const pt_cg_baiyuan_luck_welfare_req& pt, proto_cg_baiyuan_luck_welfare_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_luck_welfare_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_luck_welfare_req& msg);
+
+void CopyFrom(pt_gc_two_show_card_not& pt , const proto_gc_two_show_card_not& proto);
+
+void CopyTo(const pt_gc_two_show_card_not& pt, proto_gc_two_show_card_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_show_card_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_two_show_card_not& msg);
+
+void CopyFrom(pt_cg_baiyuan_can_bankruptcy_defend_req& pt , const proto_cg_baiyuan_can_bankruptcy_defend_req& proto);
+
+void CopyTo(const pt_cg_baiyuan_can_bankruptcy_defend_req& pt, proto_cg_baiyuan_can_bankruptcy_defend_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_can_bankruptcy_defend_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_can_bankruptcy_defend_req& msg);
+
+void CopyFrom(pt_gc_baiyuan_regain_lose_ack& pt , const proto_gc_baiyuan_regain_lose_ack& proto);
+
+void CopyTo(const pt_gc_baiyuan_regain_lose_ack& pt, proto_gc_baiyuan_regain_lose_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_regain_lose_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_regain_lose_ack& msg);
+
+void CopyFrom(pt_gc_baiyuan_hb_round_award_ack& pt , const proto_gc_baiyuan_hb_round_award_ack& proto);
+
+void CopyTo(const pt_gc_baiyuan_hb_round_award_ack& pt, proto_gc_baiyuan_hb_round_award_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_award_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_award_ack& msg);
+
+void CopyFrom(pt_cg_get_card_req& pt , const proto_cg_get_card_req& proto);
+
+void CopyTo(const pt_cg_get_card_req& pt, proto_cg_get_card_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_card_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_card_req& msg);
+
+void CopyFrom(pt_gc_lord_card_lottery_info& pt , const proto_gc_lord_card_lottery_info& proto);
+
+void CopyTo(const pt_gc_lord_card_lottery_info& pt, proto_gc_lord_card_lottery_info& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_info& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_info& msg);
+
+void CopyFrom(pt_cg_baiyuan_hb_round_award_req& pt , const proto_cg_baiyuan_hb_round_award_req& proto);
+
+void CopyTo(const pt_cg_baiyuan_hb_round_award_req& pt, proto_cg_baiyuan_hb_round_award_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_hb_round_award_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_hb_round_award_req& msg);
+
+void CopyFrom(pt_gc_baiyuan_hb_round_award_not& pt , const proto_gc_baiyuan_hb_round_award_not& proto);
+
+void CopyTo(const pt_gc_baiyuan_hb_round_award_not& pt, proto_gc_baiyuan_hb_round_award_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_award_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_award_not& msg);
+
+void CopyFrom(pt_gc_three_draw_ack_card& pt , const proto_gc_three_draw_ack_card& proto);
+
+void CopyTo(const pt_gc_three_draw_ack_card& pt, proto_gc_three_draw_ack_card& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_card& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_card& msg);
+
+void CopyFrom(pt_gc_baiyuan_hb_round_not& pt , const proto_gc_baiyuan_hb_round_not& proto);
+
+void CopyTo(const pt_gc_baiyuan_hb_round_not& pt, proto_gc_baiyuan_hb_round_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_not& msg);
+
+void CopyFrom(item_info& pt , const proto_item_info& proto);
+
+void CopyTo(const item_info& pt, proto_item_info& proto);
+
+void ReadPacketFromProto(CInputStream& is,item_info& msg);
+
+void SendPacketToProto(COutputStream& os, const item_info& msg);
+
+void CopyFrom(pt_gc_game_start_not& pt , const proto_gc_game_start_not& proto);
+
+void CopyTo(const pt_gc_game_start_not& pt, proto_gc_game_start_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_start_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_game_start_not& msg);
+
+void CopyFrom(pt_gc_baiyuan_tocash_item_not& pt , const proto_gc_baiyuan_tocash_item_not& proto);
+
+void CopyTo(const pt_gc_baiyuan_tocash_item_not& pt, proto_gc_baiyuan_tocash_item_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_tocash_item_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_tocash_item_not& msg);
+
+void CopyFrom(pt_cg_win_doubel_req& pt , const proto_cg_win_doubel_req& proto);
+
+void CopyTo(const pt_cg_win_doubel_req& pt, proto_cg_win_doubel_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_win_doubel_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_win_doubel_req& msg);
+
+void CopyFrom(pt_gc_update_player_tokenmoney_not& pt , const proto_gc_update_player_tokenmoney_not& proto);
+
+void CopyTo(const pt_gc_update_player_tokenmoney_not& pt, proto_gc_update_player_tokenmoney_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_update_player_tokenmoney_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_update_player_tokenmoney_not& msg);
+
+void CopyFrom(pt_gc_card_count_ack& pt , const proto_gc_card_count_ack& proto);
+
+void CopyTo(const pt_gc_card_count_ack& pt, proto_gc_card_count_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack& msg);
+
+void CopyFrom(pt_gc_enable_invincible_ack& pt , const proto_gc_enable_invincible_ack& proto);
+
+void CopyTo(const pt_gc_enable_invincible_ack& pt, proto_gc_enable_invincible_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_enable_invincible_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_enable_invincible_ack& msg);
+
+void CopyFrom(pt_gc_card_count_ack1& pt , const proto_gc_card_count_ack1& proto);
+
+void CopyTo(const pt_gc_card_count_ack1& pt, proto_gc_card_count_ack1& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack1& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack1& msg);
+
+void CopyFrom(pt_gc_get_redpackets_award_ack& pt , const proto_gc_get_redpackets_award_ack& proto);
+
+void CopyTo(const pt_gc_get_redpackets_award_ack& pt, proto_gc_get_redpackets_award_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_award_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_award_ack& msg);
+
+void CopyFrom(pt_gc_refresh_card_not& pt , const proto_gc_refresh_card_not& proto);
+
+void CopyTo(const pt_gc_refresh_card_not& pt, proto_gc_refresh_card_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_refresh_card_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_refresh_card_not& msg);
+
+void CopyFrom(player_itemInfo& pt , const proto_player_itemInfo& proto);
+
+void CopyTo(const player_itemInfo& pt, proto_player_itemInfo& proto);
+
+void ReadPacketFromProto(CInputStream& is,player_itemInfo& msg);
+
+void SendPacketToProto(COutputStream& os, const player_itemInfo& msg);
+
+void CopyFrom(pt_sic_bet_clear_ack& pt , const proto_sic_bet_clear_ack& proto);
+
+void CopyTo(const pt_sic_bet_clear_ack& pt, proto_sic_bet_clear_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_ack& msg);
+
+void CopyFrom(pt_gc_starsky_update_item_noti& pt , const proto_gc_starsky_update_item_noti& proto);
+
+void CopyTo(const pt_gc_starsky_update_item_noti& pt, proto_gc_starsky_update_item_noti& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_starsky_update_item_noti& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_starsky_update_item_noti& msg);
+
+void CopyFrom(pt_cg_baiyuan_bankruptcy_defend_req& pt , const proto_cg_baiyuan_bankruptcy_defend_req& proto);
+
+void CopyTo(const pt_cg_baiyuan_bankruptcy_defend_req& pt, proto_cg_baiyuan_bankruptcy_defend_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_bankruptcy_defend_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_bankruptcy_defend_req& msg);
+
+void CopyFrom(pt_svr_test_not& pt , const proto_svr_test_not& proto);
+
+void CopyTo(const pt_svr_test_not& pt, proto_svr_test_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_svr_test_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_svr_test_not& msg);
+
+void CopyFrom(pt_gc_send_dizhu_not& pt , const proto_gc_send_dizhu_not& proto);
+
+void CopyTo(const pt_gc_send_dizhu_not& pt, proto_gc_send_dizhu_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_send_dizhu_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_send_dizhu_not& msg);
+
+void CopyFrom(pt_cg_card_count_req& pt , const proto_cg_card_count_req& proto);
+
+void CopyTo(const pt_cg_card_count_req& pt, proto_cg_card_count_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_card_count_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_card_count_req& msg);
+
+void CopyFrom(pt_gc_item_add_not& pt , const proto_gc_item_add_not& proto);
+
+void CopyTo(const pt_gc_item_add_not& pt, proto_gc_item_add_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_item_add_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_item_add_not& msg);
+
+void CopyFrom(pt_gc_ju_count_not& pt , const proto_gc_ju_count_not& proto);
+
+void CopyTo(const pt_gc_ju_count_not& pt, proto_gc_ju_count_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_ju_count_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_ju_count_not& msg);
+
+void CopyFrom(pt_gc_had_start_not& pt , const proto_gc_had_start_not& proto);
+
+void CopyTo(const pt_gc_had_start_not& pt, proto_gc_had_start_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_had_start_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_had_start_not& msg);
+
+void CopyFrom(pt_gc_get_redpackets_88yuan_award_ack& pt , const proto_gc_get_redpackets_88yuan_award_ack& proto);
+
+void CopyTo(const pt_gc_get_redpackets_88yuan_award_ack& pt, proto_gc_get_redpackets_88yuan_award_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_88yuan_award_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_88yuan_award_ack& msg);
+
+void CopyFrom(pt_gc_pause_game_not& pt , const proto_gc_pause_game_not& proto);
+
+void CopyTo(const pt_gc_pause_game_not& pt, proto_gc_pause_game_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_pause_game_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_pause_game_not& msg);
+
+void CopyFrom(pt_gc_clienttimer_not& pt , const proto_gc_clienttimer_not& proto);
+
+void CopyTo(const pt_gc_clienttimer_not& pt, proto_gc_clienttimer_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_clienttimer_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_clienttimer_not& msg);
+
+void CopyFrom(pt_gc_private_room_result_not& pt , const proto_gc_private_room_result_not& proto);
+
+void CopyTo(const pt_gc_private_room_result_not& pt, proto_gc_private_room_result_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_not& msg);
+
+void CopyFrom(pt_cg_three_draw_req_card& pt , const proto_cg_three_draw_req_card& proto);
+
+void CopyTo(const pt_cg_three_draw_req_card& pt, proto_cg_three_draw_req_card& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_three_draw_req_card& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_three_draw_req_card& msg);
+
+void CopyFrom(pt_gc_laizi_not& pt , const proto_gc_laizi_not& proto);
+
+void CopyTo(const pt_gc_laizi_not& pt, proto_gc_laizi_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_laizi_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_laizi_not& msg);
+
+void CopyFrom(pt_gc_game_model& pt , const proto_gc_game_model& proto);
+
+void CopyTo(const pt_gc_game_model& pt, proto_gc_game_model& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_model& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_game_model& msg);
+
+void CopyFrom(pt_cg_double_score_ack& pt , const proto_cg_double_score_ack& proto);
+
+void CopyTo(const pt_cg_double_score_ack& pt, proto_cg_double_score_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_double_score_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_double_score_ack& msg);
+
+void CopyFrom(pt_gc_magic_emoji_config_not& pt , const proto_gc_magic_emoji_config_not& proto);
+
+void CopyTo(const pt_gc_magic_emoji_config_not& pt, proto_gc_magic_emoji_config_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_magic_emoji_config_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_magic_emoji_config_not& msg);
+
+void CopyFrom(pt_sic_bet_begin_not& pt , const proto_sic_bet_begin_not& proto);
+
+void CopyTo(const pt_sic_bet_begin_not& pt, proto_sic_bet_begin_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_begin_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_begin_not& msg);
+
+void CopyFrom(emojiConfig& pt , const proto_emojiConfig& proto);
+
+void CopyTo(const emojiConfig& pt, proto_emojiConfig& proto);
+
+void ReadPacketFromProto(CInputStream& is,emojiConfig& msg);
+
+void SendPacketToProto(COutputStream& os, const emojiConfig& msg);
+
+void CopyFrom(pt_gc_show_card_req& pt , const proto_gc_show_card_req& proto);
+
+void CopyTo(const pt_gc_show_card_req& pt, proto_gc_show_card_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_show_card_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_show_card_req& msg);
+
+void CopyFrom(pt_svr_my_ack& pt , const proto_svr_my_ack& proto);
+
+void CopyTo(const pt_svr_my_ack& pt, proto_svr_my_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_svr_my_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_svr_my_ack& msg);
+
+void CopyFrom(pt_gc_auto_not& pt , const proto_gc_auto_not& proto);
+
+void CopyTo(const pt_gc_auto_not& pt, proto_gc_auto_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_auto_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_auto_not& msg);
+
+void CopyFrom(pt_gc_play_card_req& pt , const proto_gc_play_card_req& proto);
+
+void CopyTo(const pt_gc_play_card_req& pt, proto_gc_play_card_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_play_card_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_play_card_req& msg);
+
+void CopyFrom(pt_mj_completedata_req& pt , const proto_mj_completedata_req& proto);
+
+void CopyTo(const pt_mj_completedata_req& pt, proto_mj_completedata_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_mj_completedata_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_mj_completedata_req& msg);
+
+void CopyFrom(pt_gc_three_draw_ack_data& pt , const proto_gc_three_draw_ack_data& proto);
+
+void CopyTo(const pt_gc_three_draw_ack_data& pt, proto_gc_three_draw_ack_data& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_data& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_data& msg);
+
+void CopyFrom(stUserResult1& pt , const proto_stUserResult1& proto);
+
+void CopyTo(const stUserResult1& pt, proto_stUserResult1& proto);
+
+void ReadPacketFromProto(CInputStream& is,stUserResult1& msg);
+
+void SendPacketToProto(COutputStream& os, const stUserResult1& msg);
+
+void CopyFrom(pt_gc_rob_lord_req& pt , const proto_gc_rob_lord_req& proto);
+
+void CopyTo(const pt_gc_rob_lord_req& pt, proto_gc_rob_lord_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_rob_lord_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_rob_lord_req& msg);
+
+void CopyFrom(pt_gc_get_redpackets_newbie_award_not& pt , const proto_gc_get_redpackets_newbie_award_not& proto);
+
+void CopyTo(const pt_gc_get_redpackets_newbie_award_not& pt, proto_gc_get_redpackets_newbie_award_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_not& msg);
+
+void CopyFrom(pt_cg_rob_lord_ack& pt , const proto_cg_rob_lord_ack& proto);
+
+void CopyTo(const pt_cg_rob_lord_ack& pt, proto_cg_rob_lord_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_rob_lord_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_rob_lord_ack& msg);
+
+void CopyFrom(pt_sic_bet_clear_req& pt , const proto_sic_bet_clear_req& proto);
+
+void CopyTo(const pt_sic_bet_clear_req& pt, proto_sic_bet_clear_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_req& msg);
+
+void CopyFrom(pt_cg_look_lord_card_req& pt , const proto_cg_look_lord_card_req& proto);
+
+void CopyTo(const pt_cg_look_lord_card_req& pt, proto_cg_look_lord_card_req& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_req& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_req& msg);
+
+void CopyFrom(pt_gc_task_complete_not& pt , const proto_gc_task_complete_not& proto);
+
+void CopyTo(const pt_gc_task_complete_not& pt, proto_gc_task_complete_not& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_gc_task_complete_not& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_gc_task_complete_not& msg);
+
+void CopyFrom(pt_cg_call_score_ack& pt , const proto_cg_call_score_ack& proto);
+
+void CopyTo(const pt_cg_call_score_ack& pt, proto_cg_call_score_ack& proto);
+
+void ReadPacketFromProto(CInputStream& is,pt_cg_call_score_ack& msg);
+
+void SendPacketToProto(COutputStream& os, const pt_cg_call_score_ack& msg);
+
+void CopyFrom(TaskItem& pt , const proto_TaskItem& proto);
+
+void CopyTo(const TaskItem& pt, proto_TaskItem& proto);
+
+void ReadPacketFromProto(CInputStream& is,TaskItem& msg);
+
+void SendPacketToProto(COutputStream& os, const TaskItem& msg);
 

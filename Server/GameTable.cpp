@@ -7,7 +7,7 @@ CopyRight(c)2006 by Banding,Shanghai, All Right Reserved.
 @File path:	BDLeyoyoV2\DDZV2\Server
 @Author:		leiliang
 
-@Description:	房间类，主要负责处理绑定，响应事件，收发消息
+@Description:	房间类，主�?�负责�?�理绑定，响应事件，收发消息
 */
 
 #include "stdafx.h"
@@ -54,8 +54,12 @@ CGameTable::CGameTable()
 	}
 
 	m_nMaxDouble = g_nMaxDouble;
+	m_nMustCallSeat = -1;
+	m_nShuffleLogType = -1;
+	m_nShuffleLogBetterSeat = -1;
+	m_nShuffleLogRobotSeat = -1;
 
-	setDailyCountVal();//设置优势位权重
+	setDailyCountVal();//设置优势位权�?
 	
 }
 
@@ -93,7 +97,7 @@ void CGameTable::StartTimer(char cChair, int nEvent)
 		ClientTimerNot(cChair, eDOUBLE_PERIOD);
 		m_pCoreTable->SetTimer((int)eDOUBLE_PERIOD, (void*)eDOUBLE_EVENT);
 	}
-	// 标准模式下的防守者加倍过程
+	// 标准模式下的防守者加倍过�?
 	else if (nEvent == eSTANDARD_DEFENDER_DOUBLE_EVENT)
 	{
 		for (int nIndex = 0; nIndex < GetPlayNum(); nIndex++)
@@ -110,7 +114,7 @@ void CGameTable::StartTimer(char cChair, int nEvent)
 
 		m_pCoreTable->SetTimer((int)eSTANDARD_DEFENDER_DOUBLE_PERIOPD, (void*)eSTANDARD_DEFENDER_DOUBLE_EVENT);
 	}
-	// 标准模式下的庄家加倍过程
+	// 标准模式下的庄�?�加倍过�?
 	else if (nEvent == eSTANDARD_BANKER_DOUBLE_EVENT)
 	{
 		ClientTimerNot(cChair, eSTANDARD_DEFENDER_DOUBLE_PERIOPD);
@@ -205,7 +209,7 @@ void CGameTable::OnTimer(void* pParam)
 		m_nPutCardsPlayerID = m_nWaitOpChairID;
 		SvrPlayCardReq(m_nWaitOpChairID);
 	}
-	else if (eCALLSCORE_EVENT == nEvent)	//叫分超时
+	else if (eCALLSCORE_EVENT == nEvent)	//�?分超�?
 	{
 		if (g_nPauseTime > 0)
 		{
@@ -225,7 +229,7 @@ void CGameTable::OnTimer(void* pParam)
 			pt_cg_call_score_ack_handler::handler(ack, pPlayer);
 		}
 	}
-	else if (eROBLORD_EVENT == nEvent)		//抢地主超时
+	else if (eROBLORD_EVENT == nEvent)		//抢地主超�?
 	{
 		if (g_nPauseTime > 0)
 		{
@@ -245,7 +249,7 @@ void CGameTable::OnTimer(void* pParam)
 			pt_cg_rob_lord_ack_handler::handler(ack, pPlayer);
 		}
 	}
-	else if (eDOUBLE_EVENT == nEvent)//加倍超时
+	else if (eDOUBLE_EVENT == nEvent)//加倍超�?
 	{
 		if (g_nPauseTime > 0)
 		{
@@ -278,7 +282,7 @@ void CGameTable::OnTimer(void* pParam)
 			}
 		}
 	}
-	// 标准模式下防守者加倍超时
+	// 标准模式下防守者加倍超�?
 	else if (eSTANDARD_DEFENDER_DOUBLE_EVENT == nEvent)
 	{
 		for (int nIndex = 0; nIndex < GetPlayNum(); nIndex++)
@@ -297,7 +301,7 @@ void CGameTable::OnTimer(void* pParam)
 			}
 		}
 	}
-	// 标准模式庄家加倍超时
+	// 标准模式庄�?�加倍超�?
 	else if (eSTANDARD_BANKER_DOUBLE_EVENT == nEvent)
 	{
 		CPlayer* pPlayer = GetPlayer(m_Poke.m_nCurrentLord);
@@ -324,7 +328,7 @@ void CGameTable::OnTimer(void* pParam)
 		CPlayer* pPlayer = GetPlayer(m_nWaitOpChairID);
 		if (pPlayer)
 		{
-			//超时两次自动进入拖管状态
+			//超时两�?�自动进入拖管状�?
 			if (++pPlayer->m_nTimeOut > (g_nTimeOut - 1) && !pPlayer->m_bAuto)
 			{
 				SERVER_LOG("CGameTable::OnTimer m_nTimeOut:%d", pPlayer->m_nTimeOut);
@@ -338,7 +342,7 @@ void CGameTable::OnTimer(void* pParam)
 			ack.opcode = cg_play_card_ack;
 			ack.nSerialID = m_nSerialID;
 			ack.cTimeOut = 1;
-			if (m_nWaitOpChairID == m_nPutCardsPlayerID)	//如果是首家出牌
+			if (m_nWaitOpChairID == m_nPutCardsPlayerID)	//如果�?首�?�出�?
 			{
 				pPlayer->m_PlayCard.Tips();
 				if (pPlayer->m_PlayCard.m_vecTipsCards.size() > 0)
@@ -365,7 +369,7 @@ void CGameTable::OnTimer(void* pParam)
 			pt_cg_play_card_ack_handler::handler(ack, pPlayer);
 		}
 	}
-	else if (eSHOWCARD_EVENT == nEvent)	//亮牌超时
+	else if (eSHOWCARD_EVENT == nEvent)	//�?牌超�?
 	{
 		CPlayer* pPlayer = GetPlayer(m_nWaitOpChairID);
 		if (pPlayer)
@@ -471,8 +475,8 @@ void CGameTable::SetBaseMoney()
 	m_nBaseScore = m_pCoreTable->GetBaseScore();
 	m_nSettleType = (m_nBaseScore > 0) ? 0 : 1;
 	m_nTax = (m_nBaseScore > 0) ? g_nTax : 0;
-
-	if (g_nPrivateRoom == 0 && g_nDynamic == 1)//二维动态地主改 所有玩家高于g_nHighMoney则使用高分底注
+	glog.log("SetBaseMoney m_nBaseScore:%d m_nSettleType:%d m_nTax:%d g_nTax:%d", m_nBaseScore, m_nSettleType, m_nTax, g_nTax);
+	if (g_nPrivateRoom == 0 && g_nDynamic == 1)//二维动态地主改 所有玩家高于g_nHighMoney则使用高分底�?
 	{
 		int nHighPlayerNum = 0;
 		for (int i = 0; i < GetPlayNum(); i++)
@@ -489,12 +493,12 @@ void CGameTable::SetBaseMoney()
 		if (nHighPlayerNum == GetPlayNum())
 		{
 			m_nBaseScore = g_nHighScore;
-			m_nTax = g_nHighTaxMoney;//设置税
+			m_nTax = g_nHighTaxMoney;//设置�?
 		}
 		else
 		{
 			m_nBaseScore = g_nBaseScore;
-			m_nTax = g_nTax;//设置税
+			m_nTax = g_nTax;//设置�?
 		}
 	}
 }
@@ -520,7 +524,7 @@ int CGameTable::GetNextPlayer()
 			break;
 		}
 	}
-	//新的一轮开始,清掉桌面出牌信息
+	//新的一�?开�?,清掉桌面出牌信息
 	if (m_nWaitOpChairID == m_nPutCardsPlayerID)
 	{
 		SendCommonCmd(CO_NEW);
@@ -572,19 +576,19 @@ void CGameTable::SendJuCount(CPlayer* pPlayer)
 	}
 }
 
-void CGameTable::AddRecordTimes(int nChairID, RecordTpye eType, int64 num /*= 1*/)//记录抢地主
+void CGameTable::AddRecordTimes(int nChairID, RecordTpye eType, int64 num /*= 1*/)//记录抢地�?
 {
 	SERVER_LOG("CGameTable::AddRecordTimes nChairID:%d, RecordTpye:%d num:%d", nChairID, eType, num);
-	if (g_nPrivateRoom != 1)//不是私人房
+	if (g_nPrivateRoom != 1)//不是私人�?
 	{
 		return;
 	}
 
-	if (eType == eRECORD_CALL)//叫地主
+	if (eType == eRECORD_CALL)//�?地主
 	{
 		m_sGameStatic[nChairID].nCallTimes += num;
 	}
-	else if (eType == eRECORD_LORD)//当地主
+	else if (eType == eRECORD_LORD)//当地�?
 	{
 		m_sGameStatic[nChairID].nLordTimes += num;
 	}
@@ -700,7 +704,8 @@ void CGameTable::PauseEndGame()
 void CGameTable::AbnormalEndGame()//流局
 {
 	SERVER_LOG("CGameTable::AbnormalEndGame()");
-	int nScore[3] = { 0 };
+	int nScore[3];
+	memset(nScore, 0, sizeof(nScore));
 	int tax = m_nTax;
 	for (int i = 0; i < m_nPlay_Num; i++)
 	{
@@ -714,7 +719,7 @@ void CGameTable::AbnormalEndGame()//流局
 		{
 			continue;
 		}
-		if (m_nSettleType == 1)//积分
+		if (m_nSettleType == 1)//�?�?
 		{
 			PLY_ATTR_UPDATE_REASON eReason = UP_RN_PRIVATE_ROOM_SCORE;
 			if (g_nNewMatch == 1)
@@ -752,7 +757,7 @@ void CGameTable::AbnormalEndGame()//流局
 				pIPlayer->UpdatePlyAttrs(item3_);
 			}
 		}
-		else//游戏币
+		else//游戏�?
 		{
 			if (g_nPrivateRoom == 0 && m_nSettleType == 0)
 			{
@@ -779,7 +784,7 @@ void CGameTable::AbnormalEndGame()//流局
 		//记录金币变化
 		AddRecordTimes(i, eRECORD_ZHNAJI, nScore[i]);
 
-		if (g_nCounts == 1 && pPlayer->m_bUseCounts)//是否有记牌器
+		if (g_nCounts == 1 && pPlayer->m_bUseCounts)//�?否有记牌�?
 		{
 			int n_num = pIPlayer->GetPlyAttr(ITEM_ATTR, ITEM_CARD_RECORD);
 			if (n_num > 0)
@@ -846,6 +851,10 @@ void CGameTable::NewRound()
 	m_startPauseTime = 0;
 	m_nMaJiangJu++;
 	m_nInitDouble = 1;
+	m_nMustCallSeat = -1;
+	m_nShuffleLogType = -1;
+	m_nShuffleLogBetterSeat = -1;
+	m_nShuffleLogRobotSeat = -1;
 	std::fill(m_vecDoubleDetail.begin(), m_vecDoubleDetail.end(), 1);
 	std::fill(m_vecPlayerDouble.begin(), m_vecPlayerDouble.end(), 1);
 	
@@ -855,7 +864,7 @@ void CGameTable::NewRound()
 	}
 	
 
-	if (g_nTwoPai == 1 && g_nTwoBaseRate > 0)//使用二人斗地主初始倍数(失误 应该是部分情况的)
+	if (g_nTwoPai == 1 && g_nTwoBaseRate > 0)//使用二人斗地主初始倍数(失�?? 应�?�是部分情况�?)
 	{
 		m_nInitDouble = g_nTwoBaseRate;
 	}
@@ -881,79 +890,12 @@ void CGameTable::NewRound()
 	}
 }
 
-
-bool CGameTable::CheckBetterSeatForNewBie(int& m_send_card_type_, int& m_double)
+bool CGameTable::CheckBetterSeat(int& nBetterSeat, int& nRobotSeat)
 {
-	if (g_nBetterSeatForNewBie != 1 || g_nBetterSeatForNewBieRound < 1)
-	{
-		return false;
-	}
-
-	int robotNum = 0;
-	int playerChairId = 0;
-	int nNumRound = 0;
-
-	for (int i = 0; i < GetPlayNum(); i++)
-	{
-		CPlayer* player = GetPlayer(i);
-		if (player)
-		{
-			const char* guid = player->GetCorePlayer()->GetPlyStrAttr(0, PLY_ATTR_GUID);			
-			if (CConfigManager::GetInstancePtr()->isRobotGuid(guid))
-			{
-				robotNum++;
-			}else{
-				playerChairId = i;
-				nNumRound = player->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND);
-			}
-		}
-	}
-	if (robotNum < 2)
-	{
-		return false;
-	}
-
-	m_send_card_type_ = playerChairId;
-	m_double = -10; //用此变量定义1v2机器人，玩家为新手时的配牌
-	
-	if (g_nShuffleCardsForNewBieFileABTest > 0 && nNumRound < g_nShuffleCardsForNewBieFileRound)
-	{
-		CPlayer* player = GetPlayer(playerChairId);
-		if (player)
-		{
-			int64 guid = player->GetCorePlayer()->GetPlyInt64Attr(0, PLY_ATTR_GUID);
-			if (guid % g_nShuffleCardsForNewBieFileABTest == 0)
-			{
-				m_double = -11;
-				m_Poke.m_vecNewbieCardsId = player->m_vecNewbieCardsId;
-				return true;
-			}
-		}
-	}
-
-	if (nNumRound >= g_nBetterSeatForNewBieRound)
-	{
-		return false;
-	}
-	
-	return true;
-}
-
-bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
-{
-	if (CheckBetterSeatForNewBie(m_send_card_type_, m_double))
-	{
-		return true;
-	}
-
-	if (g_nCleverRobot == 1)
-	{
-		return CheckBetterSeatForCleverRobot(m_send_card_type_, m_double);
-	}
-
 	if (g_nNewShuffleCards == 1)
 	{
-		int player_val[3] = { 0 };
+		int player_val[3];
+		memset(player_val, 0, sizeof(player_val));
 		int robotNumber = -1;
 
 		for (int i = 0; i < GetPlayNum(); i++)
@@ -973,7 +915,7 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 						else{
 							player_val[i] = 4 + rand() % 4;
 						}
-						player_val[0] = 0; // 降低机器人的优势位
+						player_val[0] = 0; // 降低机器人的优势�?
 						robotNumber = i;
 						continue;
 					}
@@ -985,12 +927,12 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 				}
 
 				//SERVER_LOG("---------first login: %d.", player->GetCorePlayer()->IsFirstLogin());
-				//if(player->GetCorePlayer()->IsFirstLogin()==1)   //1第一次进入房间  0不是第一次登陆
+				//if(player->GetCorePlayer()->IsFirstLogin()==1)   //1�?一次进入房�?  0不是�?一次登�?
 				//{
-				//	player_val[i] += 3; //每天游戏的第1局
+				//	player_val[i] += 3; //每天游戏的�??1局
 				//}	
 
-				//每天游戏局数
+				//每天游戏局�?
 				int daily_count = player->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_DAILY_COUNT);
 				if (daily_count <= 60)
 				{
@@ -1014,13 +956,13 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 					}
 				}
 
-				//充值用户
+				//充值用�?
 				if (player->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_CHARGE) > 0 && (rand() % 100 < 70))
 				{
 					player_val[i] += 1;
 				}
 
-				//高分玩家进入发差牌
+				//高分玩�?�进入发�?�?
 				if (g_nLimitMoneyNext > 0)
 				{
 					if (player->GetGameMoney() > g_nLimitMoneyNext)
@@ -1036,7 +978,7 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 					}
 				}
 
-				//连输玩家
+				//连输玩�??
 				int lost_count = player->GetCorePlayer()->GetPlyAttr(0, PLY_CONTINUE_LOST);
 				if (lost_count > 1)
 				{
@@ -1045,7 +987,7 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 			}
 		}
 		SERVER_LOG("CheckBetterSeat0:%d,1:%d,2:%d", player_val[0], player_val[1], player_val[2]);
-		//取最大值
+		//取最大�?
 		int maxNumber = 0;
 		if (player_val[1] > player_val[0])  {
 			maxNumber = 1;
@@ -1058,25 +1000,25 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 		{
 			maxNumber = robotNumber;
 		}
-		m_send_card_type_ = maxNumber;
-		m_double = robotNumber;
+		nBetterSeat = maxNumber;
+		nRobotSeat = robotNumber;
 		return true;
 	}
 	else
 	{
-		bool is_new_player = false;		//是否有新玩家
-		bool is_specific = false;		//是否特殊牌型
+		bool is_new_player = false;		//�?否有新玩�?
+		bool is_specific = false;		//�?否特殊牌�?
 		for (int i = 0; i < GetPlayNum(); i++)
 		{
 			CPlayer* player = GetPlayer(i);
 			if (player)
 			{
 				SERVER_LOG("---------first login: %d.", player->GetCorePlayer()->IsFirstLogin());
-				if (player->GetCorePlayer()->IsFirstLogin() == 1)   //1第一次进入房间  0不是第一次登陆
+				if (player->GetCorePlayer()->IsFirstLogin() == 1)   //1�?一次进入房�?  0不是�?一次登�?
 				{
 					is_specific = true;
 					is_new_player = true;
-					m_double = 192;
+					nRobotSeat = 192;
 				}
 			}
 		}
@@ -1098,26 +1040,26 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 			}
 		}
 
-		if (n_player_limit_money > g_nLimitMoney * 10)	//一位玩家游戏币是入场限制的10倍
+		if (n_player_limit_money > g_nLimitMoney * 10)	//一位玩家游戏币�?入场限制�?10�?
 		{
-			m_double = 96;
+			nRobotSeat = 96;
 			if (!is_new_player)
 			{
 				if (n_player_limit_money > g_nLimitMoney * 15)
 				{
-					m_double = 192;
+					nRobotSeat = 192;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 20)
 				{
-					m_double = 384;
+					nRobotSeat = 384;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 25)
 				{
-					m_double = 768;
+					nRobotSeat = 768;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 30)
 				{
-					m_double = 1536;
+					nRobotSeat = 1536;
 				}
 			}
 			is_specific = true;
@@ -1127,22 +1069,22 @@ bool CGameTable::CheckBetterSeat(int& m_send_card_type_, int& m_double)
 		{
 			if (g_nBaoPai == 1)
 			{
-				m_send_card_type_ = SPECIFIC_LAIZI_TYPE;
+				nBetterSeat = SPECIFIC_LAIZI_TYPE;
 			}
 			else
 			{
-				m_send_card_type_ = SPECIFIC_TYPE;
+				nBetterSeat = SPECIFIC_TYPE;
 			}
 		}
 		else
 		{
 			if (g_nBaoPai == 1)
 			{
-				m_send_card_type_ = COMMON_LAIZI_TYPE;
+				nBetterSeat = COMMON_LAIZI_TYPE;
 			}
 			else
 			{
-				m_send_card_type_ = COMMON_TYPE;
+				nBetterSeat = COMMON_TYPE;
 			}
 		}
 
@@ -1163,7 +1105,7 @@ void CGameTable::OnStartGame()
 	}
 #endif
 
-	if (g_nHBMode > 0)
+	if (g_nHBMode == 1 || g_nIsBaiYuan == 1)
 	{
 		refreshPlayerTokenMoney();
 	}
@@ -1171,42 +1113,14 @@ void CGameTable::OnStartGame()
 	m_bHadStart = true;
 	NotifyGameModle();
 	NotiStartGame();
-	NewRound();//开始新的一轮，洗牌
+	NewRound();//开始新的一�?，洗�?
 
-	int send_card_type = 0;		//发牌类型
-	int n_double = 0;			//特殊牌牌型倍数
+	ShuffleCards(); // 洗牌
+	Dealing(); // 发牌
 
-	//检查优势座位
-	bool is_specific = CheckBetterSeat(send_card_type, n_double);
-	if (g_nNewShuffleCards == 1)
-	{
-		m_Poke.NewRound(send_card_type, g_nSendCardNum, n_double);
-		Dealing(is_specific);
-
-		// 记录洗牌数据
-		if (n_double == -11)
-		{
-			GetPlayer(send_card_type)->m_vecNewbieCardsId = m_Poke.m_vecNewbieCardsId;
-			m_Poke.m_vecNewbieCardsId.clear();
-		}
-	}
-	else
-	{
-		if (g_nSendCardCommon == 1)
-		{
-			m_Poke.NewRound();
-			Dealing(false);
-		}
-		else
-		{
-			m_Poke.NewRound(send_card_type, g_nSendCardNum, n_double);
-			Dealing(is_specific);
-		}
-	}
-
-	SetBaseMoney();//设置游戏底注和税收
+	SetBaseMoney();//设置游戏底注和税�?
 	DealingTask();//任务设置
-	SvrStartGameNot();//通知开始
+	SvrStartGameNot();//通知开�?
 	SendDoubleInfo();//通知倍数
 	// SendDoubleDetail();
 	setMutiDoubleDetail(BEI_SHU_INFO_INIT, m_nInitDouble);
@@ -1291,7 +1205,7 @@ void CGameTable::OnUserJoinVisitor(IPlayerDelegate* pPlayer)
 void CGameTable::OnUserLeave(IPlayerDelegate* pPlayer)
 {
 	SERVER_LOG("CGameTable::OnUserLeave(pPlayer:%p)", pPlayer);
-	//有人退出，则累计送的游戏币从新开始计算
+	//有人退出，则累计送的游戏币从新开始�?�算
 	CPlayer *pCurPlayer = (CPlayer*)pPlayer;
 	if (pCurPlayer)
 	{
@@ -1305,7 +1219,7 @@ void CGameTable::OnUserLeave(IPlayerDelegate* pPlayer)
 		}
 
 
-		//退出时自动领取红包
+		//退出时�?动�?�取红包
 		/*
 		pt_cg_get_redpackets_award_req req;
 		req.type_ = 1;
@@ -1358,7 +1272,7 @@ void CGameTable::RefreshCards(CPlayer* pPlayer, CPlayer* pExceptPlayer, bool bPl
 		{
 			continue;
 		}
-		if (pCur == pPlayer || bPlyShow || g_nDebugShowCard == 1)	//如果是自己或同意显示给其它人看
+		if (pCur == pPlayer || bPlyShow || g_nDebugShowCard == 1)	//如果�?�?己或同意显示给其它人�?
 		{
 			pCur->SendPacket(minnoti);
 		}
@@ -1433,7 +1347,7 @@ void CGameTable::sendRobotRemainCard(vector<CCard> vecCCard)
 	}
 }
 
-void CGameTable::Dealing(bool specific)
+void CGameTable::Dealing()
 {
 
 	for (int i = 0; i < GetPlayNum(); i++)
@@ -1453,7 +1367,7 @@ void CGameTable::Dealing(bool specific)
 		}
 	}
 
-	//二人斗地主 分完牌后告诉所有玩家一张地主牌
+	//二人斗地�? 分完牌后告诉所有玩家一张地主牌
 	if (g_nTwoPai == 1)
 	{
 		CPlayer* pPlayer = GetPlayer(m_Poke.m_nDefaultLord);
@@ -1479,32 +1393,48 @@ void CGameTable::Dealing(bool specific)
 		sendRobotRemainCard(m_cCards);
 	}
 
-	string card_record = "";
 	//刷新牌面
 	for (int i = 0; i < GetPlayNum(); i++)
 	{
 		CPlayer* pPlayer = GetPlayer(i);
-		const char* uid = pPlayer->GetCorePlayer()->GetPlyStrAttr(0, PLY_ATTR_GUID);
-		card_record += uid;
-		card_record += ":";
 		if (pPlayer)
 		{
 			RefreshCards(pPlayer, NULL, false, false, false);
-			for (size_t j = 0; j < pPlayer->m_PlayCard.m_cCards.size(); j++)
-			{
-				char card_[32];
-				CCard card = pPlayer->m_PlayCard.m_cCards[j];
-				sprintf(card_, "%d,", card.m_nColor * 13 + card.m_nValue - 3);
-				card_record += card_;
-			}
 		}
 	}
 	SaveAllCards();
-	if (g_nRecordPlayerCard == 1)
+	if (g_nRecordPlayerCard == 1 || m_nShuffleLogType == 5 || m_nShuffleLogType == 10)
 	{
+		string card_record = "RecordPlayerCard:" + m_strGameLabel + "|";
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			CPlayer* pPlayer = GetPlayer(i);
+			if (pPlayer)
+			{
+				card_record += pPlayer->GetCorePlayer()->GetPlyStrAttr(0, PLY_ATTR_GUID);
+				card_record += ":";
+				for (size_t j = 0; j < pPlayer->m_PlayCard.m_cCards.size(); j++)
+				{
+					char card_[32];
+					CCard& card = pPlayer->m_PlayCard.m_cCards[j];
+					sprintf(card_, "%d,", card.m_nValue * 10 + card.m_nColor);
+					card_record += card_;
+				}
+				card_record += "|";
+			}
+		}
+
+		card_record += "lord_card:";
+		for (size_t i = 0; i < m_Poke.m_cLordCard.size(); i++)
+		{
+			char card_[32];
+			CCard& card = m_Poke.m_cLordCard[i];
+			sprintf(card_, "%d,", card.m_nValue * 10 + card.m_nColor);
+			card_record += card_;
+		}
 		g_pLogger->Log("%s", card_record.c_str());
 	}
-	//启动发牌动画定时器
+	//�?动发牌动画定时器
 	StartTimer(-1, eDEALCARD_ANIMATE_EVENT);
 }
 
@@ -1575,9 +1505,9 @@ void CGameTable::CallScore()
 	if (m_Poke.m_nDecideLordRound > GetPlayNum() - 1)
 	{
 		CPlayer* pLordPlayer = GetPlayer(m_Poke.m_nCurrentLord);
-		if (pLordPlayer && pLordPlayer->m_nCallScore == -1)	//没人叫地主
+		if (pLordPlayer && pLordPlayer->m_nCallScore == -1)	//没人�?地主
 		{
-			// 标准模式下,没人叫地主,则直接洗牌进行下一局
+			// 标准模式�?,没人�?地主,则直接洗牌进行下一局
 			if (this->is_standard_game())
 			{
 				SendCommonCmd(CO_NOLORD);
@@ -1585,7 +1515,7 @@ void CGameTable::CallScore()
 				return;
 			}
 
-			if (g_nDoubleScore == 1 && m_nNoCallNum < 3)//加倍流程 && 没叫地主小于3回合
+			if (g_nDoubleScore == 1 && m_nNoCallNum < 3)//加倍流�? && 没叫地主小于3回合
 			{
 				SendCommonCmd(CO_NOLORD);
 				OnStartGame();
@@ -1593,7 +1523,7 @@ void CGameTable::CallScore()
 			}
 			if (g_nDefaultLord)
 			{
-				m_nCallScore = (g_nTwoPai == 1) ? 2 : 1;//二人斗地主默认叫2分
+				m_nCallScore = (g_nTwoPai == 1) ? 2 : 1;//二人斗地主默认叫2�?
 				m_Poke.m_nCurrentLord = m_Poke.m_nDefaultLord;
 				if (g_nTwoPai == 1)
 				{
@@ -1610,7 +1540,7 @@ void CGameTable::CallScore()
 
 			if (g_nRPGMode == 1)
 			{
-				if (g_nCallScore == 1) {
+				if (g_nCallScore == 1 || g_nCallScore == 2) {
 					m_nCallScore = 1;
 				}else {
 					m_nCallScore = 1;
@@ -1619,8 +1549,8 @@ void CGameTable::CallScore()
 				CallScoreAndSendDoubleInfo();
 			}
 		}
-		// 标准模式下,地主确认后,没有抢地主环节
-		//叫地主流程结束,看是否有抢地主流程
+		// 标准模式�?,地主�?认后,没有抢地主环�?
+		//�?地主流程结束,看是否有抢地主流�?
 		if (m_nRobLord == 1 && !this->is_standard_game())
 		{
 			m_Poke.m_nDecideLordRound = 1;
@@ -1634,22 +1564,23 @@ void CGameTable::CallScore()
 	}
 	else
 	{
-		//从默认地主开始依次询问是否叫分
+		//从默认地主开始依次�?�问�?否叫�?
 		m_nWaitOpChairID = (m_Poke.m_nDefaultLord + m_Poke.m_nDecideLordRound) % GetPlayNum();
 		CPlayer* pPlayer = GetPlayer(m_nWaitOpChairID);
 		if (pPlayer)
 		{
 			pt_gc_call_score_req req;
 			req.opcode = gc_call_score_req;
-			if (g_nCallScore == 0)			//叫地主  不叫
+			if (g_nCallScore == 0)			//�?地主  不叫
 			{
 				req.nScore = -1;
 			}
-			else if (g_nCallScore == 1)		//1分  2分  3分
+			else if (g_nCallScore == 1 || g_nCallScore == 2 || g_nCallScore == 3)		//1�?  2�?  3�?
 			{
 				req.nScore = m_nCallScore;
 			}
 			req.nSerialID = ++m_nSerialID;
+			req.nCallMode = g_nCallScore;
 			pPlayer->SendPacket(req);
 			StartTimer(m_nWaitOpChairID, eCALLSCORE_EVENT);
 		}
@@ -1661,7 +1592,7 @@ void CGameTable::RobLord()
 {
 	SERVER_LOG("CGameTable::RobLord()");
 	bool bIsRobEnd = m_Poke.m_nDecideLordRound > GetPlayNum();
-	if (g_nTwoPai == 1)//二人斗地主
+	if (g_nTwoPai == 1)//二人斗地�?
 	{
 		bIsRobEnd = m_Poke.m_nDecideLordRound > 4;
 	}
@@ -1670,7 +1601,7 @@ void CGameTable::RobLord()
 		if (g_nCallScore == 0)
 		{
 			CPlayer* pLordPlayer = GetPlayer(m_Poke.m_nCurrentLord);
-			if (pLordPlayer && pLordPlayer->m_nCallScore == -1)	//没人叫地主
+			if (pLordPlayer && pLordPlayer->m_nCallScore == -1)	//没人�?地主
 			{
 				if (g_nDefaultLord)
 				{
@@ -1693,8 +1624,8 @@ void CGameTable::RobLord()
 	}
 	else
 	{
-		//从默认地主开始依次询问是否叫分
-		if (g_nCallScore == 1)
+		//从默认地主开始依次�?�问�?否叫�?
+		if (g_nCallScore == 1 || g_nCallScore == 2)
 		{
 			bool bFind = false;
 			for (int i = 0; i < GetPlayNum(); i++)
@@ -1822,14 +1753,14 @@ void CGameTable::sendDoubleScore(int nDouble)
 	noti.nSerialID = m_nSerialID;
 	NotifyRoom(noti);
 
-	DoubleScore();//加倍流程
+	DoubleScore();//加倍流�?
 }
 
 
-//---------------------------- [[ 标准模式下的玩家加倍 ]] ---------------------------- //
+//---------------------------- [[ 标准模式下的玩�?�加�? ]] ---------------------------- //
 void CGameTable::StandardSendDoubleScore(int nDouble, CPlayer* pPlayer)
 {
-	// 如果是防守者发送的加倍请求
+	// 如果�?防守者发送的加倍�?�求
 	if (pPlayer->GetChairID() != m_Poke.m_nCurrentLord)
 	{
 		CPlayer* pCurrentLord = GetPlayer(m_Poke.m_nCurrentLord);
@@ -1850,7 +1781,7 @@ void CGameTable::StandardSendDoubleScore(int nDouble, CPlayer* pPlayer)
 			}
 		}
 	}
-	// 如果是庄家发送的加倍请求,则向加倍过的防守者同步新的加倍请求
+	// 如果�?庄�?�发送的加倍�?�求,则向加倍过的防守者同步新的加倍�?�求
 	else
 	{
 		int nBigerScore			= 1;
@@ -1883,7 +1814,7 @@ void CGameTable::StandardSendDoubleScore(int nDouble, CPlayer* pPlayer)
 	}
 
 
-	// 加倍流程
+	// 加倍流�?
 	this->DoubleScore();
 	return;
 }
@@ -1900,7 +1831,7 @@ void CGameTable::DoubleScore()
 		StartTimer(m_nWaitOpChairID, eDOUBLE_EVENT);
 		return;
 	}else if (this->is_standard_game())	{
-		// 如果是标准模式
+		// 如果�?标准模式
 		this->StandardDoubleScore();
 		return;
 	}
@@ -1912,7 +1843,7 @@ void CGameTable::DoubleScore()
 	}
 	else
 	{
-		//从默认地主开始依次询问加倍
+		//从默认地主开始依次�?�问加�?
 		m_nWaitOpChairID = (m_Poke.m_nCurrentLord + m_nDoubleNum) % GetPlayNum();
 		CPlayer* pPlayer = GetPlayer(m_nWaitOpChairID);
 		if (pPlayer)
@@ -1928,14 +1859,14 @@ void CGameTable::DoubleScore()
 }
 
 
-//---------------------------- [[ 标准模式下的加倍流程 ]] ---------------------------- //
+//---------------------------- [[ 标准模式下的加倍流�? ]] ---------------------------- //
 void CGameTable::StandardDoubleScore()
 {
 	bool bDefenderNodify		= false;		// 防守人是否需要通知
 	bool bDefenderCallScore		= false;		// 防守人是否已经加倍过
 	bool bAllDefenderRespond	= true;
 
-	int nBankerStep				= 0;			// 庄家加倍步骤
+	int nBankerStep				= 0;			// 庄�?�加倍�?��??
 	for (int nIndex = 0; nIndex < GetPlayNum(); nIndex++)
 	{
 		CPlayer* pPlayer = GetPlayer(nIndex);
@@ -1954,7 +1885,7 @@ void CGameTable::StandardDoubleScore()
 		}
 	}
 
-	// 1. 通知农民是否加倍
+	// 1. 通知农民�?否加�?
 	if (bDefenderNodify)
 	{
 		for (int nIndex = 0; nIndex < GetPlayNum(); nIndex++)
@@ -1964,10 +1895,10 @@ void CGameTable::StandardDoubleScore()
 				CPlayer* pPlayer = GetPlayer(nIndex);
 				if (pPlayer)
 				{
-					// 1_1. 记录状态
+					// 1_1. 记录状�?
 					pPlayer->m_nStandardDoubleStep = 1;
 
-					// 1_2. 通知客户端
+					// 1_2. 通知客户�?
 					pt_gc_double_score_req req;
 					req.opcode = gc_double_score_req;
 					req.nSerialID = m_nSerialID;
@@ -1980,22 +1911,22 @@ void CGameTable::StandardDoubleScore()
 		return;
 	}
 
-	// 2. 如果防守人都已经通知过，且防守人都返回消息到客户端
+	// 2. 如果防守人都已经通知过，且防守人都返回消�?到�?�户�?
 	if (!bDefenderNodify && bAllDefenderRespond && (nBankerStep == 0 || bDefenderCallScore))
 	{
 
 	}
 
-	// 3. 如果防守人都已经通知过且有一个防守者选择了加倍,则通知庄家是否选择加倍
+	// 3. 如果防守人都已经通知过且有一�?防守者选择了加�?,则通知庄�?�是否选择加�?
 	if (!bDefenderNodify && bAllDefenderRespond && nBankerStep == 0 && bDefenderCallScore)
 	{
 		CPlayer* pPlayer = GetPlayer(m_Poke.m_nCurrentLord);
 		if (pPlayer)
 		{
-			// 3_1. 记录状态
+			// 3_1. 记录状�?
 			pPlayer->m_nStandardDoubleStep = 1;
 
-			// 3_2. 通知客户端
+			// 3_2. 通知客户�?
 			pt_gc_double_score_req req;
 			req.opcode = gc_double_score_req;
 			req.nSerialID = ++m_nSerialID;
@@ -2007,14 +1938,14 @@ void CGameTable::StandardDoubleScore()
 	}
 
 
-	// 4. 如果防守人都已经通知过且没人选择加倍,或者庄家也处理完是否加倍
+	// 4. 如果防守人都已经通知过且没人选择加�?,或者庄家也处理完是否加�?
 	if (!bDefenderNodify && bAllDefenderRespond && (!bDefenderCallScore || nBankerStep == 2))
 	{
 		startPutCard();
 	}
 }
 
-void CGameTable::startPutCard()//开始打牌
+void CGameTable::startPutCard()//开始打�?
 {
 	m_bStart = true;
 
@@ -2035,7 +1966,7 @@ void CGameTable::DealingLord()
 	SERVER_LOG("CGameTable::DealingLord()");
 	m_nAddFan = 1;
 	m_bLordDeal = true;
-	//地主拿底牌
+	//地主拿底�?
 	CPlayer* pLordPlayer = GetPlayer(m_Poke.m_nCurrentLord);
 	if (pLordPlayer)
 	{
@@ -2046,7 +1977,7 @@ void CGameTable::DealingLord()
 	}
 	RefreshCards(pLordPlayer);
 
-	//记录玩家手牌
+	//记录玩�?�手�?
 	for (int i = 0; i < GetPlayNum(); i++)
 	{
 		CPlayer* pPlayer = GetPlayer(i);
@@ -2095,7 +2026,7 @@ void CGameTable::DealingLord()
 		}
 	}
 
-	//设置玩家的宝牌
+	//设置玩�?�的宝牌
 	if (g_nBaoPai == 1)
 	{
 		for (int i = 0; i < GetPlayNum(); i++)
@@ -2156,14 +2087,14 @@ void CGameTable::DealingLord()
 		NotifyRoom(noti);
 	}
 
-	// 配置要求加倍或者标准比赛都有加倍过程
+	// 配置要求加倍或者标准比赛都有加倍过�?
 	if (g_nDoubleScore == 1 || g_nDoubleScore == 2 || this->is_standard_game())
 	{
 		DoubleScore();
 	}
 	else
 	{
-		startPutCard();//开始打牌
+		startPutCard();//开始打�?
 	}
 
 	//记录地主
@@ -2177,11 +2108,11 @@ void CGameTable::SvrPlayCardReq(int nChairID)
 	CPlayer* pPlayer = GetPlayer(nChairID);
 	if (pPlayer)
 	{
-		//清除出的牌        
+		//清除出的�?        
 		pPlayer->m_PlayCard.m_cDiscardingType.SetValue(0, 0, 0);
 		pPlayer->m_PlayCard.m_cChoosingCards.clear();
 		SendPutCards(pPlayer);
-		//发送出牌请求
+		//发送出牌�?�求
 		pPlayer->m_curTime = leaf::GetCurTime();
 		pt_gc_play_card_req req;
 		req.opcode = gc_play_card_req;
@@ -2193,7 +2124,7 @@ void CGameTable::SvrPlayCardReq(int nChairID)
 	}
 }
 
-//判断是否春天
+//判断�?否春�?
 void CGameTable::IsSpring(CPlayer* pPlayer)
 {
 	bool bSpring = true;
@@ -2207,7 +2138,7 @@ void CGameTable::IsSpring(CPlayer* pPlayer)
 				CPlayer* pLose = GetPlayer(i);
 				if (pLose)
 				{
-					if (pLose->m_PlayCard.m_cCards.size() < 17)	//农民手上的牌不得少于17张
+					if (pLose->m_PlayCard.m_cCards.size() < 17)	//农民手上的牌不得少于17�?
 					{
 						bSpring = false;
 						break;
@@ -2245,7 +2176,7 @@ void CGameTable::IsSpring(CPlayer* pPlayer)
 		m_Poke.m_bReverseSpring = true;
 		SendDoubleInfo();
 	}
-	////反春天广播
+	////反春天广�?
 	//if (bReverseSpring)
 	//{
 	//	pt_lw_trumpet_req req;
@@ -2296,7 +2227,19 @@ void CGameTable::UpdateTaskH5(CPlayer* pPlayer, int nScore[3])
 
 void CGameTable::UpdateTask(CPlayer* pPlayer, int nScore[3])
 {
-
+	if (g_nIsBaiYuan == 1)
+	{
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			CPlayer* pPlayer = GetPlayer(i);
+			if (pPlayer)
+			{
+				IPlayer::PlyAttrItem itemTask(UP_RN_AT_ACHIEVE_COMMON_TOTAL, ATH5_ROUND_CHUJI, 1);
+				pPlayer->GetCorePlayer()->UpdatePlyAttrs(itemTask);
+			}
+		}
+		return;
+	}
 	if (g_nHBMode >= HONGBAO_H5_CHUJI && g_nHBMode < HONGBAO_H5_END)	{
 		UpdateTaskH5(pPlayer, nScore);
 		return;
@@ -2329,7 +2272,7 @@ void CGameTable::UpdateTask(CPlayer* pPlayer, int nScore[3])
 		if (t_player)
 		{
 			bool complete_task = CompleteTask(t_player, nScore[i]);
-			if (complete_task)						//检测是否有完成的任务需要广播
+			if (complete_task)						//检测是否有完成的任务需要广�?
 			{
 				if (g_nBroadcastTask == 1)
 				{
@@ -2369,7 +2312,7 @@ void CGameTable::UpdateTask(CPlayer* pPlayer, int nScore[3])
 	{
 		if (is_task_done)
 		{
-			//默认对战次数完成
+			//默�?��?�战次数完成
 			IPlayer::PlyAttrItem item(UP_RN_UPDATE_MISSION_INFO, task_.current_task_id(), 1);
 			pPlayer->GetCorePlayer()->UpdatePlyAttrs(item);
 		}
@@ -2380,7 +2323,7 @@ void CGameTable::UpdateTask(CPlayer* pPlayer, int nScore[3])
 		}
 	}
 }
-void CGameTable::RoundEnd(CPlayer* pPlayer)
+void CGameTable::RoundEnd(CPlayer* pWinPlayer)
 {
 	SERVER_LOG("CGameTable::RoundEnd()");
 	m_nNoCallNum = 0;
@@ -2400,11 +2343,11 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 	int64 nMoney[3];
 	memset(nMoney, 0, sizeof(nMoney));
 
-	IsSpring(pPlayer);
+	IsSpring(pWinPlayer);
 
-	LeftCardDouble(pPlayer);
+	LeftCardDouble(pWinPlayer);
 
-	// 最低限制
+	// 最低限�?
 	if (g_nMinDouble > 0)
 	{
 		if (m_nDouble < g_nMinDouble)
@@ -2413,7 +2356,7 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 		}
 	}
 
-	// 最高限制
+	// 最高限�?
 	if (m_nMaxDouble > 0)
 	{ 
 		if (m_nDouble > m_nMaxDouble)
@@ -2427,39 +2370,51 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 		m_nDouble = CConfigManager::GetInstancePtr()->GetStarSkyScoreByDouble(m_nDouble);
 	}
 
-	//亮牌
+	//�?�?
 	for (int i = 0; i < GetPlayNum(); i++)
 	{
 		CPlayer* pShowPlayer = GetPlayer(i);
 		if (pShowPlayer)
 		{
 			RefreshCards(pShowPlayer, NULL, true, true, false);
-			if (g_nMatch == 1){//比赛场
+			if (g_nMatch == 1){//比赛�?
 				nMoney[i] = pShowPlayer->GetCorePlayer()->GetPlyAttr(PLY_BASE_ATTR, PLY_MATCH_SCORE);
+				glog.log("RoundEnd 0 chairId:%d plyUid:%s itemId:%d money:%lld g_nTax:%d tax:%d", i, pShowPlayer->m_pCorePlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID), ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 			}
-			else if (m_nSettleType == 1) {//私人积分场
+			else if (m_nSettleType == 1) {//私人�?分场
 				nMoney[i] = 0;
+				glog.log("RoundEnd 1 chairId:%d plyUid:%s itemId:%d money:%lld g_nTax:%d tax:%d", i, pShowPlayer->m_pCorePlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID), ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 			}
-			else if (g_nIsStarSky == 1){ //星空赛
+			else if (g_nIsStarSky == 1){ //星空�?
 				nMoney[i] = pShowPlayer->GetCorePlayer()->GetPlyAttr(ITEM_ATTR, ITEM_JOIN_MATCH_TICKET);
+				glog.log("RoundEnd 2 chairId:%d plyUid:%s itemId:%d money:%lld g_nTax:%d tax:%d", i, pShowPlayer->m_pCorePlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID), ITEM_BY_CASH, nMoney[i], g_nTax, tax);
+			}
+			else if (g_nIsBaiYuan == 1) { //百元�?
+				nMoney[i] = pShowPlayer->getItemNum(ITEM_BY_CASH);
+				glog.log("RoundEnd 3 chairId:%d plyUid:%s itemId:%d money:%lld g_nTax:%d tax:%d", i, pShowPlayer->m_pCorePlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID), ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 			}
 			else{
 				nMoney[i] = pShowPlayer->GetGameMoney();
+				glog.log("RoundEnd 4 chairId:%d plyUid:%s itemId:%d money:%lld g_nTax:%d tax:%d", i, pShowPlayer->m_pCorePlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID), ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 			}
 		}
 
 		if (g_nTax > 1)
 		{
 			nMoney[i] -= tax;
+			glog.log("RoundEnd 000 chairId:%d itemId:%d money:%lld g_nTax:%d tax:%d", i, ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 		}
+		glog.log("RoundEnd --- chairId:%d itemId:%d money:%lld g_nTax:%d tax:%d", i, ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 
-		if (m_nSettleType == 0)//金币场
+		if (m_nSettleType == 0)//金币�?
 		{
 			if (nMoney[i] < 0)
 			{
+				glog.log("RoundEnd 111 chairId:%d itemId:%d money:%lld g_nTax:%d tax:%d", i, ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 				nMoney[i] = 0;
 			}
 		}
+		glog.log("RoundEnd === chairId:%d itemId:%d money:%lld g_nTax:%d tax:%d", i, ITEM_BY_CASH, nMoney[i], g_nTax, tax);
 
 		if (pShowPlayer && pShowPlayer->m_nBetLordCardIndex >= 0 && pShowPlayer->m_nBetLordCardReward > 0)
 		{
@@ -2469,304 +2424,15 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 
 	SaveAllCards();
 
-	//int nLostScore1 =0 ;
-	int nFarmerNum = GetPlayNum() - 1;
+	// 计算分�?
+	CalculateScore(pWinPlayer, nScore, nRaceScore, nMoney);
 
-	int farmerDouble = 0;
-
-	for (int i = 0; i < GetPlayNum(); i++)
+	//记录赢�?��?�数
+	if (g_nPrivateRoom == 1)//不是私人�?
 	{
-		CPlayer* pFarmer = GetPlayer(i);
-		if (pFarmer && i != m_Poke.m_nCurrentLord)
+		if (pWinPlayer->GetChairID() == m_Poke.m_nCurrentLord)
 		{
-			farmerDouble += pFarmer->getMyDouble();
-		}
-	}
-
-	if (pPlayer->GetChairID() == m_Poke.m_nCurrentLord)	//地主胜利
-	{
-		int64 nAllLoseMoney = 0;
-
-		for (int i = 0; i < GetPlayNum(); i++) {
-			CPlayer* pLose = GetPlayer(i);
-			if (pLose && i != pPlayer->GetChairID()) {
-				int nActualDouble = m_nDouble;
-
-				if (g_nRPGMode == 1) {
-					nActualDouble = getDoubleDetail() * pPlayer->getMyDouble() * pLose->getMyDouble();
-				}
-
-				// 最低限制
-				if (g_nMinDouble > 0) {
-					nActualDouble = max(nActualDouble, g_nMinDouble);
-				}
-
-				// 最高限制
-				if (m_nMaxDouble > 0) {
-					nActualDouble = min(nActualDouble, m_nMaxDouble);
-				}
-
-				nAllLoseMoney += m_nBaseScore * nActualDouble;
-			}
-		}
-
-		if (nAllLoseMoney < 0 || m_nDouble > 100000000) //
-		{
-			nAllLoseMoney = 100000000; //1E
-		}
-
-		if (g_nMaxMoney > 0 && m_nSettleType != 1 && nAllLoseMoney > g_nMaxMoney)
-		{
-			nAllLoseMoney = g_nMaxMoney;
-		}
-
-		nAllLoseMoney = min(nAllLoseMoney, nMoney[m_Poke.m_nCurrentLord]);
-
-
-		int64 nWinScore = 0;
-		int64 nDLoseMoney = nAllLoseMoney / nFarmerNum;
-		int nStandardRankerWin = 0;
-		
-
-		for (int i = 0; i < GetPlayNum(); i++)
-		{
-			CPlayer* pLose = GetPlayer(i);
-			if (pLose && i != pPlayer->GetChairID())
-			{
-				int nActualDouble = m_nDouble;
-				
-				if (g_nRPGMode == 1) {
-					if (farmerDouble > 0 && pLose->getMyDouble()* nFarmerNum != farmerDouble)
-					{
-						nDLoseMoney = nAllLoseMoney * pLose->getMyDouble() / farmerDouble;
-					}
-					nActualDouble = getDoubleDetail() * pPlayer->getMyDouble() * pLose->getMyDouble();
-				}else if (this->is_standard_game() && pLose->m_nStandardDoubleScore > 1) {
-					nActualDouble	= m_nDouble * pLose->m_nStandardDoubleScore * pPlayer->m_nStandardDoubleScore;
-				}
-
-				// 最低限制
-				if (g_nMinDouble > 0)
-				{
-					nActualDouble = max(nActualDouble, g_nMinDouble);
-				}
-
-				// 最高限制
-				if (m_nMaxDouble > 0)
-				{
-					nActualDouble = min(nActualDouble, m_nMaxDouble);
-				}
-
-				int64 nLoseMoney = m_nBaseScore * nActualDouble;
-				if (nLoseMoney < 0 || m_nDouble > 100000000) //
-				{
-					nLoseMoney = 100000000; //1E
-				}
-				if (g_nMaxMoney > 0 && m_nSettleType != 1 && nLoseMoney > g_nMaxMoney)
-				{
-					nLoseMoney = g_nMaxMoney;
-				}
-				if (g_nMatch == 0 && m_nSettleType != 1)
-				{
-					if (nMoney[i] < nLoseMoney)
-					{
-						nLoseMoney = nMoney[i];
-					}
-				}
-				else if (g_nMatch == 1)
-				{
-					if (g_nLessThanZero == 0)
-					{
-						if (nMoney[i] < nLoseMoney)
-						{
-							nLoseMoney = nMoney[i];
-						}
-					}
-				}
-
-				if (nLoseMoney > nDLoseMoney && m_nSettleType != 1)
-				{
-					nLoseMoney = nDLoseMoney;
-				}
-				nScore[i] = -nLoseMoney;
-				nWinScore += nLoseMoney;
-
-				if (g_nRace == 1)
-				{
-					nRaceScore[i] = -nActualDouble;
-					nStandardRankerWin = this->is_standard_game() ? nStandardRankerWin + nActualDouble : 1;
-				}
-				if (g_nMatch == 1){
-					nRaceScore[i] = -nActualDouble * m_nBaseScore;
-					nStandardRankerWin = this->is_standard_game() ? nStandardRankerWin + nActualDouble : 1;
-				}
-			}
-		}
-
-		if (g_nRace == 1){
-			nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? nStandardRankerWin : m_nDouble*nFarmerNum;
-		}
-		if (g_nMatch == 1){
-			nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? nStandardRankerWin * m_nBaseScore : m_nDouble*nFarmerNum * m_nBaseScore;
-		}
-		if (g_nTax == 1)
-		{
-			nScore[m_Poke.m_nCurrentLord] = nWinScore*0.9;
-		}
-		else{
-			nScore[m_Poke.m_nCurrentLord] = nWinScore;
-		}
-
-	}
-	else	//农民胜利
-	{
-		int64 nWinScore = 0;
-		int64 nDLoseMoney = 0;
-		int nActualDouble = m_nDouble;
-		int64 nActualLose = 0;
-		int64 nLoseMoney = 0;
-
-		CPlayer* pLord = GetPlayer(m_Poke.m_nCurrentLord);
-		if (pLord)
-		{
-			if (this->is_standard_game()) {
-				for (int i = 0; i < GetPlayNum(); i++) {
-					CPlayer* pWin = GetPlayer(i);
-					if (pWin && i != m_Poke.m_nCurrentLord)
-					{
-						if (pWin->m_nStandardDoubleScore > 1)
-						{
-							nActualDouble = nActualDouble + m_nDouble * pWin->m_nStandardDoubleScore * pLord->m_nStandardDoubleScore;
-						}
-						else
-						{
-							nActualDouble = nActualDouble + m_nDouble;
-						}
-					}
-				}
-			}else if (g_nRPGMode == 1) {
-				nActualDouble = getDoubleDetail() * farmerDouble * pLord->getMyDouble();
-			}
-
-			if (g_nMinDouble > 0) {
-				nActualDouble = max(nActualDouble, g_nMinDouble);
-			}
-
-			if (m_nMaxDouble > 0) {
-				nActualDouble = min(nActualDouble, m_nMaxDouble);
-			}
-			
-
-
-			if (g_nRPGMode == 1) {
-				nLoseMoney = m_nBaseScore * nActualDouble;
-			}else if(this->is_standard_game()){
-				nLoseMoney = m_nBaseScore * nActualDouble * nFarmerNum;
-			}else {
-				nLoseMoney = m_nBaseScore * m_nDouble * nFarmerNum;
-			}
-
-			if (nLoseMoney < 0 || m_nDouble > 100000000) //
-			{
-				nLoseMoney = 100000000;
-			}
-			if (g_nMaxMoney > 0 && m_nSettleType != 1 && nLoseMoney > g_nMaxMoney)
-			{
-				nLoseMoney = g_nMaxMoney;
-			}
-
-			if (g_nMatch == 0 && m_nSettleType != 1)
-			{
-				if (nMoney[m_Poke.m_nCurrentLord] < nLoseMoney)
-				{
-					nLoseMoney = nMoney[m_Poke.m_nCurrentLord];
-				}
-
-			}
-			else if (g_nMatch == 1)
-			{
-				if (g_nLessThanZero == 0)
-				{
-					if (nMoney[m_Poke.m_nCurrentLord] < nLoseMoney)
-					{
-						nLoseMoney = nMoney[m_Poke.m_nCurrentLord];
-					}
-				}
-			}
-
-			nScore[m_Poke.m_nCurrentLord] = -nLoseMoney;
-			//nWinScore = nLoseMoney >> 1;
-			nWinScore = nLoseMoney / nFarmerNum;
-
-			nActualLose = abs(nLoseMoney);
-
-			if (g_nRace == 1){
-				nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? -m_nDouble * pLord->m_nStandardBigerDoubleScore : -m_nDouble;
-			}
-			if (g_nMatch == 1){
-				nRaceScore[m_Poke.m_nCurrentLord] = -nLoseMoney;
-			}
-		}
-
-
-		for (int i = 0; i < GetPlayNum(); i++)
-		{
-			CPlayer* pWin = GetPlayer(i);
-			if (pWin && i != m_Poke.m_nCurrentLord)
-			{
-				int nWinnerDouble	= m_nDouble;
-				int64 nActualWinScore = nWinScore;
-
-				if (g_nRPGMode == 1) {
-					nActualWinScore = nLoseMoney * pWin->getMyDouble() / farmerDouble;
-				}else if (this->is_standard_game())
-				{
-					if (pWin->m_nStandardDoubleScore > 1)
-					{
-						nWinnerDouble = m_nDouble * pWin->m_nStandardDoubleScore * pLord->m_nStandardDoubleScore;
-					}
-					nActualWinScore = floor((nActualLose * nWinnerDouble) / nActualDouble);
-				}
-
-				nScore[i] = nActualWinScore;
-				if (nMoney[i] < nActualWinScore && m_nSettleType != 1)
-				{
-					nScore[i] = nMoney[i];
-				}
-
-				nDLoseMoney += nScore[i];
-
-				if (g_nTax == 1)
-				{
-					nScore[i] = nScore[i] * 0.9;
-				}/*
-				else if(g_nTax == 0){
-				nScore[i] = nWinScore ;
-				}else {
-				nScore[i] = nWinScore;
-				}*/
-
-				if (g_nRace == 1)
-				{
-					nRaceScore[i] = m_nDouble;
-					if (i == pPlayer->GetChairID())
-						nRaceScore[i] += m_nDouble / 10;
-				}
-				if (g_nMatch == 1)
-				{
-					nRaceScore[i] = m_nDouble * m_nBaseScore;
-				}
-			}
-		}
-		nScore[m_Poke.m_nCurrentLord] = -nDLoseMoney;
-	}
-
-	//记录赢家次数
-	if (g_nPrivateRoom == 1)//不是私人房
-	{
-		if (pPlayer->GetChairID() == m_Poke.m_nCurrentLord)
-		{
-			AddRecordTimes(pPlayer->GetChairID(), eRECORD_WIN);
+			AddRecordTimes(pWinPlayer->GetChairID(), eRECORD_WIN);
 		}
 		else
 		{
@@ -2786,16 +2452,16 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 	}
 
 	int nScoreBackup[3] = { nScore[0], nScore[1], nScore[2] };
-	UpdateTask(pPlayer, nScoreBackup);
+	UpdateTask(pWinPlayer, nScoreBackup);
 
-	//新加结果消息 增加比赛场积分
+	//新加结果消息 增加比赛场积�?
 	pt_gc_game_result_not1 noti1;
 	noti1.opcode = gc_game_result_not1;
 
 	// 发送结果通知
 	pt_gc_game_result_not noti;
 	noti.opcode = gc_game_result_not;
-	noti.bType = (pPlayer->GetChairID() == m_Poke.m_nCurrentLord ? 1 : 2);
+	noti.bType = (pWinPlayer->GetChairID() == m_Poke.m_nCurrentLord ? 1 : 2);
 	noti.cDouble = m_nDouble;
 	noti.cCallScore = m_nCallScore;
 	noti.bShowCard = m_bShowCard;
@@ -2856,7 +2522,31 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 
 					pPlayer->UpdateStarScore(CPlayer::SR_UPDATE, nScore[i] > 0 ? 4 : 0);
 				}
-				else if (m_nSettleType == 1)//积分
+				else if (g_nIsBaiYuan == 1)
+				{
+					char buffer[512];
+					sprintf(buffer, "baiyuan_result item:%d lord:%d win:%d shuffle:%d better:%d robot:%d", pPlayer->getItemNum(ITEM_BY_CASH), m_Poke.m_nCurrentLord, pWinPlayer->GetChairID(), m_nShuffleLogType, m_nShuffleLogBetterSeat, m_nShuffleLogRobotSeat);
+
+					IPlayer::PlyAttrItem item_(UP_RN_SPECIFY_ITEM, ITEM_BY_CASH, nScore[i], 0, buffer);
+					if (corePlayer)
+					{
+						corePlayer->UpdatePlyAttrs(item_);
+					}
+
+					int index = PLY_ATTR_MONEY;
+					int score = 0;
+					if (g_nGame_id == GAME_BY_DDZ) {
+						index = -1;
+						score = nScore[i];
+					}
+
+					IPlayer::PlyAttrItem item2_(UP_RN_GAME_RESULT, index, nScore[i], 0, m_strGameLabel);
+					if (corePlayer)
+					{
+						corePlayer->UpdatePlyAttrs(item2_);
+					}
+				}
+				else if (m_nSettleType == 1)//�?�?
 				{
 					PLY_ATTR_UPDATE_REASON eReason = UP_RN_PRIVATE_ROOM_SCORE;
 					if (g_nNewMatch == 1)
@@ -2919,7 +2609,7 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 					//	}
 					//}
 				}
-				else//游戏币
+				else//游戏�?
 				{
 					int nChangeNum = g_nTax > 1 ? nScore[i] - tax : nScore[i];
 
@@ -2962,7 +2652,7 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 				}
 			}
 
-			if (corePlayer && g_nCounts == 1 && pPlayer->m_bUseCounts)//是否使用过了记牌器
+			if (corePlayer && g_nCounts == 1 && pPlayer->m_bUseCounts)//�?否使用过了�?�牌�?
 			{
 				int n_num = corePlayer->GetPlyAttr(ITEM_ATTR, ITEM_CARD_RECORD);
 				if (n_num > 0)
@@ -3014,7 +2704,7 @@ void CGameTable::RoundEnd(CPlayer* pPlayer)
 
 	NotifyRoom(noti, 0, NULL, false);
 
-	if (g_nHBMode > 0)
+	if (g_nHBMode == 1 || g_nIsBaiYuan == 1)
 	{
 		refreshPlayerTokenMoney();
 	}
@@ -3137,7 +2827,7 @@ void CGameTable::SendDoubleInfo()
 
 void CGameTable::CallScoreAndSendDoubleInfo()
 {
-	if (g_nTwoPai == 1)//二人斗地主
+	if (g_nTwoPai == 1)//二人斗地�?
 	{
 		m_nDouble = m_nInitDouble * 2;
 	}
@@ -3170,11 +2860,14 @@ void CGameTable::GetCompleteData(CPlayer *pPlayer)
 	else if (m_bRacing)
 	{
 	
-		if (g_nHBMode > 0)
+		if (g_nHBMode == 1 || g_nIsBaiYuan == 1)
 		{
 			refreshPlayerTokenMoney();
-
 			pPlayer->sendMagicEmojiConfig();
+		}
+
+		if (g_nHBMode == 1)
+		{
 			pPlayer->SendRedPacketsResult();
 			pPlayer->sendRedPacket88YuanData();
 		}
@@ -3187,7 +2880,7 @@ void CGameTable::GetCompleteData(CPlayer *pPlayer)
 			ack.ret = -4;
 			pPlayer->SendPacket(ack);
 		}
-		if (g_nTwoPai == 1)//二人斗地主
+		if (g_nTwoPai == 1)//二人斗地�?
 		{
 			pt_gc_two_complete_data_not noti;
 			noti.opcode = gc_two_complete_data_not;
@@ -3309,6 +3002,11 @@ void CGameTable::GetCompleteData(CPlayer *pPlayer)
 			pPlayer->SendPacket(noti);
 		}
 
+		if (g_nIsBaiYuan == 1 && g_nBaiYuanHBRound > 0)
+		{
+			pPlayer->SendBaiYuanHBRound();
+		}
+
 		if (task_.current_task_id() >= 0)			//
 		{
 			pt_gc_task_not task_noti;
@@ -3333,7 +3031,7 @@ void CGameTable::GetCompleteData(CPlayer *pPlayer)
 					pPlayer->SendPacket(noti);
 				}
 
-				if (pCurPlayer->m_bUseCounts) // 是否使用记牌器
+				if (pCurPlayer->m_bUseCounts) // �?否使用�?�牌�?
 				{
 					pt_gc_use_card_recode_noti noti;
 					noti.opcode = gc_use_card_recode_noti;
@@ -3390,13 +3088,13 @@ bool CGameTable::CompleteTask(CPlayer* pPlayer, int nScore)
 		pt_gc_task_complete_not noti;
 		noti.opcode = gc_task_complete_not;
 		noti.chair_id_ = pPlayer->GetChairID();
-		noti.task_status_ = 1;			//0：未完成  1：完成
+		noti.task_status_ = 1;			//0：未完成  1：完�?
 		pPlayer->SendPacket(noti);//NotifyRoom(noti);
 
 		//		vector<IPlayer::PlyAttrItem> values;
 		// 		IPlayer::PlyAttrItem item_ ;
 		// 		item_.reason_ = UP_RN_FNINISH_MISSION;
-		if (task_.current_task().task_money_type_ == 0)		//0游戏币 1元宝
+		if (task_.current_task().task_money_type_ == 0)		//0游戏�? 1元宝
 		{
 			// 			item_.index_ = PLY_ATTR_MONEY;
 			// 			item_.value1_ = task_.current_task().task_money_;
@@ -3432,11 +3130,11 @@ void CGameTable::ComplteAchieve(CPlayer* pPlayer, int nScore, bool isCompleteTas
 {
 	SERVER_LOG("CGameTable::ComplteAchieve()");
 	vector<IPlayer::PlyAttrItem> items;
-	//默认对战次数完成
+	//默�?��?�战次数完成
 	IPlayer::PlyAttrItem item(UP_RN_UPDATE_ACHIEVE_CONDITION, AT_DUIZHAN, 0);
 	items.push_back(item);
 
-	//检查是否胜利
+	//检查是否胜�?
 	if (nScore > 0)
 	{
 		if (g_nGameType == eBISAICHANG)
@@ -3487,7 +3185,7 @@ void CGameTable::ComplteAchieve(CPlayer* pPlayer, int nScore, bool isCompleteTas
 				items.push_back(item);
 			}
 
-			//出炸弹次数
+			//出炸弹�?�数
 			bool is_zhadan_ = false;
 			for (size_t i = 0; i < pPlayer->m_vecPutCard.size(); i++)
 			{
@@ -3571,7 +3269,7 @@ void CGameTable::ComplteAchieve(CPlayer* pPlayer, int nScore, bool isCompleteTas
 	}
 }
 
-void CGameTable::AddLetCardNum()//添加让牌数目并发送给所有玩家
+void CGameTable::AddLetCardNum()//添加让牌数目并发送给所有玩�?
 {
 	SERVER_LOG("CGameTable::AddLetCardNum");
 	if (g_nLetCard == 1)
@@ -3626,11 +3324,12 @@ bool CGameTable::LordCardIsSeries()
 	//	int nValue = m_Poke.m_cLordCard[i - 1].m_nValue;
 	//	if ((nValue + 1) != m_Poke.m_cLordCard[i].m_nValue)
 	//	{
-	//		return false;//大小不一致
+	//		return false;//大小不一�?
 	//	}
 	//}
 
-	int nValue[3] = { 0 };
+	int nValue[3];
+	memset(nValue, 0, sizeof(nValue));
 	nValue[0] = m_Poke.m_cLordCard[0].m_nValue - m_Poke.m_cLordCard[1].m_nValue;
 	nValue[1] = m_Poke.m_cLordCard[1].m_nValue - m_Poke.m_cLordCard[2].m_nValue;
 	nValue[2] = m_Poke.m_cLordCard[2].m_nValue - m_Poke.m_cLordCard[0].m_nValue;
@@ -3683,7 +3382,7 @@ bool CGameTable::LordCardIsSameColor()
 	{
 		if (nColor != m_Poke.m_cLordCard[i].m_nColor)
 		{
-			return false;//颜色不一致
+			return false;//颜色不一�?
 		}
 	}
 
@@ -3710,7 +3409,7 @@ bool CGameTable::LordCardIs3()
 	{
 		if (nValue != m_Poke.m_cLordCard[i].m_nValue)
 		{
-			return false;//大小不一致
+			return false;//大小不一�?
 		}
 	}
 
@@ -3786,7 +3485,7 @@ void CGameTable::OnGetPrivateRoomResult(CPlayer* pPlayer)
 	pPlayer->SendPacket(ack);
 }
 
-//---------------------------- [[ 通知目标玩家游戏模式 ]] ---------------------------- //
+//---------------------------- [[ 通知�?标玩家游戏模�? ]] ---------------------------- //
 void CGameTable::NotifyGameModle(CPlayer* pPlayer /*= nullptr*/)
 {
 	// 1. 消息定义
@@ -3794,7 +3493,7 @@ void CGameTable::NotifyGameModle(CPlayer* pPlayer /*= nullptr*/)
 	noti.opcode			= gc_game_modle;
 	noti.cModelType		= g_nIsStandard != 1 ? 0 : 1;
 
-	// 2. 发送给玩家
+	// 2. 发送给玩�??
 	if (pPlayer)
 	{
 		pPlayer->SendPacket(noti);
@@ -3807,7 +3506,7 @@ bool CGameTable::checkPlayersItem()
 {
 	bool check = true;
 
-	if (g_nIsStarSky)//星空赛
+	if (g_nIsStarSky)//星空�?
 	{
 		for (int i = 0; i < GetPlayNum(); i++)
 		{
@@ -3824,13 +3523,13 @@ bool CGameTable::checkPlayersItem()
 			}
 
 			const char* guid = iPlayer->GetPlyStrAttr(PLY_BASE_ATTR, PLY_ATTR_GUID);
-			if (guid[0] != '9' && iPlayer->GetPlyAttr(ITEM_ATTR, ITEM_STAMINA) <= 0)//体力值 > 0
+			if (guid[0] != '9' && iPlayer->GetPlyAttr(ITEM_ATTR, ITEM_STAMINA) <= 0)//体力�? > 0
 			{
 				check = false;
 				break;
 			}
 
-			//参赛券 > 4
+			//参赛�? > 4
 			if (pPlayer->GetCorePlayer()->GetPlyAttr(ITEM_ATTR, ITEM_JOIN_MATCH_TICKET) < 4)
 			{
 				check = false;
@@ -4008,6 +3707,15 @@ void CGameTable::refreshPlayerTokenMoney()
 			noti.ply_chairid_ = user_chair;
 			noti.itemInfo.push_back(item1);
 			noti.itemInfo.push_back(item2);
+
+			if (g_nIsBaiYuan == 1)
+			{
+				player_itemInfo item3;
+				item3.nItemIndex = ITEM_BY_CASH;
+				item3.nItemNum = pPlayer->getItemNum(ITEM_BY_CASH);
+				item3.nItemNum64 = item3.nItemNum;
+				noti.itemInfo.push_back(item3);
+			}
 
 			glog.log("--- refreshPlayerTokenMoney user_chair:%d ply_guid:%lld user_gold_ticket:%d user_gold_leaf:%d", user_chair, pPlayer->GetCorePlayer()->GetPlyInt64Attr(0, PLY_ATTR_GUID), user_gold_ticket, user_gold_leaf);
 			for (int j = 0; j < GetPlayNum(); ++j)
@@ -4207,7 +3915,7 @@ void CGameTable::calcLordChairID()
 	m_Poke.SetDefaultLord(chairid);
 }
 
-//剩牌加倍
+//剩牌加�?
 void CGameTable::LeftCardDouble(CPlayer* pPlayer)
 {
 	if (g_nLetCard == 0 || g_nTwoPai == 1)
@@ -4250,11 +3958,12 @@ void CGameTable::LeftCardDouble(CPlayer* pPlayer)
 	}
 }
 
-bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_double)
+bool CGameTable::CheckBetterSeatForCleverRobot(int& nBetterSeat, int& nRobotSeat)
 {
 	if (g_nNewShuffleCards == 1)
 	{
-		int player_val[3] = { 0 };
+		int player_val[3];
+		memset(player_val, 0, sizeof(player_val));
 		int robotNumber = -1;
 
 		for (int i = 0; i < GetPlayNum(); i++)
@@ -4287,12 +3996,12 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 				}
 
 				//SERVER_LOG("---------first login: %d.", player->GetCorePlayer()->IsFirstLogin());
-				//if(player->GetCorePlayer()->IsFirstLogin()==1)   //1第一次进入房间  0不是第一次登陆
+				//if(player->GetCorePlayer()->IsFirstLogin()==1)   //1�?一次进入房�?  0不是�?一次登�?
 				//{
-				//	player_val[i] += 3; //每天游戏的第1局
+				//	player_val[i] += 3; //每天游戏的�??1局
 				//}	
 
-				//每天游戏局数
+				//每天游戏局�?
 				int daily_count = player->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_DAILY_COUNT);
 				if (daily_count <= 60)
 				{
@@ -4340,13 +4049,13 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 					player_val[i] += 1;
 				}
 
-				//充值用户
+				//充值用�?
 				if (player->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_CHARGE) > 0 && (rand() % 100 < 70))
 				{
 					// player_val[i] += 1;
 				}
 
-				//高分玩家进入发差牌
+				//高分玩�?�进入发�?�?
 				if (g_nLimitMoneyNext > 0)
 				{
 					if (player->GetGameMoney() > g_nLimitMoneyNext)
@@ -4362,7 +4071,7 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 					}
 				}
 
-				//连输玩家
+				//连输玩�??
 				int lost_count = player->GetCorePlayer()->GetPlyAttr(0, PLY_CONTINUE_LOST);
 				if (lost_count >= 1)
 				{
@@ -4371,7 +4080,7 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 			}
 		}
 		SERVER_LOG("CheckBetterSeat0:%d,1:%d,2:%d", player_val[0], player_val[1], player_val[2]);
-		//取最大值
+		//取最大�?
 		int maxNumber = 0;
 		if (player_val[1] > player_val[0])  {
 			maxNumber = 1;
@@ -4384,13 +4093,13 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 		{
 			maxNumber = robotNumber;
 		}
-		m_send_card_type_ = maxNumber;
-		m_double = robotNumber;
+		nBetterSeat = maxNumber;
+		nRobotSeat = robotNumber;
 		
 		
 		if (g_nLoggerHandCard == 1)
 		{
-			int buffer_size = 512;
+			const int buffer_size = 512;
 			char buffer[buffer_size];
 			int length = 0;
 			for (int i = 0; i < GetPlayNum(); i++) {
@@ -4401,7 +4110,7 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 					length += snprintf(buffer + length, buffer_size - length, "[uid: %16s, r:%2d:], ", guid, player_val[i]);
 				}
 			}
-			g_pLogger->Log("CheckBetterSeat: better:%d, %s", m_send_card_type_, buffer);
+			g_pLogger->Log("CheckBetterSeat: better:%d, %s", nBetterSeat, buffer);
 					
 		}
 
@@ -4409,19 +4118,19 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 	}
 	else
 	{
-		bool is_new_player = false;		//是否有新玩家
-		bool is_specific = false;		//是否特殊牌型
+		bool is_new_player = false;		//�?否有新玩�?
+		bool is_specific = false;		//�?否特殊牌�?
 		for (int i = 0; i < GetPlayNum(); i++)
 		{
 			CPlayer* player = GetPlayer(i);
 			if (player)
 			{
 				SERVER_LOG("---------first login: %d.", player->GetCorePlayer()->IsFirstLogin());
-				if (player->GetCorePlayer()->IsFirstLogin() == 1)   //1第一次进入房间  0不是第一次登陆
+				if (player->GetCorePlayer()->IsFirstLogin() == 1)   //1�?一次进入房�?  0不是�?一次登�?
 				{
 					is_specific = true;
 					is_new_player = true;
-					m_double = 192;
+					nRobotSeat = 192;
 				}
 			}
 		}
@@ -4443,26 +4152,26 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 			}
 		}
 
-		if (n_player_limit_money > g_nLimitMoney * 10)	//一位玩家游戏币是入场限制的10倍
+		if (n_player_limit_money > g_nLimitMoney * 10)	//一位玩家游戏币�?入场限制�?10�?
 		{
-			m_double = 96;
+			nRobotSeat = 96;
 			if (!is_new_player)
 			{
 				if (n_player_limit_money > g_nLimitMoney * 15)
 				{
-					m_double = 192;
+					nRobotSeat = 192;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 20)
 				{
-					m_double = 384;
+					nRobotSeat = 384;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 25)
 				{
-					m_double = 768;
+					nRobotSeat = 768;
 				}
 				if (n_player_limit_money > g_nLimitMoney * 30)
 				{
-					m_double = 1536;
+					nRobotSeat = 1536;
 				}
 			}
 			is_specific = true;
@@ -4472,25 +4181,781 @@ bool CGameTable::CheckBetterSeatForCleverRobot(int& m_send_card_type_, int& m_do
 		{
 			if (g_nBaoPai == 1)
 			{
-				m_send_card_type_ = SPECIFIC_LAIZI_TYPE;
+				nBetterSeat = SPECIFIC_LAIZI_TYPE;
 			}
 			else
 			{
-				m_send_card_type_ = SPECIFIC_TYPE;
+				nBetterSeat = SPECIFIC_TYPE;
 			}
 		}
 		else
 		{
 			if (g_nBaoPai == 1)
 			{
-				m_send_card_type_ = COMMON_LAIZI_TYPE;
+				nBetterSeat = COMMON_LAIZI_TYPE;
 			}
 			else
 			{
-				m_send_card_type_ = COMMON_TYPE;
+				nBetterSeat = COMMON_TYPE;
 			}
 		}
 
 		return is_specific;
 	}
+}
+
+void CGameTable::CalculateScore(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[])
+{
+	if (g_nIsBaiYuan == 1)
+	{
+		CalculateScore_baiyuan(pPlayer, nScore, nRaceScore, nMoney);
+		return;
+	}
+
+	CalculateScore_justice(pPlayer, nScore, nRaceScore, nMoney);
+}
+
+void CGameTable::CalculateScore_justice(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[])
+{
+	int nFarmerNum = GetPlayNum() - 1;
+
+	int farmerDouble = 0;
+
+	for (int i = 0; i < GetPlayNum(); i++)
+	{
+		CPlayer* pFarmer = GetPlayer(i);
+		if (pFarmer && i != m_Poke.m_nCurrentLord)
+		{
+			farmerDouble += pFarmer->getMyDouble();
+		}
+	}
+
+	if (pPlayer->GetChairID() == m_Poke.m_nCurrentLord)	//地主胜利
+	{
+		int64 nAllLoseMoney = 0;
+
+		for (int i = 0; i < GetPlayNum(); i++) {
+			CPlayer* pLose = GetPlayer(i);
+			if (pLose && i != pPlayer->GetChairID()) {
+				int nActualDouble = m_nDouble;
+
+				if (g_nRPGMode == 1) {
+					nActualDouble = getDoubleDetail() * pPlayer->getMyDouble() * pLose->getMyDouble();
+				}
+
+				// 最低限�?
+				if (g_nMinDouble > 0) {
+					nActualDouble = max(nActualDouble, g_nMinDouble);
+				}
+
+				// 最高限�?
+				if (m_nMaxDouble > 0) {
+					nActualDouble = min(nActualDouble, m_nMaxDouble);
+				}
+
+				nAllLoseMoney += m_nBaseScore * nActualDouble;
+			}
+		}
+
+		if (nAllLoseMoney < 0 || m_nDouble > 100000000) //
+		{
+			nAllLoseMoney = 100000000; //1E
+		}
+
+		if (g_nMaxMoney > 0 && m_nSettleType != 1 && nAllLoseMoney > g_nMaxMoney)
+		{
+			nAllLoseMoney = g_nMaxMoney;
+		}
+
+		nAllLoseMoney = min(nAllLoseMoney, nMoney[m_Poke.m_nCurrentLord]);
+
+
+		int64 nWinScore = 0;
+		int64 nDLoseMoney = nAllLoseMoney / nFarmerNum;
+		int nStandardRankerWin = 0;
+
+
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			CPlayer* pLose = GetPlayer(i);
+			if (pLose && i != pPlayer->GetChairID())
+			{
+				int nActualDouble = m_nDouble;
+
+				if (g_nRPGMode == 1) {
+					if (farmerDouble > 0 && pLose->getMyDouble() * nFarmerNum != farmerDouble)
+					{
+						nDLoseMoney = nAllLoseMoney * pLose->getMyDouble() / farmerDouble;
+					}
+					nActualDouble = getDoubleDetail() * pPlayer->getMyDouble() * pLose->getMyDouble();
+				}
+				else if (this->is_standard_game() && pLose->m_nStandardDoubleScore > 1) {
+					nActualDouble = m_nDouble * pLose->m_nStandardDoubleScore * pPlayer->m_nStandardDoubleScore;
+				}
+
+				// 最低限�?
+				if (g_nMinDouble > 0)
+				{
+					nActualDouble = max(nActualDouble, g_nMinDouble);
+				}
+
+				// 最高限�?
+				if (m_nMaxDouble > 0)
+				{
+					nActualDouble = min(nActualDouble, m_nMaxDouble);
+				}
+
+				int64 nLoseMoney = m_nBaseScore * nActualDouble;
+				if (nLoseMoney < 0 || m_nDouble > 100000000) //
+				{
+					nLoseMoney = 100000000; //1E
+				}
+				if (g_nMaxMoney > 0 && m_nSettleType != 1 && nLoseMoney > g_nMaxMoney)
+				{
+					nLoseMoney = g_nMaxMoney;
+				}
+				if (g_nMatch == 0 && m_nSettleType != 1)
+				{
+					if (nMoney[i] < nLoseMoney)
+					{
+						nLoseMoney = nMoney[i];
+					}
+				}
+				else if (g_nMatch == 1)
+				{
+					if (g_nLessThanZero == 0)
+					{
+						if (nMoney[i] < nLoseMoney)
+						{
+							nLoseMoney = nMoney[i];
+						}
+					}
+				}
+
+				if (nLoseMoney > nDLoseMoney && m_nSettleType != 1)
+				{
+					nLoseMoney = nDLoseMoney;
+				}
+				nScore[i] = -nLoseMoney;
+				nWinScore += nLoseMoney;
+
+				if (g_nRace == 1)
+				{
+					nRaceScore[i] = -nActualDouble;
+					nStandardRankerWin = this->is_standard_game() ? nStandardRankerWin + nActualDouble : 1;
+				}
+				if (g_nMatch == 1) {
+					nRaceScore[i] = -nActualDouble * m_nBaseScore;
+					nStandardRankerWin = this->is_standard_game() ? nStandardRankerWin + nActualDouble : 1;
+				}
+			}
+		}
+
+		if (g_nRace == 1) {
+			nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? nStandardRankerWin : m_nDouble * nFarmerNum;
+		}
+		if (g_nMatch == 1) {
+			nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? nStandardRankerWin * m_nBaseScore : m_nDouble * nFarmerNum * m_nBaseScore;
+		}
+		if (g_nTax == 1)
+		{
+			nScore[m_Poke.m_nCurrentLord] = nWinScore * 0.9;
+		}
+		else {
+			nScore[m_Poke.m_nCurrentLord] = nWinScore;
+		}
+
+	}
+	else	//农民胜利
+	{
+		int64 nWinScore = 0;
+		int64 nDLoseMoney = 0;
+		int nActualDouble = m_nDouble;
+		int64 nActualLose = 0;
+		int64 nLoseMoney = 0;
+
+		CPlayer* pLord = GetPlayer(m_Poke.m_nCurrentLord);
+		if (pLord)
+		{
+			if (this->is_standard_game()) {
+				for (int i = 0; i < GetPlayNum(); i++) {
+					CPlayer* pWin = GetPlayer(i);
+					if (pWin && i != m_Poke.m_nCurrentLord)
+					{
+						if (pWin->m_nStandardDoubleScore > 1)
+						{
+							nActualDouble = nActualDouble + m_nDouble * pWin->m_nStandardDoubleScore * pLord->m_nStandardDoubleScore;
+						}
+						else
+						{
+							nActualDouble = nActualDouble + m_nDouble;
+						}
+					}
+				}
+			}
+			else if (g_nRPGMode == 1) {
+				nActualDouble = getDoubleDetail() * farmerDouble * pLord->getMyDouble();
+			}
+
+			if (g_nMinDouble > 0) {
+				nActualDouble = max(nActualDouble, g_nMinDouble);
+			}
+
+			if (m_nMaxDouble > 0) {
+				nActualDouble = min(nActualDouble, m_nMaxDouble);
+			}
+
+
+
+			if (g_nRPGMode == 1) {
+				nLoseMoney = m_nBaseScore * nActualDouble;
+			}
+			else if (this->is_standard_game()) {
+				nLoseMoney = m_nBaseScore * nActualDouble * nFarmerNum;
+			}
+			else {
+				nLoseMoney = m_nBaseScore * m_nDouble * nFarmerNum;
+			}
+
+			if (nLoseMoney < 0 || m_nDouble > 100000000) //
+			{
+				nLoseMoney = 100000000;
+			}
+			if (g_nMaxMoney > 0 && m_nSettleType != 1 && nLoseMoney > g_nMaxMoney)
+			{
+				nLoseMoney = g_nMaxMoney;
+			}
+
+			if (g_nMatch == 0 && m_nSettleType != 1)
+			{
+				if (nMoney[m_Poke.m_nCurrentLord] < nLoseMoney)
+				{
+					nLoseMoney = nMoney[m_Poke.m_nCurrentLord];
+				}
+
+			}
+			else if (g_nMatch == 1)
+			{
+				if (g_nLessThanZero == 0)
+				{
+					if (nMoney[m_Poke.m_nCurrentLord] < nLoseMoney)
+					{
+						nLoseMoney = nMoney[m_Poke.m_nCurrentLord];
+					}
+				}
+			}
+
+			nScore[m_Poke.m_nCurrentLord] = -nLoseMoney;
+			//nWinScore = nLoseMoney >> 1;
+			nWinScore = nLoseMoney / nFarmerNum;
+
+			nActualLose = abs(nLoseMoney);
+
+			if (g_nRace == 1) {
+				nRaceScore[m_Poke.m_nCurrentLord] = this->is_standard_game() ? -m_nDouble * pLord->m_nStandardBigerDoubleScore : -m_nDouble;
+			}
+			if (g_nMatch == 1) {
+				nRaceScore[m_Poke.m_nCurrentLord] = -nLoseMoney;
+			}
+		}
+
+
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			CPlayer* pWin = GetPlayer(i);
+			if (pWin && i != m_Poke.m_nCurrentLord)
+			{
+				int nWinnerDouble = m_nDouble;
+				int64 nActualWinScore = nWinScore;
+
+				if (g_nRPGMode == 1) {
+					nActualWinScore = nLoseMoney * pWin->getMyDouble() / farmerDouble;
+				}
+				else if (this->is_standard_game())
+				{
+					if (pWin->m_nStandardDoubleScore > 1)
+					{
+						nWinnerDouble = m_nDouble * pWin->m_nStandardDoubleScore * pLord->m_nStandardDoubleScore;
+					}
+					nActualWinScore = floor((nActualLose * nWinnerDouble) / nActualDouble);
+				}
+
+				nScore[i] = nActualWinScore;
+				if (nMoney[i] < nActualWinScore && m_nSettleType != 1)
+				{
+					nScore[i] = nMoney[i];
+				}
+
+				nDLoseMoney += nScore[i];
+
+				if (g_nTax == 1)
+				{
+					nScore[i] = nScore[i] * 0.9;
+				}/*
+				else if(g_nTax == 0){
+				nScore[i] = nWinScore ;
+				}else {
+				nScore[i] = nWinScore;
+				}*/
+
+				if (g_nRace == 1)
+				{
+					nRaceScore[i] = m_nDouble;
+					if (i == pPlayer->GetChairID())
+						nRaceScore[i] += m_nDouble / 10;
+				}
+				if (g_nMatch == 1)
+				{
+					nRaceScore[i] = m_nDouble * m_nBaseScore;
+				}
+			}
+		}
+		nScore[m_Poke.m_nCurrentLord] = -nDLoseMoney;
+	}
+}
+
+void CGameTable::CalculateScore_baiyuan(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[])
+{
+	bool nFreeLose[3];
+	memset(nFreeLose, false, sizeof(nFreeLose));
+	for (int i = 0; i < GetPlayNum(); i++)
+	{
+		CPlayer* player = GetPlayer(i);
+		if (player && player->GetCorePlayer())
+		{
+			// 免输
+			if (player->GetCorePlayer()->GetPlyAttr(ITEM_ATTR, ITEM_FREE_LOSE) > 0)
+			{
+				IPlayer::PlyAttrItem item_(UP_RN_USE_ITEM, ITEM_FREE_LOSE, -1);
+				player->GetCorePlayer()->UpdatePlyAttrs(item_);
+
+				nFreeLose[i] = true;
+			}
+		}
+	}
+
+	int nWinMoney = m_nBaseScore * m_nCallScore;
+	//地主胜利
+	if (pPlayer->GetChairID() == m_Poke.m_nCurrentLord)
+	{
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			if (i == m_Poke.m_nCurrentLord)
+			{
+				continue;
+			}
+			
+			int money = min(nWinMoney, (int)nMoney[i]);
+
+			nMoney[m_Poke.m_nCurrentLord] += money;
+			nScore[m_Poke.m_nCurrentLord] += money;
+
+			// 免输
+			if (nFreeLose[i])
+			{
+				continue;
+			}
+
+			nMoney[i] -= money;
+			nScore[i] -= money;
+		}
+	}
+	//农民胜利
+	else if (nMoney[m_Poke.m_nCurrentLord] > 0)
+	{
+		int money = nWinMoney;
+		int nFarmerNum = GetPlayNum() - 1;
+		if ((nWinMoney * nFarmerNum) > nMoney[m_Poke.m_nCurrentLord])
+		{
+			money = nMoney[m_Poke.m_nCurrentLord] / nFarmerNum;
+		}
+
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			if (i == m_Poke.m_nCurrentLord)
+			{
+				continue;
+			}
+
+			nMoney[i] += money;
+			nScore[i] += money;
+
+			// 免输
+			if (nFreeLose[m_Poke.m_nCurrentLord])
+			{
+				continue;
+			}
+
+			nMoney[m_Poke.m_nCurrentLord] -= money;
+			nScore[m_Poke.m_nCurrentLord] -= money;
+		}
+	}
+}
+
+void CGameTable::BombBaiYuan(CPlayer* pPlayer)
+{
+	pt_gc_baiyuan_tocash_item_not noti;
+	noti.opcode = gc_baiyuan_tocash_item_not;
+	noti.cType = 1;
+
+	TocashItemInfo infoSelf;
+	infoSelf.cChairID = pPlayer->GetChairID();
+	infoSelf.nItemChange = 0;
+
+	//int nWinMoney = m_nBaseScore * m_nCallScore * g_dBaiYuanBombDouble;
+	int nWinMoney = 100;
+	// 地主炸弹
+	if (pPlayer->GetChairID() == m_Poke.m_nCurrentLord)
+	{
+		for (int i = 0; i < GetPlayNum(); i++)
+		{
+			if (i == m_Poke.m_nCurrentLord)
+			{
+				continue;
+			}
+
+			CPlayer* player = GetPlayer(i);
+			if (player && player->GetCorePlayer())
+			{
+				int money = min(nWinMoney, player->getItemNum(ITEM_BY_CASH));
+
+				TocashItemInfo info;
+				info.cChairID = player->GetChairID();
+				info.nItemChange = -money;
+				noti.vecItemInfo.push_back(info);
+
+				infoSelf.nItemChange += money;
+			}
+		}
+	}
+	// 农民炸弹
+	else
+	{
+		CPlayer* player = GetPlayer(m_Poke.m_nCurrentLord);
+		if (player && player->GetCorePlayer())
+		{
+			int money = min(nWinMoney, player->getItemNum(ITEM_BY_CASH));
+
+			TocashItemInfo info;
+			info.cChairID = player->GetChairID();
+			info.nItemChange = -money;
+			noti.vecItemInfo.push_back(info);
+
+			infoSelf.nItemChange += money;
+		}
+	}
+	noti.vecItemInfo.push_back(infoSelf);
+
+	for (size_t i = 0; i < noti.vecItemInfo.size(); i++)
+	{
+		TocashItemInfo& itemInfo = noti.vecItemInfo[i];
+		if (itemInfo.nItemChange == 0)
+		{
+			continue;
+		}
+
+		CPlayer* player = GetPlayer(itemInfo.cChairID);
+		if (player && player->GetCorePlayer())
+		{
+			// 加钱
+			char buffer[512];
+			sprintf(buffer, "baiyuan_bomb item:%d base:%d call:%d double:%.2f", player->getItemNum(ITEM_BY_CASH), m_nBaseScore, m_nCallScore, g_dBaiYuanBombDouble);
+			IPlayer::PlyAttrItem item_(UP_RN_SPECIFY_ITEM, ITEM_BY_CASH, itemInfo.nItemChange, 0, buffer);
+			player->GetCorePlayer()->UpdatePlyAttrs(item_);
+		}
+	}
+
+	NotifyRoom(noti, eALLUSER, NULL, false);
+}
+
+
+void CGameTable::ShuffleCards()
+{
+	m_nShuffleLogType = 0;
+	m_nShuffleLogBetterSeat = -1;
+	m_nShuffleLogRobotSeat = -1;
+	// 初�?�化参数
+	m_Poke.NewRound();
+
+	// 使用配牌�?
+	if (m_Poke.ShuffleCardsFile())
+	{
+		m_nShuffleLogType = 1;
+		return;
+	}
+
+	// �?随机洗牌
+	if (g_nNewShuffleCards != 1 && g_nSendCardCommon == 1)
+	{
+		m_Poke.ShuffleDefaultCards();
+		m_nShuffleLogType = 2;
+		return;
+	}
+
+	int nBetterSeat = 0; // 优势�?
+	int nRobotSeat = 0;	 // 机器人座�?
+	ShuffleCardsInfo info;
+	for (int i = 0; i < GetPlayNum(); i++)
+	{
+		CPlayer* player = GetPlayer(i);
+		if (player)
+		{
+			const char* guid = player->GetCorePlayer()->GetPlyStrAttr(0, PLY_ATTR_GUID);
+			if (CConfigManager::GetInstancePtr()->isRobotGuid(guid))
+			{
+				info.vecRobotSeat.push_back(i);
+			}
+			else
+			{
+				info.vecPlayerSeat.push_back(i);
+			}
+		}
+	}
+
+	// �?1�?玩�?��?�都�?机器�?
+	// 特殊场�?? �?和机器人�?
+	if (info.vecPlayerSeat.size() == 1 && info.vecRobotSeat.size() == (GetPlayNum() - 1))
+	{
+		// 新手顺序牌组
+		if (g_nShuffleCardsForNewBieFileOrder == 1)
+		{
+			int nOrderIndex = 0;
+			if (CheckShuffleCardsForNewBieFileOrder(info, nBetterSeat, nOrderIndex))
+			{
+				if (m_Poke.ShuffleCardsForNewBieFileOrder(nBetterSeat, nOrderIndex))
+				{
+					m_nShuffleLogType = 3;
+					m_nShuffleLogBetterSeat = nBetterSeat;
+					m_nShuffleLogRobotSeat = nOrderIndex;
+					return;
+				}
+			}
+		}
+
+		// 百元�? 根据玩�?�道具数量调整优势位
+		if (g_nIsBaiYuan == 1)
+		{
+			if (CheckShuffleCardsForBaiYuanMustLose(info, nBetterSeat, nRobotSeat))
+			{
+				bool bUseMaxConfig = false;
+				if (g_nBaiYuanMustLostMaxMoney > 0)
+				{
+					CPlayer* pPlayer = GetPlayer(info.vecPlayerSeat.front());
+					if (pPlayer && pPlayer->getItemNum(ITEM_BY_CASH) >= g_nBaiYuanMustLostMaxMoney)
+					{
+						bUseMaxConfig = true;
+					}
+				}
+				if (m_Poke.ShuffleCardsForBaiYuanMustLose(nBetterSeat, nRobotSeat, bUseMaxConfig))
+				{
+					m_nShuffleLogType = bUseMaxConfig ? 10: 5;
+					m_nShuffleLogBetterSeat = nBetterSeat;
+					m_nShuffleLogRobotSeat = nRobotSeat;
+					return;
+				}
+			}
+
+			if (CheckShuffleCardsForBaiYuanMatchCard(info, nBetterSeat, nRobotSeat))
+			{
+				m_Poke.ShuffleCardsForBaiYuanMatchCard(nBetterSeat, nRobotSeat);
+				m_nShuffleLogType = 4;
+				m_nShuffleLogBetterSeat = nBetterSeat;
+				m_nShuffleLogRobotSeat = nRobotSeat;
+				return;
+			}
+		}
+
+		// 新手随机牌组
+		if (g_nShuffleCardsForNewBieFileABTest > 0)
+		{
+			vector<int> vecCardsId;
+			if (CheckShuffleCardsForNewBieFile(info, nBetterSeat, vecCardsId))
+			{
+				if (m_Poke.ShuffleCardsForNewBieFile(nBetterSeat, vecCardsId))
+				{
+					m_nShuffleLogType = 6;
+					m_nShuffleLogBetterSeat = nBetterSeat;
+					m_nShuffleLogRobotSeat = nRobotSeat;
+					return;
+				}
+			}
+		}
+
+		// 新手随机洗牌
+		if (g_nBetterSeatForNewBie == 1)
+		{
+			if (CheckShuffleCardsForNewBie(info, nBetterSeat))
+			{
+				m_Poke.ShuffleCardsForNewBie(nBetterSeat);
+				m_nShuffleLogType = 7;
+				m_nShuffleLogBetterSeat = nBetterSeat;
+				m_nShuffleLogRobotSeat = nRobotSeat;
+				return;
+			}
+		}
+	}
+
+	// �?明机器人
+	if (g_nCleverRobot == 1)
+	{
+		CheckBetterSeatForCleverRobot(nBetterSeat, nRobotSeat);
+		m_Poke.ShuffleCards(nBetterSeat, nRobotSeat);
+		m_nShuffleLogType = 8;
+		m_nShuffleLogBetterSeat = nBetterSeat;
+		m_nShuffleLogRobotSeat = nRobotSeat;
+		return;
+	}
+
+	CheckBetterSeat(nBetterSeat, nRobotSeat); // 检查优势座�?
+	m_Poke.ShuffleCards(nBetterSeat, nRobotSeat);
+	m_nShuffleLogType = 9;
+	m_nShuffleLogBetterSeat = nBetterSeat;
+	m_nShuffleLogRobotSeat = nRobotSeat;
+}
+
+bool CGameTable::CheckShuffleCardsForNewBie(const ShuffleCardsInfo& info, int& nBetterSeat)
+{
+	if (g_nBetterSeatForNewBieRound <= 0)
+	{
+		return false;
+	}
+
+	// �?1�?玩�?��?�都�?机器�?
+	if (info.vecPlayerSeat.size() == 0 || info.vecRobotSeat.size() != (GetPlayNum() - 1))
+	{
+		return false;
+	}
+
+	int nPlayerSeat = info.vecPlayerSeat.front();
+	CPlayer* pPlayer = GetPlayer(nPlayerSeat);
+	if (pPlayer == NULL)
+	{
+		return false;
+	}
+
+	// 局数超�?
+	int nRoundSum = pPlayer->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND);
+	if (nRoundSum >= g_nBetterSeatForNewBieRound)
+	{
+		return false;
+	}
+
+	nBetterSeat = nPlayerSeat;
+	return true;
+}
+
+bool CGameTable::CheckShuffleCardsForNewBieFile(const ShuffleCardsInfo& info, int& nBetterSeat, vector<int>& vecCardsId)
+{
+	if (g_nShuffleCardsForNewBieFileRound <= 0)
+	{
+		return false;
+	}
+
+	int nPlayerSeat = info.vecPlayerSeat.front();
+	CPlayer* pPlayer = GetPlayer(nPlayerSeat);
+	if (pPlayer == NULL)
+	{
+		return false;
+	}
+
+	// 局数超�?
+	int nRoundSum = pPlayer->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND);
+	if (nRoundSum >= g_nShuffleCardsForNewBieFileRound)
+	{
+		return false;
+	}
+
+	int64 guid = pPlayer->GetCorePlayer()->GetPlyInt64Attr(0, PLY_ATTR_GUID);
+	if (guid % g_nShuffleCardsForNewBieFileABTest != 0)
+	{
+		return false;
+	}
+
+	nBetterSeat = nPlayerSeat;
+	vecCardsId = pPlayer->m_vecNewbieCardsId;
+	return true;
+}
+
+bool CGameTable::CheckShuffleCardsForNewBieFileOrder(const ShuffleCardsInfo& info, int& nBetterSeat, int& nOrderIndex)
+{
+	if (g_nShuffleCardsForNewBieFileOrderRound <= 0)
+	{
+		return false;
+	}
+
+	int nPlayerSeat = info.vecPlayerSeat.front();
+	CPlayer* pPlayer = GetPlayer(nPlayerSeat);
+	if (pPlayer == NULL)
+	{
+		return false;
+	}
+
+	// 红包�?�?
+	if (g_nShuffleCardsForNewBieFileOrderMoney > 0 && pPlayer->getItemNum(ITEM_BY_CASH) >= g_nShuffleCardsForNewBieFileOrderMoney)
+	{
+		return false;
+	}
+
+	// 局数超�?
+	int nRoundSum = pPlayer->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND);
+	if (nRoundSum > g_nShuffleCardsForNewBieFileOrderRound)
+	{
+		return false;
+	}
+
+	nBetterSeat = nPlayerSeat;
+	nOrderIndex = nRoundSum;
+	return true;
+}
+
+
+// 玩家输赢控制处理
+bool CGameTable::CheckShuffleCardsForBaiYuanMatchCard(const ShuffleCardsInfo& info, int& nBetterSeat, int& nRobotSeat)
+{
+	int nPlayerSeat = info.vecPlayerSeat.front();
+	CPlayer* pPlayer = GetPlayer(nPlayerSeat);
+	if (pPlayer == NULL)
+	{
+		return false;
+	}
+
+	if (!CConfigManager::GetInstancePtr()->isToggleCondition(CPlayer::TC_MatchCard, pPlayer->getItemNum(ITEM_BY_CASH)))
+	{
+		return false;
+	}
+
+	nBetterSeat = nPlayerSeat;
+	nRobotSeat = info.vecRobotSeat[rand() % info.vecRobotSeat.size()];;
+	return true;
+}
+
+bool CGameTable::CheckShuffleCardsForBaiYuanMustLose(const ShuffleCardsInfo& info, int& nBetterSeat, int& nRobotSeat)
+{
+	int nPlayerSeat = info.vecPlayerSeat.front();
+	CPlayer* pPlayer = GetPlayer(nPlayerSeat);
+	if (pPlayer == NULL)
+	{
+		return false;
+	}
+
+	do
+	{
+		// 特定局数必杀
+		if (g_nBaiYuanMustLostRound > 0 && (pPlayer->GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND) + 1) == g_nBaiYuanMustLostRound)
+		{
+			break;
+		}
+
+		if (CConfigManager::GetInstancePtr()->isToggleCondition(CPlayer::TC_MustLose, pPlayer->getItemNum(ITEM_BY_CASH)))
+		{
+			break;
+		}
+
+		return false;
+	} while (false);
+
+	nRobotSeat = info.vecRobotSeat[rand() % info.vecRobotSeat.size()];
+	nBetterSeat = nRobotSeat;
+	m_nMustCallSeat = nRobotSeat;
+	return true;
 }

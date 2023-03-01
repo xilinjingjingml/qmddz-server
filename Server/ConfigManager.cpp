@@ -124,9 +124,26 @@ int g_nRedpakcetControllerRatio = 1;
 int g_nWinDoubleCan = 0;
 int g_nWinDoubleAddAmount = 0;
 int g_nWinDoubleAddProbabily = 0;
+int g_nWinDoubleMaxAmount = 0;
+int g_nWinDoubleMaxDouble = 0;
 int g_nShuffleCardsForNewBieFileABTest = 0;
 int g_nShuffleCardsForNewBieFileRound = 0;
 vector<int> g_nRegainLoseMoneyLimit;
+int g_nIsBaiYuan = 0;
+double g_dBaiYuanBombDouble = 0;
+int g_nBaiYuanHBRound = 0;
+int g_nBaiYuanHBAwardStartId = 0;
+int g_nBaiYuanHBAwardEndId = 0;
+int g_nBaiYuanWinDoubleMin = 0;
+int g_nBaiYuanWinDoubleMax = 0;
+int g_nBaiYuanBankruptcyMin = 0;
+int g_nBaiYuanBankruptcyMax = 0;
+int g_nShuffleCardsForNewBieFileOrder = 0;
+int g_nShuffleCardsForNewBieFileOrderRound = 0;
+int g_nShuffleCardsForNewBieFileOrderMoney = 0;
+int g_nBaiYuanMustLostRound = 0;
+int g_nBaiYuanMustLostMaxMoney = 0;
+
 
 CConfigManager::CConfigManager(void) :m_nPlay_Num(3)
 {
@@ -268,8 +285,25 @@ bool CConfigManager::Init(const char* m_szConfigFile)
 	READ_XML_ATTR("WinDoubleCan", g_nWinDoubleCan, 0);
 	READ_XML_ATTR("WinDoubleAddAmount", g_nWinDoubleAddAmount, 0);
 	READ_XML_ATTR("WinDoubleAddProbabily", g_nWinDoubleAddProbabily, 0);
+	READ_XML_ATTR("WinDoubleMaxAmount", g_nWinDoubleMaxAmount, 0);
+	READ_XML_ATTR("WinDoubleMaxDouble", g_nWinDoubleMaxDouble, 50);
 	READ_XML_ATTR("ShuffleCardsForNewBieFileABTest", g_nShuffleCardsForNewBieFileABTest, 0);
 	READ_XML_ATTR("ShuffleCardsForNewBieFileRound", g_nShuffleCardsForNewBieFileRound, 0);
+	READ_XML_ATTR("IsBaiYuan", g_nIsBaiYuan, 0);
+	READ_XML_ATTR("BaiYuanHBRound", g_nBaiYuanHBRound, 0);
+	READ_XML_ATTR("BaiYuanHBAwardStartId", g_nBaiYuanHBAwardStartId, 0);
+	READ_XML_ATTR("BaiYuanHBAwardEndId", g_nBaiYuanHBAwardEndId, 0);
+	READ_XML_ATTR("BaiYuanBombDouble", g_dBaiYuanBombDouble, 0.5);
+	READ_XML_ATTR("BaiYuanWinDoubleMin", g_nBaiYuanWinDoubleMin, 0);
+	READ_XML_ATTR("BaiYuanWinDoubleMax", g_nBaiYuanWinDoubleMax, 20);
+	READ_XML_ATTR("BaiYuanBankruptcyMin", g_nBaiYuanBankruptcyMin, 2000);
+	READ_XML_ATTR("BaiYuanBankruptcyMax", g_nBaiYuanBankruptcyMax, 4000);
+	READ_XML_ATTR("ShuffleCardsForNewBieFileOrder", g_nShuffleCardsForNewBieFileOrder, 0);
+	READ_XML_ATTR("ShuffleCardsForNewBieFileOrderRound", g_nShuffleCardsForNewBieFileOrderRound, 0);
+	READ_XML_ATTR("ShuffleCardsForNewBieFileOrderMoney", g_nShuffleCardsForNewBieFileOrderMoney, 17000); // 控制玩家输赢
+	READ_XML_ATTR("BaiYuanMustLostRound", g_nBaiYuanMustLostRound, 0);
+	READ_XML_ATTR("BaiYuanMustLostMaxMoney", g_nBaiYuanMustLostMaxMoney, 19000); // 控制玩家输赢
+	
 	g_sServerName = pElement->Attribute("ServerName");
 	
 	
@@ -415,6 +449,11 @@ bool CConfigManager::Init(const char* m_szConfigFile)
 	}
 
 	readRewardConfig();
+	readRewardItem();
+	readRewardCondition();
+	readToggleCondition();
+	readMustLoseCardConfig();
+	readMustLoseCardMaxConfig();
 
 	SERVER_LOG("---------------m_nPlay_Num %d", m_nPlay_Num);
 	return true;
@@ -605,6 +644,8 @@ void CConfigManager::readRewardConfig()
 		sRewardConfig.nItemId = table.GetIntField(i, 1);
 		sRewardConfig.nItemNumMin = table.GetIntField(i, 2);
 		sRewardConfig.nItemNumMax = table.GetIntField(i, 3);
+		sRewardConfig.nConditionMin = table.GetIntField(i, 4);
+		sRewardConfig.nConditionMax = table.GetIntField(i, 5);
 		sRewardConfig.nWeight = nWeight;
 		
 		map<int, structRewardConfigList>::iterator iterConfig = m_mapRewardConfig.find(nId);
@@ -647,11 +688,267 @@ void CConfigManager::getRewardNum(int nId, structRewardInfo& info)
 				info.nItemNum = iter->nItemNumMin;
 				if (iter->nItemNumMin != iter->nItemNumMax)
 				{
-					info.nItemNum += rand() % (iter->nItemNumMin - iter->nItemNumMin);
+					info.nItemNum += rand() % (iter->nItemNumMax - iter->nItemNumMin);
 				}
 				break;
 			}
 		}
+	}
+}
+
+void CConfigManager::readRewardItem()
+{
+	m_mapRewardItem.clear();
+	glog.log("CConfigManager:readRewardItem");
+	ExTable table;
+	if (!table.InitFromFile("reaward_item.csv"))
+	{
+		glog.error("load reaward_item.csv failed");
+		return;
+	}
+
+	for (int i = 0; i < table.GetRecordNum(); i++)
+	{
+		structRewardItem sRewardItem;
+		sRewardItem.nItemId = table.GetIntField(i, 1);
+		sRewardItem.nItemNumMin = table.GetIntField(i, 2);
+		sRewardItem.nItemNumMax = table.GetIntField(i, 3);
+
+		int nId = table.GetIntField(i, 0);
+		map<int, vector<structRewardItem> >::iterator iter = m_mapRewardItem.find(nId);
+		if (iter == m_mapRewardItem.end())
+		{
+			vector<structRewardItem> vecRewardItem;
+			vecRewardItem.push_back(sRewardItem);
+
+			m_mapRewardItem[nId] = vecRewardItem;
+		}
+		else
+		{
+			iter->second.push_back(sRewardItem);
+		}
+	}
+}
+
+void CConfigManager::readRewardCondition()
+{
+	m_mapRewardCondition.clear();
+	glog.log("CConfigManager:readRewardCondition");
+	ExTable table;
+	if (!table.InitFromFile("reaward_condition.csv"))
+	{
+		glog.error("load reaward_condition.csv failed");
+		return;
+	}
+
+	for (int i = 0; i < table.GetRecordNum(); i++)
+	{
+		int nWeight = table.GetIntField(i, 4);
+		if (nWeight <= 0)
+		{
+			continue;
+		}
+
+		structRewardCondition sRewardCondition;
+		sRewardCondition.nConditionMin = table.GetIntField(i, 1);
+		sRewardCondition.nConditionMax = table.GetIntField(i, 2); // nConditionMax必须>0 否则无效
+		sRewardCondition.nRewardId = table.GetIntField(i, 3);
+		sRewardCondition.nWeight = nWeight;
+
+		int nId = table.GetIntField(i, 0);
+		map<int, vector<structRewardCondition> >::iterator iter = m_mapRewardCondition.find(nId);
+		if (iter == m_mapRewardCondition.end())
+		{
+			vector<structRewardCondition> vecRewardCondition;
+			vecRewardCondition.push_back(sRewardCondition);
+
+			m_mapRewardCondition[nId] = vecRewardCondition;
+		}
+		else
+		{
+			iter->second.push_back(sRewardCondition);
+		}
+	}
+}
+
+void CConfigManager::getRewardCondition(vector<structRewardInfo>& vecReward, vector<int>& vecIds, int condition /*= 0*/)
+{
+	for (size_t i = 0; i < vecIds.size(); i++)
+	{
+		int nId = vecIds[i];
+		map<int, vector<structRewardCondition> >::iterator iterConditions = m_mapRewardCondition.find(nId);
+		if (iterConditions == m_mapRewardCondition.end())
+		{
+			continue;
+		}
+
+		int nWeightSum = 0;
+		for (vector<structRewardCondition>::iterator iter = iterConditions->second.begin(); iter != iterConditions->second.end(); iter++)
+		{
+			if (iter->nConditionMax > 0 && (condition < iter->nConditionMin || condition >= iter->nConditionMax))
+			{
+				continue;
+			}
+
+			nWeightSum += iter->nWeight;
+			break;
+		}
+
+		if (nWeightSum == 0)
+		{
+			continue;
+		}
+
+		int nWeight = rand() % nWeightSum;
+		for (vector<structRewardCondition>::iterator iter = iterConditions->second.begin(); iter != iterConditions->second.end(); iter++)
+		{
+			if (iter->nConditionMax > 0 && (condition < iter->nConditionMin || condition >= iter->nConditionMax))
+			{
+				continue;
+			}
+
+			nWeight -= iter->nWeight;
+			if (nWeight >= 0)
+			{
+				continue;
+			}
+
+			map<int, vector<structRewardItem> >::iterator iterItems = m_mapRewardItem.find(nId);
+			if (iterItems != m_mapRewardItem.end())
+			{
+				for (vector<structRewardItem>::iterator iter = iterItems->second.begin(); iter != iterItems->second.end(); iter++)
+				{
+					structRewardInfo info;
+					info.nItemId = iter->nItemId;
+					info.nItemNum = iter->nItemNumMin;
+					if (iter->nItemNumMin != iter->nItemNumMax)
+					{
+						info.nItemNum += rand() % (iter->nItemNumMax - iter->nItemNumMin);
+					}
+					vecReward.push_back(info);
+				}
+			}
+			break;
+		}
+	}
+}
+
+void CConfigManager::readToggleCondition()
+{
+	m_mapToggleCondition.clear();
+	glog.log("CConfigManager:readToggleCondition");
+	ExTable table;
+	if (!table.InitFromFile("toggle_condition.csv"))
+	{
+		glog.error("load toggle_condition.csv failed");
+		return;
+	}
+
+	for (int i = 0; i < table.GetRecordNum(); i++)
+	{
+		structToggleCondition sToggleCondition;
+		sToggleCondition.nConditionMin = table.GetIntField(i, 1);
+		sToggleCondition.nConditionMax = table.GetIntField(i, 2);
+		sToggleCondition.nPercent = table.GetIntField(i, 3);
+
+		int nId = table.GetIntField(i, 0);
+		map<int, vector<structToggleCondition> >::iterator iter = m_mapToggleCondition.find(nId);
+		if (iter == m_mapToggleCondition.end())
+		{
+			vector<structToggleCondition> vecToggleCondition;
+			vecToggleCondition.push_back(sToggleCondition);
+
+			m_mapToggleCondition[nId] = vecToggleCondition;
+		}
+		else
+		{
+			iter->second.push_back(sToggleCondition);
+		}
+	}
+}
+
+bool CConfigManager::isToggleCondition(int nId, int condition, bool def)
+{
+	map<int, vector<structToggleCondition> >::iterator iterConfig = m_mapToggleCondition.find(nId);
+	if (iterConfig == m_mapToggleCondition.end())
+	{
+		return def;
+	}
+
+	for (vector<structToggleCondition>::iterator iter = iterConfig->second.begin(); iter != iterConfig->second.end(); iter++)
+	{
+		if (condition < iter->nConditionMin || condition >= iter->nConditionMax)
+		{
+			continue;
+		}
+
+		return (rand() % 100) < iter->nPercent;
+	}
+
+	return def;
+}
+
+void CConfigManager::readMustLoseCardConfig()
+{
+	m_vecMustLoseCardConfigs.clear();
+	glog.log("CConfigManager:readMustLoseCardConfig");
+	ExTable table;
+	if (!table.InitFromFile("must_lost_card_config.csv"))
+	{
+		glog.error("load must_lost_card_config.csv failed");
+		return;
+	}
+
+	int nLastId = -1;
+	for (int i = 0; i < table.GetRecordNum(); i++)
+	{
+		structMustLoseCardConfig sMustLoseCardConfig;
+		sMustLoseCardConfig.nCardValueMin = table.GetIntField(i, 1);
+		sMustLoseCardConfig.nCardValueMax = table.GetIntField(i, 2);
+		sMustLoseCardConfig.nCardNum = table.GetIntField(i, 3);
+		sMustLoseCardConfig.nCardLength = table.GetIntField(i, 4);
+
+		int nId = table.GetIntField(i, 0);
+		if (nLastId != nId)
+		{
+			nLastId = nId;
+			vector<structMustLoseCardConfig> vecMustLoseCardConfig;
+			m_vecMustLoseCardConfigs.push_back(vecMustLoseCardConfig);
+		}
+
+		m_vecMustLoseCardConfigs.back().push_back(sMustLoseCardConfig);
+	}
+}
+
+void CConfigManager::readMustLoseCardMaxConfig()
+{
+	m_vecMustLoseCardMaxConfigs.clear();
+	glog.log("CConfigManager:readMustLoseCardMaxConfig");
+	ExTable table;
+	if (!table.InitFromFile("must_lost_card_max_config.csv"))
+	{
+		glog.error("load must_lost_card_max_config.csv failed");
+		return;
+	}
+
+	int nLastId = -1;
+	for (int i = 0; i < table.GetRecordNum(); i++)
+	{
+		structMustLoseCardConfig sMustLoseCardConfig;
+		sMustLoseCardConfig.nCardValueMin = table.GetIntField(i, 1);
+		sMustLoseCardConfig.nCardValueMax = table.GetIntField(i, 2);
+		sMustLoseCardConfig.nCardNum = table.GetIntField(i, 3);
+		sMustLoseCardConfig.nCardLength = table.GetIntField(i, 4);
+
+		int nId = table.GetIntField(i, 0);
+		if (nLastId != nId)
+		{
+			nLastId = nId;
+			vector<structMustLoseCardConfig> vecMustLoseCardConfig;
+			m_vecMustLoseCardMaxConfigs.push_back(vecMustLoseCardConfig);
+		}
+
+		m_vecMustLoseCardMaxConfigs.back().push_back(sMustLoseCardConfig);
 	}
 }
 

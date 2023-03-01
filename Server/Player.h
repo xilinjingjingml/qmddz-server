@@ -55,6 +55,15 @@ public:
 		SR_QUERY,	///< 枚举，查询
 		SR_UPDATE,	///< 枚举，更新
 	};
+
+	enum TC_ToggleCondition
+	{
+		TC_MatchCard = 1,	// 配牌
+		TC_MustLose,		// 强杀
+		TC_RegainLose,		// 追回损失
+		TC_LuckWelfare,		// 幸运福利
+		TC_WinDouble,		// 赢分加倍
+	};
 public:
 	/// 构造函数
 	CPlayer();
@@ -247,6 +256,12 @@ public:
 	void OnPacket(const pt_ss_get_newbie_reward_ack& ack);
 	void OnPacket(const pt_cg_look_lord_card_item_req& req);
 	void OnPacket(const pt_cg_win_doubel_req& req);
+	void OnPacket(const pt_cg_baiyuan_hb_round_award_req& req);
+	void OnPacket(const pt_cg_baiyuan_win_double_req& req);
+	void OnPacket(const pt_cg_baiyuan_regain_lose_req& req);
+	void OnPacket(const pt_cg_baiyuan_luck_welfare_req& req);
+	void OnPacket(const pt_cg_baiyuan_can_bankruptcy_defend_req& req);
+	void OnPacket(const pt_cg_baiyuan_bankruptcy_defend_req& req);
 	
 public:
 	IPlayer* m_pCorePlayer;			///< 系统接口
@@ -312,4 +327,21 @@ private:
 	RedPacketsNewbieData m_redpackets_newbie_data;
 
 	bool m_bInvincible;			// true 开局免输
+
+// 百元赛
+public:
+	int m_nBaiYuanHBCurRound;		
+	vector<item_info> m_vecBaiYuanHBRoundAward;	// 百元赛红包局数
+	vector<item_info> m_vecBaiYuanWinDouble;	// 百元赛赢分加倍
+	vector<item_info> m_vecBaiYuanRegainLose;	// 百元赛追回损失
+	vector<item_info> m_vecBaiYuanLuckWelfare;	// 百元赛幸运福利
+	void SendBaiYuanHBRound();		// 百元赛红包局数
+	void SendBaiYuanHBRoundAward();	// 百元赛赢分加倍
+	void SendBaiYuanWinDouble();	// 百元赛赢分加倍
+	void SendBaiYuanRegainLose();	// 百元赛追回损失
+	void SendBaiYuanLuckWelfare();	// 百元赛幸运福利
+
+	// 根据道具id获得玩家道具数量
+	int getItemNum(ITEM_INDEX index);
+	void updatePlayerItems(vector<item_info>& vecItems, const char* buffer);
 };

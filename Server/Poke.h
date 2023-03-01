@@ -1,4 +1,5 @@
 #pragma once
+#include "ConfigManager.h"
 
 struct seriesCardsTemp
 {
@@ -21,14 +22,7 @@ public:
 	CPoke();
 	~CPoke();
 public:
-	void ShuffleCards();
-	void ShuffleCards(int send_card_type,int send_card_num,int n_double);
-	// bool ShuffleCardsDB(int send_card_type,int send_card_num,int n_double);
-	bool ShuffleCardsFile(int send_card_type,int send_card_num,int n_double);
-	void ShuffleDefaultCards();
-	void NewShuffleCards();
 	void NewRound();
-	void NewRound(int send_card_type,int send_card_num,int n_double);//发牌类型和一次发牌张数
 	void SetDefaultLord(int chairid = -1);
 	void SetZhaDanCard(int chairid = -1);			//设置炸弹
 	int  GetZhaDanValue();			//获取单个炸弹值
@@ -43,9 +37,16 @@ public:
 	int checkCardHas34(int* card);
 	int checkLowCardIsOk(int* card);
 
-	void NewShuffleCardsForNewBie();
-	bool ShuffleCardsForNewBieFile();
+	void ShuffleDefaultCards();
+	void ShuffleCards(int nBetterSeat, int nRobotSeat);
+	bool ShuffleCardsFile();
+	void ShuffleCardsForNewBie(int nBetterSeat);
+	bool ShuffleCardsForNewBieFile(int nBetterSeat, vector<int>& vecIds);
+	bool ShuffleCardsForNewBieFileOrder(int nBetterSeat, int nOrderIndex);
+	void ShuffleCardsForBaiYuanMatchCard(int nBetterSeat, int nRobotSeat);
+	bool ShuffleCardsForBaiYuanMustLose(int nBetterSeat, int nRobotSeat, bool bUseMaxConfig);
 	void genPackOfCards(vector<CCard>& cards);
+	void genSeriesCards(vector<CCard>& srcCards, vector<CCard>& dstCards, const structMustLoseCardConfig& sConfig, vector<bool>& vecUsedPoint);
 	void genSeriesCards(vector<CCard>& srcCards, vector<CCard>& dstCards, seriesCardsTemp SeriesTemp);
 public:
 	vector<CCard> m_AllCards;			//全副牌54张
@@ -57,11 +58,8 @@ public:
 	int m_nBombCounter;					//计算炸弹个数
 	int m_nNextPlayer;					//下一个出牌玩家
 	int m_nDecideLordRound;				//决定地主计数
-	int m_BetterSeat;                   //优势座位号
-	int m_robotSeat;
 	bool m_bSendCardOK[3];				//几个玩家是否发牌完毕
 	bool m_bSpring;
 	bool m_bReverseSpring;
 	CCard m_cLaiziCard;					//随机牌
-	vector<int> m_vecNewbieCardsId;
 };

@@ -27,10 +27,10 @@ void pt_gc_lord_card_not_handler::handler( const pt_gc_lord_card_not& noti, CUse
 	robot->converCardToRobot(noti.vecCards, robot->lord_robot_->pot, NULL, -1);
 	//assert(!robot->checkCardIsOk());
 	chair = session->chair_id();
+	robot->lord_ = noti.cLord;
 	if (noti.cLord == chair)
 	{
 		beLord(robot->lord_robot_, robot->lord_robot_->pot, CUR_PLAYER);
-		robot->lord_ = chair;
 	}else{
 		if (noti.cLord == ((chair + 1)%3))
 		{
@@ -55,7 +55,7 @@ void pt_gc_lord_card_not_handler::handler( const pt_gc_lord_card_not& noti, CUse
 	}
 
 	//session->players_ 里面保存了除了自己的玩家
-	if (g_nBetterForPlayer == 1)
+	if (session->bBetterForPlayer)
 	{
 		int robotNum = 0;
 		for(size_t i = 0; i < session->players_.size(); ++i)

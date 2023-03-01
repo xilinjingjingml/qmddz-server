@@ -20,8 +20,10 @@ int g_need_userrobot_=0; //需要机器人玩家进入，只有当g_user_robot_=
 int g_max_table_num = 0; 
 int g_nBetterForPlayer = 0;
 int g_nNotCallScore = 0;
+int g_nMustBomb = 0;
 int g_playcard_time_min_ = 0;
 int g_playcard_time_max_ = 0;
+int g_nBetterForPlayerCloseMoney = 0;
 #define CHAT_TIME 15000
 #define PING_TIME  5000
 #define	READY_TIME  1000
@@ -106,6 +108,10 @@ bool CConfigManager::Init(const char* m_szConfigFile)
 	pElement->Attribute("UserRobot",&g_user_robot_);
 	pElement->Attribute("BetterForPlayer",&g_nBetterForPlayer);
 	pElement->Attribute("NotCallScore",&g_nNotCallScore);
+	pElement->Attribute("MustBomb", &g_nMustBomb);
+	// 控制玩家输赢
+	if (!pElement->Attribute("BetterForPlayerCloseMoney", &g_nBetterForPlayerCloseMoney))
+		g_nBetterForPlayerCloseMoney = 18000;
 	
 	
 

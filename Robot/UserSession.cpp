@@ -25,6 +25,8 @@
 #include "pt_gc_auto_not_handler.h"
 #include "pt_gc_double_score_req_handler.h"
 #include "pt_gc_two_lord_card_not_handler.h"
+#include "pt_gc_update_player_tokenmoney_not_handler.h"
+#include "pt_gc_clienttimer_not_handler.h"
 CUserSession::CUserSession(void)
 {
 	status_ = US_UNCONNECTED;
@@ -48,6 +50,7 @@ CUserSession::CUserSession(void)
 	leavetable_time_=0;
 	players_.clear();
     reconnect_time_ = 0;
+	bBetterForPlayer = g_nBetterForPlayer == 1;
 }
 
 
@@ -125,6 +128,8 @@ void CUserSession::dispatchOpcode(short opcode,CInputStream& is)
 		GAME_MESSAGE_HANDLER(gc_auto_not);
 		GAME_MESSAGE_HANDLER(gc_double_score_req);
 		GAME_MESSAGE_HANDLER(gc_two_lord_card_not);
+		GAME_MESSAGE_HANDLER(gc_update_player_tokenmoney_not);
+		GAME_MESSAGE_HANDLER(gc_clienttimer_not);
 		
 	}
 }
@@ -234,16 +239,19 @@ void CUserSession::OnLoop( int ndelat )
 		lastElapse_ = 0;
 		SendPingPacket();
 	}
-    if(g_chat_time_ != 0)
+    if(chat_time_ > 0)
     {
-        chat_time_ += ndelat;
-        if(isready_ == 1 && chat_time_ >= g_chat_time_)
+        chat_time_ -= ndelat;
+        if(chat_time_ <= 0)
         {
-            chat_time_ = 0;
-            if (rand()%2)
+            if (rand() % 100 < 25)
             {
                 OnChat();
-            }
+			}
+			else
+			{
+				chat_time_ = 1000;
+			}
         }
     }
 }
@@ -438,6 +446,7 @@ void CUserSession::OnRobLord()
 void CUserSession::OnResult()
 {
 	//glog.log("-- OnResult %lld", user_pid_);
+	bBetterForPlayer = g_nBetterForPlayer == 1;
 	if (Robot::isRobot(user_pid_))
 	{
 		return;
@@ -485,6 +494,7 @@ void CUserSession::OnPlayCard( )
 
 void CUserSession::OnChat( )
 {
+	/*
 	// 不要说话，NO TALKING.
 	return;
 
@@ -501,6 +511,12 @@ void CUserSession::OnChat( )
 		strName = buff;
 	}
 	//glog.log("OnChat:%s",strName.c_str());
+	*/
+
+	char buff[64]={'\0'};
+	sprintf(buff,"<B┃┃%d",((rand()%2)+5));
+	string strName = buff;
+
 	pt_cb_chat_req req;
 	req.opcode = cb_chat_req;
 	req.type_ = 0;

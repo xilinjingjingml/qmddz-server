@@ -23,6 +23,9 @@ extern int g_need_userrobot_; //需要机器人玩家进入，只有当g_user_ro
 extern int g_max_table_num;
 extern int g_nBetterForPlayer; //对玩家友好，当自己是地主，变为等级0; 当自己是农民，玩家是地主时，变为等级0
 extern int g_nNotCallScore;
+extern int g_nMustBomb; //玩家最后一手 机器人必炸
+extern int g_nBetterForPlayerCloseMoney; //对玩家友好在382>=19000时不生效
+
 class CConfigManager
 {
 public:

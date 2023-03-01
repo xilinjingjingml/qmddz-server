@@ -141,6 +141,12 @@
     <ClCompile Include="pt_gc_two_lord_card_not_handler.cpp">
       <Filter>handler</Filter>
     </ClCompile>
+    <ClCompile Include="pt_gc_update_player_tokenmoney_not_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
+    <ClCompile Include="pt_gc_clienttimer_not_handler.cpp">
+      <Filter>handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -267,6 +273,12 @@
       <Filter>handler</Filter>
     </ClInclude>
     <ClInclude Include="pt_gc_two_lord_card_not_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_gc_update_player_tokenmoney_not_handler.h">
+      <Filter>handler</Filter>
+    </ClInclude>
+    <ClInclude Include="pt_gc_clienttimer_not_handler.h">
       <Filter>handler</Filter>
     </ClInclude>
   </ItemGroup>

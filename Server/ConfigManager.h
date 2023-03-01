@@ -48,12 +48,44 @@ struct structRewardConfig
 	int nItemNumMin;
 	int nItemNumMax;
 	int nWeight;
+	int nConditionMin;
+	int nConditionMax;
 };
 
 struct structRewardConfigList
 {
 	int nWeightSum;
 	vector<structRewardConfig> vecRewardConfig;
+};
+
+struct structRewardItem
+{
+	int nItemId;
+	int nItemNumMin;
+	int nItemNumMax;
+};
+
+struct structRewardCondition
+{
+	int nRewardId;
+	int nWeight;
+	int nConditionMin;
+	int nConditionMax;
+};
+
+struct structToggleCondition
+{
+	int nPercent;
+	int nConditionMin;
+	int nConditionMax;
+};
+
+struct structMustLoseCardConfig
+{
+	int nCardValueMax;
+	int nCardValueMin;
+	int nCardNum;
+	int nCardLength;
 };
 
 typedef struct _MagicEmojiItem
@@ -118,15 +150,33 @@ public:
 	void getRedPacketNewBieInfo();
 	void readRewardConfig();
 	void getRewardNum(int nId, structRewardInfo& info);
+
+	void readRewardItem();
+	void readRewardCondition();
+	void getRewardCondition(vector<structRewardInfo>& vecReward, vector<int>& vecIds, int condition = 0);
+
+	void readToggleCondition();
+	bool isToggleCondition(int nId, int condition, bool def = false);
+
+	void readMustLoseCardConfig();
+	void readMustLoseCardMaxConfig();
+	vector< vector<structMustLoseCardConfig> > m_vecMustLoseCardConfigs;
+	vector< vector<structMustLoseCardConfig> > m_vecMustLoseCardMaxConfigs;
+
 private:
 	int m_nPlay_Num;
 	map<int, MagicEmojiItem> mapMagicEmojiItems_;
 	map<int, int> m_mapStarSkyDouble;
 	map<int, int> m_mapStarSkyTax;
 	map<int, structRewardConfigList> m_mapRewardConfig;
+
+	map<int, vector<structRewardItem> > m_mapRewardItem;
+	map<int, vector<structRewardCondition> > m_mapRewardCondition;
+
+	map<int, vector<structToggleCondition> > m_mapToggleCondition;
 };
 
-extern int g_nCallScore;	//是否叫分  0(叫地主,不叫）   1(1分，2分，3分）
+extern int g_nCallScore;	//是否叫分  0(叫地主,不叫）   1(1分，2分，3分）2(1分，2分，4分）
 extern int g_nRobLord;		//是否抢地主
 extern int g_nShowCard;		//是否明牌
 extern int g_nBaseScore;	//底注,0:动态调整
@@ -249,5 +299,21 @@ extern int g_nRedpakcetControllerRatio; //抽红包红包调整开关
 extern int g_nWinDoubleCan; //是否支持胜利翻倍
 extern int g_nWinDoubleAddAmount; //胜利翻倍额外赠送金额
 extern int g_nWinDoubleAddProbabily; //胜利翻倍额外赠送几率
+extern int g_nWinDoubleMaxAmount; //胜利翻倍额外赠送最大值
+extern int g_nWinDoubleMaxDouble; //胜利翻倍额外赠送最大倍数
 extern int g_nShuffleCardsForNewBieFileABTest; //新手洗牌读取文件abtest
 extern int g_nShuffleCardsForNewBieFileRound;  //新手洗牌读取文件局数限制
+extern int g_nShuffleCardsForNewBieFileOrder;		//新手洗牌读取顺序文件开关
+extern int g_nShuffleCardsForNewBieFileOrderRound;	//新手洗牌读取顺序文件局数限制
+extern int g_nShuffleCardsForNewBieFileOrderMoney;	//新手洗牌读取顺序文件提现道具数量限制
+extern int g_nIsBaiYuan;				//百元赛开关
+extern double g_dBaiYuanBombDouble;		//百元赛炸弹倍数
+extern int g_nBaiYuanHBRound;			//百元赛红包局数
+extern int g_nBaiYuanHBAwardStartId;	//百元赛局数红包奖励起始id
+extern int g_nBaiYuanHBAwardEndId;		//百元赛局数红包奖励结束id
+extern int g_nBaiYuanWinDoubleMin;		//百元赛赢分翻倍最小值 单位*100
+extern int g_nBaiYuanWinDoubleMax;		//百元赛赢分翻倍最大值 单位*100
+extern int g_nBaiYuanBankruptcyMin;		//百元赛破产补助最小值
+extern int g_nBaiYuanBankruptcyMax;		//百元赛破产补助最大值
+extern int g_nBaiYuanMustLostRound;		//百元赛必杀局
+extern int g_nBaiYuanMustLostMaxMoney;	//百元赛必杀局道具数量

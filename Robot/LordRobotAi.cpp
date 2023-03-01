@@ -11607,7 +11607,7 @@ int forceLord(LordRobot* robot)
 
 
 /*6、出牌：传出参数同[发牌]的传入参数，如果机器人不出牌，则传出null*/
-int takeOut(LordRobot* robot,int * p, int* laizi)
+int takeOut(LordRobot* robot,int * p, int* laizi, bool mustBomb)
 {
 	GAME *game=&robot->game;
 	COMBO_OF_POKERS *cur, combo;
@@ -11645,6 +11645,22 @@ int takeOut(LordRobot* robot,int * p, int* laizi)
 		{
 			//printf("beidong chupai!\n");
 			pass=robot_play(robot,cur,0);
+			if (pass && mustBomb && pl->combos_summary.bomb_num > 0 && game->players[game->pre_playernum]->combos_summary.real_total_num == 1)
+			{
+				COMBOS_SUMMARY* summary = pl->summary;
+				for (int i = 0; i < summary->bomb_num; i++)
+				{
+					if (check_combo_a_Big_than_b(summary->bomb[i], &game->pre))
+					{
+						COMBO_OF_POKERS* res = summary->bomb[i];
+						remove_combo_in_suit(summary, res);//tobe removed
+						*cur = *res;
+						res->type = NOTHING;
+						pass = 0;
+						break;
+					}
+				}
+			}
 		}
 	}
 	else

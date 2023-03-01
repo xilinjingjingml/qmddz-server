@@ -96,6 +96,8 @@ public:
 	Robot *getRobot(){return robot_;}
 	void set_playcardtime(int value = -1);
 	void SendPingPacket();
+	void set_chat_time(int time) { chat_time_ = time; }
+
 	/*
 	**	获取牌型;
 	*/
@@ -143,4 +145,5 @@ public:
 	int nScore_;
 	char cRob_;
     int reconnect_time_;
+	bool bBetterForPlayer;
 };

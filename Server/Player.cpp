@@ -2,20 +2,20 @@
 /// Copyright (c) 2005-2010 ShangHai Banding Co., All Rights Reserved.
 ///
 /// @file Player.cpp
-/// @brief 玩家控制类
+/// @brief 玩�?�控制类
 ///
-/// 处理玩家出牌操作，响应玩家操作请求
+/// 处理玩�?�出牌操作，响应玩�?�操作�?�求
 ///
 /// @author leiliang
 /// @date  2009/04/17
 ///
-/// 修改记录： 
-/// 日 期             版本     修改人        修改内容
+/// �?改�?�录�? 
+/// �? �?             版本     �?改人        �?改内�?
 /// 2009/04/17        1.0      leiliang       新建
 /// 2009/06/08        1.1      leiliang       添加任务系统
 
 /// 2012/08/10        v1.1.2    wulei           癞子场完
-/// 2012/08/15        v1.1.3    wulei           比赛场
+/// 2012/08/15        v1.1.3    wulei           比赛�?
 //////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -128,6 +128,11 @@ CPlayer::CPlayer()
 	m_bInvincible = false;
 	m_vecNewbieCardsId.clear();
 	m_vecRedPackets_Iteminfo.clear();
+	m_nBaiYuanHBCurRound = 0;
+	m_vecBaiYuanHBRoundAward.clear();
+	m_vecBaiYuanWinDouble.clear();
+	m_vecBaiYuanRegainLose.clear();
+	m_vecBaiYuanLuckWelfare.clear();
 }
 
 CPlayer::~CPlayer()
@@ -170,6 +175,15 @@ void CPlayer::NewRound()
 	m_bIsDouble = false;
 	m_nisRoundStart = true;
 	m_nGameScore = 0;
+	if (g_nIsBaiYuan == 1 && g_nBaiYuanHBRound > 0 && m_nBaiYuanHBCurRound >= g_nBaiYuanHBRound)
+	{
+		m_nBaiYuanHBCurRound = 0;
+		SendBaiYuanHBRound();
+	}
+	m_vecBaiYuanHBRoundAward.clear();
+	m_vecBaiYuanWinDouble.clear();
+	m_vecBaiYuanRegainLose.clear();
+	m_vecBaiYuanLuckWelfare.clear();
 
 #if 0
 	if (m_nBetLordCardIndex >= 0 && GetGameMoney() >= g_nBaseLordCardLottery + g_nLimitMoney)
@@ -201,7 +215,7 @@ void CPlayer::NewRound()
 	if (g_nPrivateRoom == 1 || g_nNewMatch == 1 || g_nIsStarSky == 1) {}
 	else if (GetCorePlayer()->GetPlyAttr(1, ITEM_CARD_RECORD) > 0)
 	{
-		UseCounts(); //使用记牌器
+		UseCounts(); //使用记牌�?
 	}
 
 	if (m_pCorePlayer)
@@ -247,7 +261,7 @@ void CPlayer::GetPlayerCards(pt_gc_refresh_card_not& noti, bool bShow)
 bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 {
 	SERVER_LOG("CPlayer::DoPlayCard()");
-	//检查出的牌是否存在，防止外挂出牌
+	//检查出的牌�?否存�?，防止�?�挂出牌
 	if (!m_PlayCard.CheckCards(m_PlayCard.m_cChoosingCards))
 	{
 		g_pLogger->Log("-------------------------------------------");
@@ -277,7 +291,7 @@ bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 		if( m_PlayCard.CheckChoosing() == 1 )
 		{
 			SERVER_LOG("DoPlayCard ok");
-			if( pPutPlayer == this )    //首家出牌
+			if( pPutPlayer == this )    //首�?�出�?
 			{
 				nCompare = 1;
 			}
@@ -294,14 +308,14 @@ bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 		}
 		else
 		{
-			SERVER_LOG("DoPlayCard 牌不合规则");
+			SERVER_LOG("DoPlayCard 牌不合�?�则");
 			return false;
 		}
 		*/
 		//change by JL for e
 	int nCompare = 0;
 
-	if (pPutPlayer == this)    //首家出牌
+	if (pPutPlayer == this)    //首�?�出�?
 	{
 		nCompare = m_PlayCard.CheckChoosing();
 	}
@@ -320,19 +334,19 @@ bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 	}
 	if (nCompare != 1)
 	{
-		SERVER_LOG("DoPlayCard 牌不合规则");
+		SERVER_LOG("DoPlayCard 牌不合�?�则");
 		return false;
 	}
 
 
-	//癞子斗地主    火箭X4倍、硬炸弹X4倍、软炸弹X2倍、纯癞子炸弹X64倍
+	//癞子斗地主    �?箭X4倍、硬炸弹X4倍、软炸弹X2倍、纯癞子炸弹X64�?
 
-	//如果出的是炸弹
+	//如果出的�?炸弹
 	if (m_PlayCard.m_cDiscardingType.m_nTypeNum == 4)
 	{
 		if (g_nBaoPai == 1)
 		{
-			if (m_PlayCard.m_cDiscardingType.m_nTypeBomb == 1)   //软炸弹
+			if (m_PlayCard.m_cDiscardingType.m_nTypeBomb == 1)   //�?炸弹
 			{
 				m_pGameTable->m_Poke.m_nBombCounter++;
 				m_pGameTable->m_nDouble *= 2;
@@ -346,8 +360,8 @@ bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 				m_pGameTable->setMutiDoubleDetail(BEI_SHU_INFO_BOMB, 64);
 				m_pGameTable->SendDoubleInfo();
 			}
-			//else if(m_PlayCard.m_cDiscardingType.m_nTypeBomb == 2 && m_PlayCard.m_cDiscardingType.m_nTypeValue == 16) //火箭
-			else if (m_PlayCard.m_cDiscardingType.m_nTypeBomb == 2)  //硬炸弹 (包括火箭)
+			//else if(m_PlayCard.m_cDiscardingType.m_nTypeBomb == 2 && m_PlayCard.m_cDiscardingType.m_nTypeValue == 16) //�?�?
+			else if (m_PlayCard.m_cDiscardingType.m_nTypeBomb == 2)  //�?炸弹 (包括�?�?)
 			{
 				m_pGameTable->m_Poke.m_nBombCounter += 2;
 				m_pGameTable->m_nDouble *= 4;
@@ -368,9 +382,15 @@ bool CPlayer::DoPlayCard(CPlayer* pPutPlayer)
 		{
 			chipFall();
 		}
+
+		// 百元�?
+		if (g_nIsBaiYuan == 1)
+		{
+			m_pGameTable->BombBaiYuan(this);
+		}
 	}
 
-	//减去玩家出的牌
+	//减去玩�?�出的牌
 	m_PlayCard.EraseCards(m_PlayCard.m_cChoosingCards);
 
 	return true;
@@ -462,12 +482,12 @@ void CPlayer::ProcessPacket(const char* pData, int nLen)
 	{
 
 		GAME_MESSAGE_HANDLER(cg_send_card_ok_ack);      //发牌动画完成
-		GAME_MESSAGE_HANDLER(cg_call_score_ack);        //叫分
-		GAME_MESSAGE_HANDLER(cg_rob_lord_ack);          //抢地主
-		GAME_MESSAGE_HANDLER(cg_show_card_ack);         //亮牌
+		GAME_MESSAGE_HANDLER(cg_call_score_ack);        //�?�?
+		GAME_MESSAGE_HANDLER(cg_rob_lord_ack);          //抢地�?
+		GAME_MESSAGE_HANDLER(cg_show_card_ack);         //�?�?
 		GAME_MESSAGE_HANDLER(cg_play_card_ack);         //出牌
-		GAME_MESSAGE_HANDLER(cg_auto_req);              //托管
-		GAME_MESSAGE_HANDLER(cg_complete_data_req);     //请求完整数据包
+		GAME_MESSAGE_HANDLER(cg_auto_req);              //托�??
+		GAME_MESSAGE_HANDLER(cg_complete_data_req);     //请求完整数据�?
 		GAME_MESSAGE_HANDLER(cg_card_count_req);
 		GAME_MESSAGE_HANDLER(cg_bet_lord_card_req);
 		GAME_MESSAGE_HANDLER(cg_get_lord_card_reward);
@@ -479,17 +499,23 @@ void CPlayer::ProcessPacket(const char* pData, int nLen)
 		GAME_DISPATCH_MESSAGE(ss_rp_update_grading_info_ack);
 		GAME_DISPATCH_MESSAGE(gc_card_recode_req);
 		//GAME_MESSAGE_HANDLER(cg_get_card_req);
-		GAME_DISPATCH_MESSAGE(cg_get_redpackets_award_req); // 客户端请求是否可红包
-		GAME_DISPATCH_MESSAGE(cg_get_redpackets_88yuan_award_req);  // 客户端请求是否可红包
-		GAME_DISPATCH_MESSAGE(cg_look_lord_card_req);   //请求看底牌
+		GAME_DISPATCH_MESSAGE(cg_get_redpackets_award_req); // 客户�?请求�?否可红包
+		GAME_DISPATCH_MESSAGE(cg_get_redpackets_88yuan_award_req);  // 客户�?请求�?否可红包
+		GAME_DISPATCH_MESSAGE(cg_look_lord_card_req);   //请求看底�?
 		GAME_DISPATCH_MESSAGE(cg_beishu_info_req);  // 请求倍数
-		GAME_DISPATCH_MESSAGE(cg_regain_lose_score_req);    // 获取之前输掉的金币
+		GAME_DISPATCH_MESSAGE(cg_regain_lose_score_req);    // 获取之前输掉的金�?
 		GAME_DISPATCH_MESSAGE(cg_enable_invincible_req);    // 开局免输
 		GAME_DISPATCH_MESSAGE(cg_get_redpackets_newbie_award_ack);
 		DISPATCH_MESSAGE(ss_update_regain_lose_score_ack);    // 开局免输
 		DISPATCH_MESSAGE(ss_get_newbie_reward_ack);    // 开局免输
-		GAME_DISPATCH_MESSAGE(cg_look_lord_card_item_req);   //请求看底牌
+		GAME_DISPATCH_MESSAGE(cg_look_lord_card_item_req);   //请求看底�?
 		GAME_DISPATCH_MESSAGE(cg_win_doubel_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_hb_round_award_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_win_double_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_regain_lose_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_luck_welfare_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_can_bankruptcy_defend_req);
+		GAME_DISPATCH_MESSAGE(cg_baiyuan_bankruptcy_defend_req);
 
 	default:
 		//SERVER_LOG("Unknow Cmd %d", opcode);      
@@ -502,7 +528,7 @@ void CPlayer::OnNetStatusChange(bool status)
 	SERVER_LOG("CPlayer::OnNetStatusChange(status:%d)", status);
 	if (!m_pGameTable)
 		return;
-	if (status)                                     //断线重连
+	if (status)                                     //�?线重�?
 	{
 		if (m_pGameTable->m_bRacing)
 		{
@@ -575,6 +601,7 @@ void CPlayer::OnNetStatusChange(bool status)
 				req.opcode = gc_call_score_req;
 				req.nScore = m_pGameTable->m_nCallScore;
 				req.nSerialID = m_pGameTable->m_nSerialID;
+				req.nCallMode = g_nCallScore;
 				SendPacket(req);
 			}
 			else if (m_pGameTable->m_currentTime_ == CGameTable::eROBLORD_EVENT)
@@ -612,7 +639,7 @@ void CPlayer::OnNetStatusChange(bool status)
 		}
 
 	}
-	else                                            //断线
+	else                                            //�?�?
 	{
 		if (m_pGameTable->m_bRacing && g_nPauseTime == 0)
 		{
@@ -714,7 +741,7 @@ void CPlayer::OnPacket(const pt_magic_emoji_req& req)
 
 	const vector<MagicEmojiItem>& tempMagicEmojiConfigs = CConfigManager::GetInstancePtr()->m_vecMagicEmojiConfigs;
 
-	if (g_nIsNeedMagicEmoji != 1) //不支持
+	if (g_nIsNeedMagicEmoji != 1) //不支�?
 	{
 		errorIndx = NO_SUPPORT;
 	}
@@ -722,7 +749,7 @@ void CPlayer::OnPacket(const pt_magic_emoji_req& req)
 	{
 		errorIndx = NO_EXIST;
 	}
-	else if (cToChairID == GetChairID()) //不能发给自己
+	else if (cToChairID == GetChairID()) //不能发给�?�?
 	{
 		errorIndx = NO_SEND_SELF;
 	}
@@ -736,7 +763,7 @@ void CPlayer::OnPacket(const pt_magic_emoji_req& req)
 	magicEmojiInfo.cToChairID = cToChairID;
 	magicEmojiInfo.cEmojiNum = 1;
 
-	if (errorIndx > 0) // 判断消耗类型
+	if (errorIndx > 0) // 判断消耗类�?
 	{
 		SendPacket(magicEmojiInfo);
 		return;
@@ -753,7 +780,7 @@ void CPlayer::OnPacket(const pt_magic_emoji_req& req)
 		magicEmojiInfo.cEmojiNum = emojiItem.nTenEmojiNum;
 	}
 
-	// 如果魔法表情消耗的是金币
+	// 如果魔法表情消耗的�?金币
 	if (nCostType == ITEM_MONEY)
 	{
 		int64 curPlayerMoney = GetGameMoney();
@@ -770,12 +797,12 @@ void CPlayer::OnPacket(const pt_magic_emoji_req& req)
 	{
 		if (GetCorePlayer()->GetPlyAttr(ITEM_ATTR, nCostType) < nItemConsumeCoins)
 		{
-			errorIndx = NO_ENOUGH_MONEY;    //未知的货币
+			errorIndx = NO_ENOUGH_MONEY;    //�?知的货币
 		}
 	}
 
 
-	if (errorIndx > 0) // 判断消耗类型
+	if (errorIndx > 0) // 判断消耗类�?
 	{
 		SendPacket(magicEmojiInfo);
 		return;
@@ -853,7 +880,7 @@ void CPlayer::OnPacket(const pt_ss_get_newbie_reward_ack& ack)
 		}
 		else
 		{
-			// 没有参加新人局数活动的老用户 剔除
+			// 没有参加新人局数活动的老用�? 剔除
 			m_redpackets_newbie_data.nIndex = -1;
 		}
 
@@ -890,7 +917,7 @@ void CPlayer::OnPacket(const pt_cg_get_redpackets_newbie_award_ack& ack)
 	noti.opcode = gc_get_redpackets_newbie_award_not;
 	noti.nRet = 0;
 	noti.nAmount = sRedPacketNewBieInfo.nAmount;
-	// 新手翻倍
+	// 新手翻�?
 	if (ack.cDouble > 0 && ack.cDouble <= sRedPacketNewBieInfo.nDoubel)
 	{
 		noti.nAmount *= ack.cDouble;
@@ -954,15 +981,15 @@ void CPlayer::readRedPacketsData()
 	{
 		return;
 	}
-	//目前只有高级场读取数据库
+	//�?前只有高级场读取数据�?
 	if (g_nHBMode == HONGBAO_GAOJI)
 	{
 		/*
 		RPGAME_DATA_GIFT_POOL = 0,   // 奖池
 		RPGAME_DATA_CURRENT_ROUND,   // 当前回合
-		RPGAME_DATA_REWARD_STATUS,   // 奖励状态
-		RPGAME_DATA_AWARD,           // 领取金额
-		RPGAME_DATA_TOTAL_REWARD,    // 领取红包总值
+		RPGAME_DATA_REWARD_STATUS,   // 奖励状�?
+		RPGAME_DATA_AWARD,           // 领取金�??
+		RPGAME_DATA_TOTAL_REWARD,    // 领取红包总�?
 		RPGAME_DATA_REWARD_TIMES,    // 红包领取次数
 		*/
 		m_nRedPackets_AwardPool = GetCorePlayer()->GetPlyInt64Attr(PLY_RP_GAME_DATA, RPGAME_DATA_GIFT_POOL);
@@ -982,7 +1009,7 @@ void CPlayer::readRedPacketsData()
 	}
 	*/
 
-	// 清理状态3
+	// 清理状�?3
 	if (m_nRedPackets_Status == REDPACKET_STATUS_EXTRA)
 	{
 		m_nRedPackets_Status = REDPACKET_STATUS_NONE;
@@ -1065,15 +1092,15 @@ void CPlayer::writeRedPacketsStatusData()
 	{
 		return;
 	}
-	//目前只有高级场写入数据库
+	//�?前只有高级场写入数据�?
 	if (g_nHBMode == HONGBAO_GAOJI)
 	{
 		/*
 		int64 gift_pool;    // 奖池
 		int current_round;  // 当前回合
-		int reward_status;  // 奖励状态
-		int64 award;        // 领取金额
-		int64 total_reward; // 领取红包总值
+		int reward_status;  // 奖励状�?
+		int64 award;        // 领取金�??
+		int64 total_reward; // 领取红包总�?
 		int reward_times;   // 红包领取次数
 		*/
 		pt_ss_rp_save_game_data_req req;
@@ -1129,7 +1156,7 @@ void CPlayer::pt_cg_get_redpackets_award_req_handler(const pt_cg_get_redpackets_
 		return;
 	}
 
-	//写数据库操作TODO    
+	//写数�?库操作TODO    
 	if (m_nRedPackets_AwardNum > 0)
 	{
 		m_nRedPackets_CurRound = 0;
@@ -1151,7 +1178,7 @@ void CPlayer::pt_cg_get_redpackets_award_req_handler(const pt_cg_get_redpackets_
 		this->GetCorePlayer()->UpdatePlyAttrs(item_);
 
 		bool needGenExtraRedPacket = (m_nRedPackets_Status == REDPACKET_STATUS_READY);
-		//通知客户端
+		//通知客户�?
 		m_nRedPackets_Status = REDPACKET_STATUS_SEND;
 		SendRedPacketsResult();
 		getRedPacketBroadcast(m_nRedPackets_AwardNum, ITEM_GOLD_TICKET);
@@ -1176,7 +1203,7 @@ bool CPlayer::genExtraRedPacketNum()
 		return false;
 	}
 
-	// 新人前3局不显示抽奖
+	// 新人�?3局不显示抽�?
 	int nNumRound = GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND);
 	if (nNumRound < g_nBetterSeatForNewBieRound)
 	{
@@ -1412,9 +1439,9 @@ void CPlayer::RoundEnd(int64 nScore)
 
 	m_nWinRound = nScore > 0 ? 2 : 1;
 	m_nGameScore = nScore;
-	//检查红包状态是否可以领, 可以领直接生成红包
+	//检查红包状态是否可以�??, �?以�?�直接生成红�?
 	checkRedPacketsTask();
-	//通知客户端
+	//通知客户�?
 	SendRedPacketsResult();
 
 	checkRedPacket88YuanData();
@@ -1423,7 +1450,7 @@ void CPlayer::RoundEnd(int64 nScore)
 	// 新人前n局奖励红包
 	genRedPacketForNewBie();
 
-	// 胜利翻倍
+	// 胜利翻�?
 	genWinDouble();
 
 	setShowCard(0);
@@ -1433,6 +1460,28 @@ void CPlayer::RoundEnd(int64 nScore)
 	m_nisRoundStart = false;
 	m_bInvincible = false;
 	
+	if (g_nIsBaiYuan == 1)
+	{
+		if (g_nBaiYuanHBRound > 0)
+		{
+			m_nBaiYuanHBCurRound++;
+
+			//百元赛局数红�?
+			SendBaiYuanHBRound();
+
+			//百元赛局数红�?
+			SendBaiYuanHBRoundAward();
+		}
+
+		//百元赛赢分加�?
+		SendBaiYuanWinDouble();
+
+		//百元赛追回损�?
+		SendBaiYuanRegainLose();
+
+		//百元赛幸运�?�利
+		SendBaiYuanLuckWelfare();
+	}
 }
 
 
@@ -1444,7 +1493,7 @@ int CPlayer::genRedPacketNumForNewBie() {
 	}
 
 	int nNumRound = GetCorePlayer()->GetPlyAttr(0, PLY_ATTR_ROUND) - 1;
-	//int limitRound = tmp_vecRedPacketNewBieConfig.size() * 4 + 10;//放宽局数显示，有的人可能中途破产了。
+	//int limitRound = tmp_vecRedPacketNewBieConfig.size() * 4 + 10;//放�?�局数显示，有的人可能中途破产了�?
 	if (nNumRound >= 0 && nNumRound < tmp_vecRedPacketNewBieConfig.size())
 	{
 		if (m_nRedPackets_TotalAwardCount >= 0 && m_nRedPackets_TotalAwardCount < tmp_vecRedPacketNewBieConfig.size())
@@ -1495,7 +1544,7 @@ int CPlayer::genRedPacketNumForH5(int extBet)
 
 	int awardIndexCount = realVecRedPacketConfig.size();
 
-	//限制抽取红包过多的人
+	//限制抽取红包过�?�的�?
 	if (g_nRedPacketLimit == 1)
 	{
 		vector<structRedPackeLimit>::reverse_iterator vecRedPacketLimitIt = CConfigManager::GetInstancePtr()->m_vecRedPacketLimitConfig.rbegin();
@@ -1615,7 +1664,7 @@ int CPlayer::genRedPacketNum(int extBet)
 	{
 		extBet = 13;
 	}
-	else if (m_nWinRound == 2) { //赢的人倍数少
+	else if (m_nWinRound == 2) { //赢的人倍数�?
 		extBet = 8;
 	}
 	else if (m_nWinRound == 1) {
@@ -1731,13 +1780,13 @@ void CPlayer::readRedPacket88YuanData()
 		return;
 	}
 
-	//目前只有高级场读取数据库
+	//�?前只有高级场读取数据�?
 	/*
 	RPGAME_DATA_GIFT_POOL = 0,   // 奖池
 	RPGAME_DATA_CURRENT_ROUND,   // 当前回合
-	RPGAME_DATA_REWARD_STATUS,   // 奖励状态
-	RPGAME_DATA_AWARD,           // 领取金额
-	RPGAME_DATA_TOTAL_REWARD,    // 领取红包总值
+	RPGAME_DATA_REWARD_STATUS,   // 奖励状�?
+	RPGAME_DATA_AWARD,           // 领取金�??
+	RPGAME_DATA_TOTAL_REWARD,    // 领取红包总�?
 	RPGAME_DATA_REWARD_TIMES,    // 红包领取次数
 	*/
 	m_nRedPackets_88Yuan_AwardPool = GetCorePlayer()->GetPlyInt64Attr(PLY_RP_88FIXED_DATA, RPGAME_DATA_GIFT_POOL);
@@ -1775,7 +1824,7 @@ void CPlayer::readRedPacket88YuanData()
 void CPlayer::saveRedPacket88YuanData()
 {
 
-	//目前只有高级场写入数据库
+	//�?前只有高级场写入数据�?
 	if (g_nHBMode < HONGBAO_H5_CHUJI)
 	{
 		return;
@@ -1788,9 +1837,9 @@ void CPlayer::saveRedPacket88YuanData()
 	/*
 	int64 gift_pool;    // 奖池
 	int current_round;  // 当前回合
-	int reward_status;  // 奖励状态
-	int64 award;        // 领取金额
-	int64 total_reward; // 领取红包总值
+	int reward_status;  // 奖励状�?
+	int64 award;        // 领取金�??
+	int64 total_reward; // 领取红包总�?
 	int reward_times;   // 红包领取次数
 	*/
 	pt_ss_rp_save_game_data_req req;
@@ -2055,7 +2104,7 @@ void CPlayer::getRegainLoseMoney(int op, pt_cg_regain_lose_score_req* req)
 	int ackTime = 0;
 	do {
 		if (g_nRegainLoseCountLimit < 1) {
-			ackRet = -1;  // 没开启功能
+			ackRet = -1;  // 没开�?功能
 			return;
 		}
 
@@ -2068,7 +2117,7 @@ void CPlayer::getRegainLoseMoney(int op, pt_cg_regain_lose_score_req* req)
 		}
 		if (m_rls_game_data.total_count < 0 || g_nRegainLoseMAXCount <= 0 || m_rls_game_data.total_count >= (g_nRegainLoseMAXCount + nRegainLoseFreeCount))
 		{
-			ackRet = -7;	//每日次数用完了
+			ackRet = -7;	//每日次数用完�?
 			break;
 		}
 			
@@ -2115,12 +2164,12 @@ void CPlayer::getRegainLoseMoney(int op, pt_cg_regain_lose_score_req* req)
 		}
 
 		if (m_rls_game_data.last_lose_money < 1) {
-			ackRet = -5;  // 领完了
+			ackRet = -5;  // 领完�?
 			break;
 		}
 
-		// < 2kw 领取80% 一次领取玩
-		// >= 2kw 领取0.8kw + 1.2kw 分两次领取
+		// < 2kw 领取80% 一次�?�取�?
+		// >= 2kw 领取0.8kw + 1.2kw 分两次�?�取
 		ackRet = 1;
 
 	} while (false);
@@ -2146,7 +2195,7 @@ void CPlayer::getRegainLoseMoney(int op, pt_cg_regain_lose_score_req* req)
 			GetCorePlayer()->UpdatePlyAttrs(item_);
 		}
 
-		// Warn 根据客户端发送道具 不做验证
+		// Warn 根据客户�?发送道�? 不做验证
 		if (req != NULL && req->nItemNum > 0)
 		{
 			buffer[512];
@@ -2224,6 +2273,11 @@ void CPlayer::genWinDouble()
 		return;
 	}
 
+	if (g_nWinDoubleMaxAmount > 0 && m_nGameScore >= g_nWinDoubleMaxAmount)
+	{
+		return;
+	}
+
 	pt_gc_win_doubel_req req;
 	req.opcode = gc_win_doubel_req;
 	req.nAddAmount = g_nWinDoubleAddAmount;
@@ -2250,7 +2304,27 @@ void CPlayer::OnPacket(const pt_cg_win_doubel_req& req)
 		ItemInfo info;
 		info.nItemIndex = ITEM_MONEY;
 		info.nItemNum = m_nGameScore;
-		if (g_nWinDoubleAddAmount > 0 && g_nWinDoubleAddProbabily > 0 && rand() % 100 < g_nWinDoubleAddProbabily)
+		
+		if (g_nWinDoubleMaxAmount > 0)
+		{
+			if (g_nWinDoubleMaxDouble > 0)
+			{
+				int curDouble = min(g_nWinDoubleMaxDouble, int(g_nWinDoubleMaxAmount / m_nGameScore));
+				if (curDouble > 2)
+				{
+					info.nItemNum *= rand() % (curDouble - 2) + 2;
+				}
+				else if (curDouble == 2)
+				{
+					info.nItemNum *= curDouble;
+				}
+			}
+			if (info.nItemNum > g_nWinDoubleMaxAmount)
+			{
+				info.nItemNum = g_nWinDoubleMaxAmount;
+			}
+		}
+		else if (g_nWinDoubleAddAmount > 0 && g_nWinDoubleAddProbabily > 0 && rand() % 100 < g_nWinDoubleAddProbabily)
 		{
 			info.nItemNum += g_nWinDoubleAddAmount;
 		}
@@ -2265,5 +2339,299 @@ void CPlayer::OnPacket(const pt_cg_win_doubel_req& req)
 		m_nGameScore = 0;
 	}
 	// 通知
+	SendPacket(ack);
+}
+
+void CPlayer::SendBaiYuanHBRound()
+{
+	pt_gc_baiyuan_hb_round_not noti;
+	noti.opcode = gc_baiyuan_hb_round_not;
+	noti.nCurRound = m_nBaiYuanHBCurRound;
+	noti.nLimitRound = g_nBaiYuanHBRound;
+	SendPacket(noti);
+}
+
+void CPlayer::SendBaiYuanHBRoundAward()
+{
+	if (m_nBaiYuanHBCurRound < g_nBaiYuanHBRound)
+	{
+		return;
+	}
+
+	vector<structRewardInfo> vecReward;
+	vector<int> vecIds;
+	for (int i = g_nBaiYuanHBAwardStartId; i <= g_nBaiYuanHBAwardEndId; i++)
+	{
+		vecIds.push_back(i);
+	}
+	CConfigManager::GetInstancePtr()->getRewardCondition(vecReward, vecIds, getItemNum(ITEM_BY_CASH));
+	if (vecReward.size() == 0)
+	{
+		return;
+	}
+
+	for (size_t i = 0; i < vecReward.size(); i++)
+	{
+		item_info info;
+		info.nItemId = vecReward[i].nItemId;
+		info.nItemNum = vecReward[i].nItemNum;
+		m_vecBaiYuanHBRoundAward.push_back(info);
+	}
+
+	pt_gc_baiyuan_hb_round_award_not noti;
+	noti.opcode = gc_baiyuan_hb_round_award_not;
+	noti.vecItemInfo = m_vecBaiYuanHBRoundAward;
+	SendPacket(noti);
+}
+
+void CPlayer::SendBaiYuanWinDouble()
+{
+	if (m_nGameScore <= 0)
+	{
+		return;
+	}
+
+	if (!CConfigManager::GetInstancePtr()->isToggleCondition(TC_WinDouble, getItemNum(ITEM_BY_CASH)))
+	{
+		return;
+	}
+
+/*
+	int nDouble = g_nBaiYuanWinDoubleMin;
+	if (nDouble != g_nBaiYuanWinDoubleMax)
+	{
+		nDouble += rand() % (g_nBaiYuanWinDoubleMax - g_nBaiYuanWinDoubleMin);
+	}*/
+	item_info info;
+	info.nItemId = ITEM_BY_CASH;
+	//info.nItemNum = m_nGameScore * nDouble / 100;
+	info.nItemNum = m_nGameScore * 2; // ��Ԫ����ÿ�η���
+	m_vecBaiYuanWinDouble.push_back(info);
+	
+	info.nItemNum += m_nGameScore;
+
+	pt_gc_baiyuan_win_double_not noti;
+	noti.opcode = gc_baiyuan_win_double_not;
+	noti.vecItemInfo.push_back(info);
+	SendPacket(noti);
+}
+
+void CPlayer::SendBaiYuanRegainLose()
+{
+	if (m_nGameScore >= 0)
+	{
+		return;
+	}
+
+/*
+	if (!CConfigManager::GetInstancePtr()->isToggleCondition(TC_RegainLose, getItemNum(ITEM_BY_CASH)))
+	{
+		return;
+	}
+*/
+
+	item_info info;
+	info.nItemId = ITEM_BY_CASH;
+	info.nItemNum = (int)-m_nGameScore;
+	m_vecBaiYuanRegainLose.push_back(info);
+	
+	pt_gc_baiyuan_regain_lose_not noti;
+	noti.opcode = gc_baiyuan_regain_lose_not;
+	noti.vecItemInfo = m_vecBaiYuanRegainLose;
+	SendPacket(noti);
+}
+
+void CPlayer::SendBaiYuanLuckWelfare()
+{
+	if (m_pGameTable == NULL)
+	{
+		return;
+	}
+
+	if (!CConfigManager::GetInstancePtr()->isToggleCondition(TC_LuckWelfare, getItemNum(ITEM_BY_CASH)))
+	{
+		return;
+	}
+
+	item_info info;
+	info.nItemId = ITEM_BY_CASH;
+	info.nItemNum = m_pGameTable->m_nBaseScore * m_pGameTable->m_nCallScore;
+	m_vecBaiYuanLuckWelfare.push_back(info);
+
+	pt_gc_baiyuan_luck_welfare_not noti;
+	noti.opcode = gc_baiyuan_luck_welfare_not;
+	noti.vecItemInfo = m_vecBaiYuanLuckWelfare;
+	SendPacket(noti);
+}
+
+int CPlayer::getItemNum(ITEM_INDEX index)
+{
+	if (m_pCorePlayer)
+	{
+		return m_pCorePlayer->GetPlyAttr(ITEM_ATTR, index);
+	}
+
+	return 0;
+}
+
+void CPlayer::updatePlayerItems(vector<item_info>& vecItems, const char* buffer)
+{
+	for (size_t i = 0; i < vecItems.size(); i++)
+	{
+		IPlayer::PlyAttrItem item_(UP_RN_SPECIFY_ITEM, vecItems[i].nItemId, vecItems[i].nItemNum, 0, buffer);
+		GetCorePlayer()->UpdatePlyAttrs(item_);
+	}
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_hb_round_award_req& req)
+{
+	pt_gc_baiyuan_hb_round_award_ack ack;
+	ack.opcode = gc_baiyuan_hb_round_award_ack;
+	if (m_vecBaiYuanHBRoundAward.size() == 0)
+	{
+		ack.cRet = -1;
+	}
+	else
+	{
+		ack.cRet = 0;
+		ack.vecItemInfo = m_vecBaiYuanHBRoundAward;
+
+		m_vecBaiYuanHBRoundAward.clear();
+		m_nBaiYuanHBCurRound = 0;
+
+		// 加钱
+		char buffer[512];
+		sprintf(buffer, "baiyuan_hb_round_award item:%d", getItemNum(ITEM_BY_CASH));
+		updatePlayerItems(ack.vecItemInfo, buffer);
+	}
+	SendPacket(ack);
+	SendBaiYuanHBRound();
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_win_double_req& req)
+{
+	pt_gc_baiyuan_win_double_ack ack;
+	ack.opcode = gc_baiyuan_win_double_ack;
+	if (m_vecBaiYuanWinDouble.size() == 0)
+	{
+		ack.cRet = -1;
+	}
+	else
+	{
+		ack.cRet = 0;
+		ack.vecItemInfo = m_vecBaiYuanWinDouble;
+
+		m_vecBaiYuanWinDouble.clear();
+
+		// 加钱
+		char buffer[512];
+		sprintf(buffer, "baiyuan_win_double item:%d score:%lld", getItemNum(ITEM_BY_CASH), m_nGameScore);
+		updatePlayerItems(ack.vecItemInfo, buffer);
+/*
+
+		if (ack.vecItemInfo[0].nItemId == ITEM_BY_CASH && m_nGameScore > 0)
+		{
+			ack.vecItemInfo[0].nItemNum += m_nGameScore;
+		}*/
+	}
+	SendPacket(ack);
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_regain_lose_req& req)
+{
+	pt_gc_baiyuan_regain_lose_ack ack;
+	ack.opcode = gc_baiyuan_regain_lose_ack;
+	if (m_vecBaiYuanRegainLose.size() == 0)
+	{
+		ack.cRet = -1;
+	}
+	else
+	{
+		ack.cRet = 0;
+		ack.vecItemInfo = m_vecBaiYuanRegainLose;
+
+		m_vecBaiYuanRegainLose.clear();
+
+		// 加钱
+		char buffer[512];
+		sprintf(buffer, "baiyuan_regain_lose item:%d score:%lld", getItemNum(ITEM_BY_CASH), m_nGameScore);
+		updatePlayerItems(ack.vecItemInfo, buffer);
+	}
+	SendPacket(ack);
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_luck_welfare_req& req)
+{
+	pt_gc_baiyuan_luck_welfare_ack ack;
+	ack.opcode = gc_baiyuan_luck_welfare_ack;
+	if (m_vecBaiYuanLuckWelfare.size() == 0)
+	{
+		ack.cRet = -1;
+	}
+	else
+	{
+		ack.cRet = 0;
+		ack.vecItemInfo = m_vecBaiYuanLuckWelfare;
+
+		m_vecBaiYuanLuckWelfare.clear();
+
+		// 加钱
+		char buffer[512];
+		sprintf(buffer, "baiyuan_luck_welfare item:%d", getItemNum(ITEM_BY_CASH));
+		updatePlayerItems(ack.vecItemInfo, buffer);
+	}
+	SendPacket(ack);
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_can_bankruptcy_defend_req& req)
+{
+	pt_gc_baiyuan_can_bankruptcy_defend_ack ack;
+	ack.opcode = gc_baiyuan_can_bankruptcy_defend_ack;
+
+	int num = getItemNum(ITEM_BY_CASH);
+	if (g_nBaiYuanBankruptcyMin >= 0 && num < g_nBaiYuanBankruptcyMin)
+	{
+		int nScore = g_nBaiYuanBankruptcyMax - num;
+
+		item_info info;
+		info.nItemId = ITEM_BY_CASH;
+		info.nItemNum = nScore;
+
+		ack.cRet = 0;
+		ack.vecItemInfo.push_back(info);
+	}
+	else
+	{
+		ack.cRet = -1;
+	}
+	SendPacket(ack);
+}
+
+void CPlayer::OnPacket(const pt_cg_baiyuan_bankruptcy_defend_req& req)
+{
+	pt_gc_baiyuan_bankruptcy_defend_ack ack;
+	ack.opcode = gc_baiyuan_bankruptcy_defend_ack;
+
+	int num = getItemNum(ITEM_BY_CASH);
+	if (g_nBaiYuanBankruptcyMin >= 0 && num < g_nBaiYuanBankruptcyMin)
+	{
+		int nScore = g_nBaiYuanBankruptcyMax - num;
+
+		item_info info;
+		info.nItemId = ITEM_BY_CASH;
+		info.nItemNum = nScore;
+
+		ack.cRet = 0;
+		ack.vecItemInfo.push_back(info);
+
+		// 加钱
+		char buffer[512];
+		sprintf(buffer, "baiyuan_bankruptcy_subsidy item:%d min:%d max:%d", num, g_nBaiYuanBankruptcyMin, g_nBaiYuanBankruptcyMax);
+		updatePlayerItems(ack.vecItemInfo, buffer);
+	}
+	else
+	{
+		ack.cRet = -1;
+	}
 	SendPacket(ack);
 }

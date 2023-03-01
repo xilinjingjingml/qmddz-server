@@ -10,22 +10,26 @@
 #	user design
 #**********************************************************
 
+
+PROTOCOL_DIR := ../../../LobbyServer/branches/LobbyServer_qmmj/Protocol
+LIBS_DIR := ../../../../libs
+
 # DEBUG can be set to YES to include debug info, or NO otherwise
 DEBUG := YES
 OUTPUT	:= ../bin/RPDDZV2Server
 DEFS	:= 
 INCS	:= -I./ \
 	-I../ \
-	-I../../../../../LobbyServer/tags/Protocol/20200907 \
-	-I../../../../../LobbyServer/tags/Protocol/20200907/gen_src \
-	-I../../../../../../libs/hglibs \
-	-I../../../../../../libs/hglibs/BD_Common/libprotobuf-2.5 -I../../../../../../libs/boost_1_48_0 \
-	-I../../../../../../libs/hglibs/BD_BaseHelper/sqlite \
+	-I$(PROTOCOL_DIR) \
+	-I$(PROTOCOL_DIR)/gen_src \
+	-I$(LIBS_DIR)/hglibs \
+	-I$(LIBS_DIR)/hglibs/BD_Common/libprotobuf-2.5 -I$(LIBS_DIR)/boost_1_48_0 \
+	-I$(LIBS_DIR)/hglibs/BD_BaseHelper/sqlite \
 	-I/usr/include/mysql
 
-LIBS	:= -L../../../../../../libs/libraries -lboost_system-s \
+LIBS	:= -L$(LIBS_DIR)/libraries -lboost_system-s \
 	-L/usr/lib -lmysqlclient -lbd_basehelper -ldl -lpthread \
-	../../../../../../libs/libraries/libprotobuf.a
+	$(LIBS_DIR)/libraries/libprotobuf.a
 
 #**********************************************************
 
@@ -51,8 +55,8 @@ endif
 all:$(OUTPUT)
 
 SRCS	:= $(wildcard *.cpp) $(wildcard ../Common/*.cpp) $(wildcard Protocol/BaseGameServer/*.cpp) $(wildcard ../gen_src/*.cpp) \
-   	$(wildcard ../../../../../LobbyServer/tags/Protocol/20200907/gen_src/world*.cpp) \
-   	$(wildcard ../../../../../LobbyServer/tags/Protocol/20200907/gen_src/base*.cpp)
+   	$(wildcard $(PROTOCOL_DIR)/gen_src/world*.cpp) \
+   	$(wildcard $(PROTOCOL_DIR)/gen_src/base*.cpp)
 
 OBJS	:= $(addsuffix .o, $(basename $(SRCS)))
 

@@ -1359,12 +1359,13 @@ void lookCard(lordGame * game)
 
 
 //skill34 是否跳过3 4
-void  setbomb(lordGame* g, int num, int inRuleType)
+void  setbomb(lordGame* g, int num, int inRuleType, int better_pos)
 {
 	static const int prob_rocket[]= {0, 58, 74, 82, 87, 90, 93, 96};
 	int probR, remain[4]= {17,17,17,3};
-	int bomb_value[13] = { 0 };
-	if(num>=8)
+	int bomb_value[13];
+	memset(bomb_value, 0, sizeof(bomb_value));
+	if (num >= 8)
 		probR = 100;
 	else
 		probR = prob_rocket[num];
@@ -1373,6 +1374,10 @@ void  setbomb(lordGame* g, int num, int inRuleType)
 	if(is_R)
 	{
 		int pos=RAND_NUM_FROM_RANGE(0,2);
+		if (inRuleType == 4)
+		{
+			pos = better_pos;
+		}
 		g->bombs[pos].hands[BIG_JOKER] = 1;
 		g->bombs[pos].hands[LIT_JOKER] = 1;
 		num--;
@@ -1423,6 +1428,10 @@ void  setbomb(lordGame* g, int num, int inRuleType)
 		bomb_value[val]=0;
 __re_find_pos_set_bomb:
 		int pos=get_pos(remain,3);
+		if (inRuleType == 4 && remain[pos] >= 4)
+		{
+			pos = better_pos;
+		}
 		if(remain[pos]<4)
 			goto __re_find_pos_set_bomb;
 
@@ -2458,7 +2467,8 @@ void  setBetterSeat_two(lordGame* g, int pos)
 	if (cur_pos == -1)
 	{
 		int num = 0;
-		int num_wang_2[2] = { 0 };
+		int num_wang_2[2];
+		memset(num_wang_2, 0, sizeof(num_wang_2));
 		for (int i = 0; i < num; i++)
 		{
 			num_wang_2[i] = calc_wang_2(&g->other_pokers[i]);
@@ -3207,7 +3217,7 @@ bool InitCardRandom(Request& cardReq, int inRuleType, int *Card, int* Laizi)
 
 
 	// step 0: bomb
-	setbomb(game, bomb_number, inRuleType);
+	setbomb(game, bomb_number, inRuleType, better_pos);
 
 	if(!verify_game(game, inRuleType)){
 		free(game);
@@ -3225,11 +3235,11 @@ bool InitCardRandom(Request& cardReq, int inRuleType, int *Card, int* Laizi)
 	{
 		if (inRuleType == 2)
 			setBetterSeat_two(game, better_pos);
-		else if(inRuleType==0 || inRuleType == 3)
-			setBetterSeat( game, better_pos);
+		else if(inRuleType == 1)
+			setBetterSeat_laizi(game, better_pos);
 		else
-			setBetterSeat_laizi( game, better_pos);
-	}        
+			setBetterSeat(game, better_pos);
+	}
 	//ly20130326 remove   else if (cardReq->base_good) //give first player better
 	//ly20130326 remove        setBetterSeat( game, first_pos);
 
@@ -3303,12 +3313,12 @@ bool InitCardRandom(Request& cardReq, int inRuleType, int *Card, int* Laizi)
         return 0;
     }
 
-	if (inRuleType == 0 || inRuleType == 3){
+	if (inRuleType == 1){
 		if(pos_better >= 0){
-			settidiness(game, pos_better, swap[0],first_seat);
+			settidiness_laizi(game, pos_better, swap[0],first_seat);
 		}
 		if(pos_first>=0){
-			settidiness(game, pos_first, swap[1],first_seat);
+			settidiness_laizi(game, pos_first, swap[1],first_seat);
 		}
 		game->hun= -1;
 	}else if (inRuleType == 2){
@@ -3322,10 +3332,10 @@ bool InitCardRandom(Request& cardReq, int inRuleType, int *Card, int* Laizi)
 	}else{
 
 		if(pos_better >= 0){
-			settidiness_laizi(game, pos_better, swap[0],first_seat);
+			settidiness(game, pos_better, swap[0],first_seat);
 		}
 		if(pos_first>=0){
-			settidiness_laizi(game, pos_first, swap[1],first_seat);
+			settidiness(game, pos_first, swap[1],first_seat);
 		}
 	}
 

@@ -78,7 +78,7 @@ void getPlayerCallScore(LordRobot* robot,int score, int player_number) ;
 void beLord(LordRobot* robot,int *pot,int player_number);
 
 /*6、出牌：1表示pass，0表示出牌，牌组信息放在P里*/
-int  takeOut(LordRobot* robot,int * p, int* laizi);
+int takeOut(LordRobot* robot, int* p, int* laizi, bool mustBomb = false);
 
 int userTakeOutAndTest(LordRobot* robot,int * p, int* laizi);
 

@@ -146,6 +146,30 @@ enum GAME_OPCODE
 	gc_win_doubel_req,         // 胜利翻倍
 	cg_win_doubel_req,         // 胜利翻倍
 	gc_win_doubel_ack,         // 胜利翻倍
+
+	gc_baiyuan_tocash_item_not,		// 百元赛提现道具信息
+
+	gc_baiyuan_hb_round_not,		// 百元赛服务端通知红包局数信息
+	gc_baiyuan_hb_round_award_not,	// 百元赛客户端请求抽红包
+	cg_baiyuan_hb_round_award_req,	// 百元赛客户端请求抽红包
+	gc_baiyuan_hb_round_award_ack,	// 百元赛服务端回应抽红包
+
+	gc_baiyuan_win_double_not,		// 百元赛服务端通知赢分加倍
+	cg_baiyuan_win_double_req,		// 百元赛客户端请求赢分加倍
+	gc_baiyuan_win_double_ack,		// 百元赛服务端回应赢分加倍
+
+	gc_baiyuan_regain_lose_not,		// 百元赛服务端通知追回损失
+	cg_baiyuan_regain_lose_req,		// 百元赛客户端请求追回损失
+	gc_baiyuan_regain_lose_ack,		// 百元赛服务端回应追回损失
+
+	gc_baiyuan_luck_welfare_not,	// 百元赛服务端通知幸运福利
+	cg_baiyuan_luck_welfare_req,	// 百元赛客户端请求幸运福利
+	gc_baiyuan_luck_welfare_ack,	// 百元赛服务端回应幸运福利
+
+	cg_baiyuan_can_bankruptcy_defend_req,	// 百元赛客户端请求是否有破产补助
+	gc_baiyuan_can_bankruptcy_defend_ack,	// 百元赛服务端回应是否有破产补助
+	cg_baiyuan_bankruptcy_defend_req,		// 百元赛客户端请求破产补助
+	gc_baiyuan_bankruptcy_defend_ack,		// 百元赛服务端回应破产补助
 };
 
 /**表情包**/
@@ -184,6 +208,8 @@ enum COMMON_OPCODE
 	CO_NO_STAMINA = 25,						// //没有体力
 	CO_DELAY_KEEPSTAR_TIME = 26,
 	CO_SUPER_T_DOUBLE,						//超级加倍
+	CO_CALL4 = 28,							//叫4分
+	CO_CALL8 = 29,							//叫8分
 };
 
 //V1.0

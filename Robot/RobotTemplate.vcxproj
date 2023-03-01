@@ -14,7 +14,7 @@
     <ProjectGuid>{3EC6F4D3-4353-49DC-8C44-D528AB0D5681}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>Robot</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -62,7 +62,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\..\..\libs\hglibs;$(SolutionDir)..\..\..\..\..\LobbyServer\tags\Protocol\20200622;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../../../../libs/boost_1_48_0;$(SolutionDir)../../../../../../libs/hglibs;$(SolutionDir)../../../../../LobbyServer/tags/Protocol/20200907;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)ServerTemplate.exe</OutputFile>
@@ -108,6 +108,7 @@
     <ClCompile Include="pt_br_need_send_robot_not_handler.cpp" />
     <ClCompile Include="pt_gc_auto_not_handler.cpp" />
     <ClCompile Include="pt_gc_call_score_req_handler.cpp" />
+    <ClCompile Include="pt_gc_clienttimer_not_handler.cpp" />
     <ClCompile Include="pt_gc_common_not_handler.cpp" />
     <ClCompile Include="pt_gc_complete_data_not_handler.cpp" />
     <ClCompile Include="pt_gc_double_score_req_handler.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="pt_gc_rob_lord_req_handler.cpp" />
     <ClCompile Include="pt_gc_show_card_req_handler.cpp" />
     <ClCompile Include="pt_gc_two_lord_card_not_handler.cpp" />
+    <ClCompile Include="pt_gc_update_player_tokenmoney_not_handler.cpp" />
     <ClCompile Include="RobotManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -155,6 +157,7 @@
     <ClInclude Include="pt_br_need_send_robot_not_handler.h" />
     <ClInclude Include="pt_gc_auto_not_handler.h" />
     <ClInclude Include="pt_gc_call_score_req_handler.h" />
+    <ClInclude Include="pt_gc_clienttimer_not_handler.h" />
     <ClInclude Include="pt_gc_common_not_handler.h" />
     <ClInclude Include="pt_gc_complete_data_not_handler.h" />
     <ClInclude Include="pt_gc_double_score_req_handler.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="pt_gc_rob_lord_req_handler.h" />
     <ClInclude Include="pt_gc_show_card_req_handler.h" />
     <ClInclude Include="pt_gc_two_lord_card_not_handler.h" />
+    <ClInclude Include="pt_gc_update_player_tokenmoney_not_handler.h" />
     <ClInclude Include="RobotManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UserSession.h" />

@@ -37,6 +37,48 @@ void exit_sigal(int)
 	return;
 }
 
+void print_vector_bool(vector<bool>& vec)
+{
+	const int buffer_size = 512;
+	char buffer[buffer_size];
+	int length = 0;
+	length += snprintf(buffer + length, buffer_size - length, "{ ");
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		length += snprintf(buffer + length, buffer_size - length, "%d, ", vec[i]);
+	}
+	length += snprintf(buffer + length, buffer_size - length, "}");
+	glog.log(buffer);
+}
+
+void print_vector_int(vector<int>& vec)
+{
+	const int buffer_size = 512;
+	char buffer[buffer_size];
+	int length = 0;
+	length += snprintf(buffer + length, buffer_size - length, "{ ");
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		length += snprintf(buffer + length, buffer_size - length, "%d, ", vec[i]);
+	}
+	length += snprintf(buffer + length, buffer_size - length, "}");
+	glog.log(buffer);
+}
+
+void print_vector_card(vector<CCard>& vec)
+{
+	const int buffer_size = 512;
+	char buffer[buffer_size];
+	int length = 0;
+	length += snprintf(buffer + length, buffer_size - length, "{ ");
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		length += snprintf(buffer + length, buffer_size - length, "%d%d, ", vec[i].m_nValue, vec[i].m_nColor);
+	}
+	length += snprintf(buffer + length, buffer_size - length, "}");
+	glog.log(buffer);
+}
+
 //////////////////////////////////////////////////////////////////////////
 //								测试代码								//
 //////////////////////////////////////////////////////////////////////////

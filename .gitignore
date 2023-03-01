@@ -1,8 +1,10 @@
+*.back
 *.d
 *.o
 *.opensdf
 *.sdf
 *.suo
-*/.vs/
-*/ipch/
-bin/
+*/.vs
+*/ipch
+bin
+.vscode/settings.json

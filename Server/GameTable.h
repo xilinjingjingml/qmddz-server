@@ -19,12 +19,10 @@
 //class CPlayer;
 class IPlayerDelegate;
 
-struct play_ackopcode
+struct ShuffleCardsInfo
 {
-public:
-	int	time_;
-	pt_cg_play_card_ack ack_;
-	play_ackopcode(int time, pt_cg_play_card_ack& ack) : time_(time), ack_(ack){}
+	vector<int> vecRobotSeat; // 机器人座位
+	vector<int> vecPlayerSeat; // 玩家座位
 };
 
 class CGameTable : public ITableDelegate
@@ -108,7 +106,7 @@ public:
 	void DealingTask();
 
 	//发送初始17张牌
-	void Dealing(bool specific);
+	void Dealing();
 
 	//叫分流程
 	void CallScore();
@@ -368,4 +366,28 @@ private:
 private:
 	bool checkPlayersItem(); //检测玩家身上道具是否足够开始游戏
 	void LeftCardDouble(CPlayer* pPlayer);
+
+public:
+	// 计算分值
+	void CalculateScore(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[]);
+	// 计算分值 公平的：输赢不超过自身 农民是相同的
+	void CalculateScore_justice(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[]);
+	// 计算分值 百元赛
+	void CalculateScore_baiyuan(CPlayer* pPlayer, int64 nScore[], int nRaceScore[], int64 nMoney[]);
+	// 玩家出炸弹 百元赛 实时计算分值
+	void BombBaiYuan(CPlayer* pPlayer);
+	// 洗牌
+	void ShuffleCards();
+	//检查优势座位
+	bool CheckShuffleCardsForNewBie(const ShuffleCardsInfo& info, int& nBetterSeat);
+	bool CheckShuffleCardsForNewBieFile(const ShuffleCardsInfo& info, int& nBetterSeat, vector<int>& m_vecIds);
+	bool CheckShuffleCardsForNewBieFileOrder(const ShuffleCardsInfo& info, int& nBetterSeat, int& nOrderIndex);
+	bool CheckShuffleCardsForBaiYuanMatchCard(const ShuffleCardsInfo& info, int& nBetterSeat, int& nRobotSeat);
+	// 玩家输赢控制处理
+	bool CheckShuffleCardsForBaiYuanMustLose(const ShuffleCardsInfo& info, int& nBetterSeat, int& nRobotSeat);
+
+	int m_nMustCallSeat;
+	int m_nShuffleLogType;
+	int m_nShuffleLogBetterSeat;
+	int m_nShuffleLogRobotSeat;
 };

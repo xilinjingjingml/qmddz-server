@@ -50,7 +50,7 @@ void pt_cg_send_card_ok_ack_handler::handler( const pt_cg_send_card_ok_ack& ack,
 		{			
 			SERVER_LOG("pt_cg_send_card_ok_ack,all ready");
 			player->m_pGameTable->AfterDealCard();
-			if( g_nCallScore == 1 || g_nCallScore == 0)	//判断是否有叫分流程
+			if( g_nCallScore == 1 || g_nCallScore == 0 || g_nCallScore == 2 || g_nCallScore == 3)	//判断是否有叫分流程
 				player->m_pGameTable->CallScore();
 			else if (player->m_pGameTable->m_nRobLord == 1)	//判断是否有抢地主流程
 				player->m_pGameTable->RobLord();

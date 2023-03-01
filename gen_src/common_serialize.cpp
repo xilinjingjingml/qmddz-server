@@ -2,37 +2,63 @@
 #include "stdafx.h"
 #include "Common/packetdefine.h"
 
-// pt_gc_game_start_not CopyFrom
-void CopyFrom(pt_gc_game_start_not& pt , const proto_gc_game_start_not& proto) {
-	pt.nGameMoney = proto.ngamemoney();
-	pt.nCardNum = proto.ncardnum();
-	pt.nLordPos = proto.nlordpos();
-	CopyFrom(pt.cLordCard, proto.clordcard());
-	pt.nSerialID = proto.nserialid();
+// pt_cg_baiyuan_win_double_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_win_double_req& pt , const proto_cg_baiyuan_win_double_req& proto) {
 }
 
-// pt_gc_game_start_not CopyTo
-void CopyTo(const pt_gc_game_start_not& pt, proto_gc_game_start_not& proto) {
-	proto.set_ngamemoney(pt.nGameMoney);
-	proto.set_ncardnum(pt.nCardNum);
-	proto.set_nlordpos(pt.nLordPos);
-	CopyTo(pt.cLordCard, *(proto.mutable_clordcard()));
-	proto.set_nserialid(pt.nSerialID);
+// pt_cg_baiyuan_win_double_req CopyTo
+void CopyTo(const pt_cg_baiyuan_win_double_req& pt, proto_cg_baiyuan_win_double_req& proto) {
 }
 
-// pt_gc_game_start_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_start_not& msg) {
+// pt_cg_baiyuan_win_double_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_win_double_req& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_game_start_not proto;
+	proto_cg_baiyuan_win_double_req proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_game_start_not& msg) {
-	proto_gc_game_start_not proto;
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_win_double_req& msg) {
+	proto_cg_baiyuan_win_double_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_call_score_req CopyFrom
+void CopyFrom(pt_gc_call_score_req& pt , const proto_gc_call_score_req& proto) {
+	pt.nScore = proto.nscore();
+	pt.nSerialID = proto.nserialid();
+	pt.nCallMode = proto.ncallmode();
+}
+
+// pt_gc_call_score_req CopyTo
+void CopyTo(const pt_gc_call_score_req& pt, proto_gc_call_score_req& proto) {
+	proto.set_nscore(pt.nScore);
+	proto.set_nserialid(pt.nSerialID);
+	proto.set_ncallmode(pt.nCallMode);
+}
+
+// pt_gc_call_score_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_call_score_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_call_score_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_call_score_req& msg) {
+	proto_gc_call_score_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -99,38 +125,6 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_bet_req& msg) {
 
 void SendPacketToProto(COutputStream& os, const pt_sic_bet_req& msg) {
 	proto_sic_bet_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_task_not CopyFrom
-void CopyFrom(pt_gc_task_not& pt , const proto_gc_task_not& proto) {
-	CopyFrom(pt.task_item_, proto.task_item());
-}
-
-// pt_gc_task_not CopyTo
-void CopyTo(const pt_gc_task_not& pt, proto_gc_task_not& proto) {
-	CopyTo(pt.task_item_, *(proto.mutable_task_item()));
-}
-
-// pt_gc_task_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_task_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_task_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_task_not& msg) {
-	proto_gc_task_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -249,6 +243,68 @@ void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_newbie_awar
 	os.WriteData(buff, length);
 	delete [] buff;
 }
+// pt_gc_card_recode_req CopyFrom
+void CopyFrom(pt_gc_card_recode_req& pt , const proto_gc_card_recode_req& proto) {
+}
+
+// pt_gc_card_recode_req CopyTo
+void CopyTo(const pt_gc_card_recode_req& pt, proto_gc_card_recode_req& proto) {
+}
+
+// pt_gc_card_recode_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_card_recode_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_card_recode_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_card_recode_req& msg) {
+	proto_gc_card_recode_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_bomb_not CopyFrom
+void CopyFrom(pt_gc_bomb_not& pt , const proto_gc_bomb_not& proto) {
+	pt.nDouble = proto.ndouble();
+}
+
+// pt_gc_bomb_not CopyTo
+void CopyTo(const pt_gc_bomb_not& pt, proto_gc_bomb_not& proto) {
+	proto.set_ndouble(pt.nDouble);
+}
+
+// pt_gc_bomb_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_bomb_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_bomb_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_bomb_not& msg) {
+	proto_gc_bomb_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
 // pt_gc_beishu_info_ack CopyFrom
 void CopyFrom(pt_gc_beishu_info_ack& pt , const proto_gc_beishu_info_ack& proto) {
 	pt.vecBeiShuInfo.resize(proto.vecbeishuinfo_size());
@@ -293,448 +349,27 @@ void SendPacketToProto(COutputStream& os, const pt_gc_beishu_info_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_use_card_recode_noti CopyFrom
-void CopyFrom(pt_gc_use_card_recode_noti& pt , const proto_gc_use_card_recode_noti& proto) {
-	pt.cChairID = proto.cchairid();
-	pt.cReconnection = proto.creconnection();
+// pt_cg_private_room_result_req CopyFrom
+void CopyFrom(pt_cg_private_room_result_req& pt , const proto_cg_private_room_result_req& proto) {
 }
 
-// pt_gc_use_card_recode_noti CopyTo
-void CopyTo(const pt_gc_use_card_recode_noti& pt, proto_gc_use_card_recode_noti& proto) {
-	proto.set_cchairid(pt.cChairID);
-	proto.set_creconnection(pt.cReconnection);
+// pt_cg_private_room_result_req CopyTo
+void CopyTo(const pt_cg_private_room_result_req& pt, proto_cg_private_room_result_req& proto) {
 }
 
-// pt_gc_use_card_recode_noti serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_use_card_recode_noti& msg) {
+// pt_cg_private_room_result_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_private_room_result_req& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_use_card_recode_noti proto;
+	proto_cg_private_room_result_req proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_use_card_recode_noti& msg) {
-	proto_gc_use_card_recode_noti proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_win_doubel_req CopyFrom
-void CopyFrom(pt_cg_win_doubel_req& pt , const proto_cg_win_doubel_req& proto) {
-}
-
-// pt_cg_win_doubel_req CopyTo
-void CopyTo(const pt_cg_win_doubel_req& pt, proto_cg_win_doubel_req& proto) {
-}
-
-// pt_cg_win_doubel_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_win_doubel_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_win_doubel_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_win_doubel_req& msg) {
-	proto_cg_win_doubel_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_card_recode_req CopyFrom
-void CopyFrom(pt_gc_card_recode_req& pt , const proto_gc_card_recode_req& proto) {
-}
-
-// pt_gc_card_recode_req CopyTo
-void CopyTo(const pt_gc_card_recode_req& pt, proto_gc_card_recode_req& proto) {
-}
-
-// pt_gc_card_recode_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_card_recode_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_card_recode_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_card_recode_req& msg) {
-	proto_gc_card_recode_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_two_let_card_not CopyFrom
-void CopyFrom(pt_gc_two_let_card_not& pt , const proto_gc_two_let_card_not& proto) {
-	pt.nLetNum = proto.nletnum();
-}
-
-// pt_gc_two_let_card_not CopyTo
-void CopyTo(const pt_gc_two_let_card_not& pt, proto_gc_two_let_card_not& proto) {
-	proto.set_nletnum(pt.nLetNum);
-}
-
-// pt_gc_two_let_card_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_let_card_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_two_let_card_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_two_let_card_not& msg) {
-	proto_gc_two_let_card_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_update_player_tokenmoney_not CopyFrom
-void CopyFrom(pt_gc_update_player_tokenmoney_not& pt , const proto_gc_update_player_tokenmoney_not& proto) {
-	pt.ply_chairid_ = proto.ply_chairid();
-	pt.itemInfo.resize(proto.iteminfo_size());
-	for (int idx = 0; idx < proto.iteminfo_size(); ++idx) {
-		CopyFrom(pt.itemInfo[idx], proto.iteminfo(idx));
-	}
-}
-
-// pt_gc_update_player_tokenmoney_not CopyTo
-void CopyTo(const pt_gc_update_player_tokenmoney_not& pt, proto_gc_update_player_tokenmoney_not& proto) {
-	proto.set_ply_chairid(pt.ply_chairid_);
-	for (size_t idx = 0; idx < pt.itemInfo.size(); ++idx) {
-		CopyTo(pt.itemInfo[idx], *(proto.add_iteminfo()));
-	}
-}
-
-// pt_gc_update_player_tokenmoney_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_update_player_tokenmoney_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_update_player_tokenmoney_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_update_player_tokenmoney_not& msg) {
-	proto_gc_update_player_tokenmoney_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_card_count_ack CopyFrom
-void CopyFrom(pt_gc_card_count_ack& pt , const proto_gc_card_count_ack& proto) {
-	pt.counts_num_ = proto.counts_num();
-	pt.m_vecPutCard.resize(proto.m_vecputcard_size());
-	for (int idx = 0; idx < proto.m_vecputcard_size(); ++idx) {
-		CopyFrom(pt.m_vecPutCard[idx], proto.m_vecputcard(idx));
-	}
-}
-
-// pt_gc_card_count_ack CopyTo
-void CopyTo(const pt_gc_card_count_ack& pt, proto_gc_card_count_ack& proto) {
-	proto.set_counts_num(pt.counts_num_);
-	for (size_t idx = 0; idx < pt.m_vecPutCard.size(); ++idx) {
-		CopyTo(pt.m_vecPutCard[idx], *(proto.add_m_vecputcard()));
-	}
-}
-
-// pt_gc_card_count_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_card_count_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack& msg) {
-	proto_gc_card_count_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_regain_lose_score_req CopyFrom
-void CopyFrom(pt_cg_regain_lose_score_req& pt , const proto_cg_regain_lose_score_req& proto) {
-	pt.nOp = proto.nop();
-	pt.nItemIndex = proto.nitemindex();
-	pt.nItemNum = proto.nitemnum();
-}
-
-// pt_cg_regain_lose_score_req CopyTo
-void CopyTo(const pt_cg_regain_lose_score_req& pt, proto_cg_regain_lose_score_req& proto) {
-	proto.set_nop(pt.nOp);
-	proto.set_nitemindex(pt.nItemIndex);
-	proto.set_nitemnum(pt.nItemNum);
-}
-
-// pt_cg_regain_lose_score_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_regain_lose_score_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_regain_lose_score_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_regain_lose_score_req& msg) {
-	proto_cg_regain_lose_score_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_private_room_result_ack CopyFrom
-void CopyFrom(pt_gc_private_room_result_ack& pt , const proto_gc_private_room_result_ack& proto) {
-	pt.vecGameStatiscs.resize(proto.vecgamestatiscs_size());
-	for (int idx = 0; idx < proto.vecgamestatiscs_size(); ++idx) {
-		CopyFrom(pt.vecGameStatiscs[idx], proto.vecgamestatiscs(idx));
-	}
-}
-
-// pt_gc_private_room_result_ack CopyTo
-void CopyTo(const pt_gc_private_room_result_ack& pt, proto_gc_private_room_result_ack& proto) {
-	for (size_t idx = 0; idx < pt.vecGameStatiscs.size(); ++idx) {
-		CopyTo(pt.vecGameStatiscs[idx], *(proto.add_vecgamestatiscs()));
-	}
-}
-
-// pt_gc_private_room_result_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_private_room_result_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_ack& msg) {
-	proto_gc_private_room_result_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_enable_invincible_ack CopyFrom
-void CopyFrom(pt_gc_enable_invincible_ack& pt , const proto_gc_enable_invincible_ack& proto) {
-	pt.nRet = proto.nret();
-}
-
-// pt_gc_enable_invincible_ack CopyTo
-void CopyTo(const pt_gc_enable_invincible_ack& pt, proto_gc_enable_invincible_ack& proto) {
-	proto.set_nret(pt.nRet);
-}
-
-// pt_gc_enable_invincible_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_enable_invincible_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_enable_invincible_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_enable_invincible_ack& msg) {
-	proto_gc_enable_invincible_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_bet_lord_card_req CopyFrom
-void CopyFrom(pt_cg_bet_lord_card_req& pt , const proto_cg_bet_lord_card_req& proto) {
-	pt.index = proto.index();
-}
-
-// pt_cg_bet_lord_card_req CopyTo
-void CopyTo(const pt_cg_bet_lord_card_req& pt, proto_cg_bet_lord_card_req& proto) {
-	proto.set_index(pt.index);
-}
-
-// pt_cg_bet_lord_card_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_bet_lord_card_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_bet_lord_card_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_bet_lord_card_req& msg) {
-	proto_cg_bet_lord_card_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_look_lord_card_item_ack CopyFrom
-void CopyFrom(pt_gc_look_lord_card_item_ack& pt , const proto_gc_look_lord_card_item_ack& proto) {
-	pt.nRet = proto.nret();
-}
-
-// pt_gc_look_lord_card_item_ack CopyTo
-void CopyTo(const pt_gc_look_lord_card_item_ack& pt, proto_gc_look_lord_card_item_ack& proto) {
-	proto.set_nret(pt.nRet);
-}
-
-// pt_gc_look_lord_card_item_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_look_lord_card_item_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_look_lord_card_item_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_look_lord_card_item_ack& msg) {
-	proto_gc_look_lord_card_item_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// stUserData CopyFrom
-void CopyFrom(stUserData& pt , const proto_stUserData& proto) {
-	pt.cChairID = proto.cchairid();
-	pt.vecHandCards.resize(proto.vechandcards_size());
-	for (int idx = 0; idx < proto.vechandcards_size(); ++idx) {
-		CopyFrom(pt.vecHandCards[idx], proto.vechandcards(idx));
-	}
-	pt.vecPutCards.resize(proto.vecputcards_size());
-	for (int idx = 0; idx < proto.vecputcards_size(); ++idx) {
-		CopyFrom(pt.vecPutCards[idx], proto.vecputcards(idx));
-	}
-}
-
-// stUserData CopyTo
-void CopyTo(const stUserData& pt, proto_stUserData& proto) {
-	proto.set_cchairid(pt.cChairID);
-	for (size_t idx = 0; idx < pt.vecHandCards.size(); ++idx) {
-		CopyTo(pt.vecHandCards[idx], *(proto.add_vechandcards()));
-	}
-	for (size_t idx = 0; idx < pt.vecPutCards.size(); ++idx) {
-		CopyTo(pt.vecPutCards[idx], *(proto.add_vecputcards()));
-	}
-}
-
-// stUserData serialization
-void ReadPacketFromProto(CInputStream& is,stUserData& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_stUserData proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const stUserData& msg) {
-	proto_stUserData proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_double_score_req CopyFrom
-void CopyFrom(pt_gc_double_score_req& pt , const proto_gc_double_score_req& proto) {
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_gc_double_score_req CopyTo
-void CopyTo(const pt_gc_double_score_req& pt, proto_gc_double_score_req& proto) {
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_gc_double_score_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_double_score_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_double_score_req& msg) {
-	proto_gc_double_score_req proto;
+void SendPacketToProto(COutputStream& os, const pt_cg_private_room_result_req& msg) {
+	proto_cg_private_room_result_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -827,85 +462,29 @@ void SendPacketToProto(COutputStream& os, const pt_gc_user_savestar_card_noti& m
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_get_redpackets_award_ack CopyFrom
-void CopyFrom(pt_gc_get_redpackets_award_ack& pt , const proto_gc_get_redpackets_award_ack& proto) {
-	pt.ret_ = proto.ret();
-	pt.cur_rounds_ = proto.cur_rounds();
-	pt.limit_rounds_ = proto.limit_rounds();
-	pt.nAmount = proto.namount();
-	pt.cItemtype = proto.citemtype();
-	pt.task_id_ = proto.task_id();
-	pt.fakeItem.resize(proto.fakeitem_size());
-	for (int idx = 0; idx < proto.fakeitem_size(); ++idx) {
-		CopyFrom(pt.fakeItem[idx], proto.fakeitem(idx));
-	}
+// pt_gc_counts_not CopyFrom
+void CopyFrom(pt_gc_counts_not& pt , const proto_gc_counts_not& proto) {
+	pt.counts_num_ = proto.counts_num();
 }
 
-// pt_gc_get_redpackets_award_ack CopyTo
-void CopyTo(const pt_gc_get_redpackets_award_ack& pt, proto_gc_get_redpackets_award_ack& proto) {
-	proto.set_ret(pt.ret_);
-	proto.set_cur_rounds(pt.cur_rounds_);
-	proto.set_limit_rounds(pt.limit_rounds_);
-	proto.set_namount(pt.nAmount);
-	proto.set_citemtype(pt.cItemtype);
-	proto.set_task_id(pt.task_id_);
-	for (size_t idx = 0; idx < pt.fakeItem.size(); ++idx) {
-		CopyTo(pt.fakeItem[idx], *(proto.add_fakeitem()));
-	}
+// pt_gc_counts_not CopyTo
+void CopyTo(const pt_gc_counts_not& pt, proto_gc_counts_not& proto) {
+	proto.set_counts_num(pt.counts_num_);
 }
 
-// pt_gc_get_redpackets_award_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_award_ack& msg) {
+// pt_gc_counts_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_counts_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_get_redpackets_award_ack proto;
+	proto_gc_counts_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_award_ack& msg) {
-	proto_gc_get_redpackets_award_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_refresh_card_not CopyFrom
-void CopyFrom(pt_gc_refresh_card_not& pt , const proto_gc_refresh_card_not& proto) {
-	pt.cChairID = proto.cchairid();
-	pt.vecCards.resize(proto.veccards_size());
-	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
-		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
-	}
-}
-
-// pt_gc_refresh_card_not CopyTo
-void CopyTo(const pt_gc_refresh_card_not& pt, proto_gc_refresh_card_not& proto) {
-	proto.set_cchairid(pt.cChairID);
-	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
-		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
-	}
-}
-
-// pt_gc_refresh_card_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_refresh_card_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_refresh_card_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_refresh_card_not& msg) {
-	proto_gc_refresh_card_not proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_counts_not& msg) {
+	proto_gc_counts_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -979,33 +558,34 @@ void SendPacketToProto(COutputStream& os, const ItemInfo& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// player_itemInfo CopyFrom
-void CopyFrom(player_itemInfo& pt , const proto_player_itemInfo& proto) {
-	pt.nItemIndex = proto.nitemindex();
-	pt.nItemNum = proto.nitemnum();
-	pt.nItemNum64 = proto.nitemnum64();
+// pt_gc_baiyuan_regain_lose_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_regain_lose_not& pt , const proto_gc_baiyuan_regain_lose_not& proto) {
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
 }
 
-// player_itemInfo CopyTo
-void CopyTo(const player_itemInfo& pt, proto_player_itemInfo& proto) {
-	proto.set_nitemindex(pt.nItemIndex);
-	proto.set_nitemnum(pt.nItemNum);
-	proto.set_nitemnum64(pt.nItemNum64);
+// pt_gc_baiyuan_regain_lose_not CopyTo
+void CopyTo(const pt_gc_baiyuan_regain_lose_not& pt, proto_gc_baiyuan_regain_lose_not& proto) {
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
 }
 
-// player_itemInfo serialization
-void ReadPacketFromProto(CInputStream& is,player_itemInfo& msg) {
+// pt_gc_baiyuan_regain_lose_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_regain_lose_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_player_itemInfo proto;
+	proto_gc_baiyuan_regain_lose_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const player_itemInfo& msg) {
-	proto_player_itemInfo proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_regain_lose_not& msg) {
+	proto_gc_baiyuan_regain_lose_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -1015,161 +595,91 @@ void SendPacketToProto(COutputStream& os, const player_itemInfo& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_cg_get_redpackets_88yuan_award_req CopyFrom
-void CopyFrom(pt_cg_get_redpackets_88yuan_award_req& pt , const proto_cg_get_redpackets_88yuan_award_req& proto) {
-	pt.type_ = proto.type();
-}
-
-// pt_cg_get_redpackets_88yuan_award_req CopyTo
-void CopyTo(const pt_cg_get_redpackets_88yuan_award_req& pt, proto_cg_get_redpackets_88yuan_award_req& proto) {
-	proto.set_type(pt.type_);
-}
-
-// pt_cg_get_redpackets_88yuan_award_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_88yuan_award_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_get_redpackets_88yuan_award_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_88yuan_award_req& msg) {
-	proto_cg_get_redpackets_88yuan_award_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_starsky_update_item_noti CopyFrom
-void CopyFrom(pt_gc_starsky_update_item_noti& pt , const proto_gc_starsky_update_item_noti& proto) {
-	pt.stamina_ = proto.stamina();
-	pt.match_ticket_ = proto.match_ticket();
-	pt.score_ = proto.score();
-	pt.savestar_card_ = proto.savestar_card();
-}
-
-// pt_gc_starsky_update_item_noti CopyTo
-void CopyTo(const pt_gc_starsky_update_item_noti& pt, proto_gc_starsky_update_item_noti& proto) {
-	proto.set_stamina(pt.stamina_);
-	proto.set_match_ticket(pt.match_ticket_);
-	proto.set_score(pt.score_);
-	proto.set_savestar_card(pt.savestar_card_);
-}
-
-// pt_gc_starsky_update_item_noti serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_starsky_update_item_noti& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_starsky_update_item_noti proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_starsky_update_item_noti& msg) {
-	proto_gc_starsky_update_item_noti proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_look_lord_card_item_req CopyFrom
-void CopyFrom(pt_cg_look_lord_card_item_req& pt , const proto_cg_look_lord_card_item_req& proto) {
-}
-
-// pt_cg_look_lord_card_item_req CopyTo
-void CopyTo(const pt_cg_look_lord_card_item_req& pt, proto_cg_look_lord_card_item_req& proto) {
-}
-
-// pt_cg_look_lord_card_item_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_item_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_look_lord_card_item_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_item_req& msg) {
-	proto_cg_look_lord_card_item_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_get_redpackets_award_req CopyFrom
-void CopyFrom(pt_cg_get_redpackets_award_req& pt , const proto_cg_get_redpackets_award_req& proto) {
-	pt.type_ = proto.type();
-}
-
-// pt_cg_get_redpackets_award_req CopyTo
-void CopyTo(const pt_cg_get_redpackets_award_req& pt, proto_cg_get_redpackets_award_req& proto) {
-	proto.set_type(pt.type_);
-}
-
-// pt_cg_get_redpackets_award_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_award_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_get_redpackets_award_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_award_req& msg) {
-	proto_cg_get_redpackets_award_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_send_dizhu_not CopyFrom
-void CopyFrom(pt_gc_send_dizhu_not& pt , const proto_gc_send_dizhu_not& proto) {
+// pt_gc_two_complete_data_not CopyFrom
+void CopyFrom(pt_gc_two_complete_data_not& pt , const proto_gc_two_complete_data_not& proto) {
 	pt.nGameMoney = proto.ngamemoney();
+	pt.nDouble = proto.ndouble();
+	pt.cLord = proto.clord();
+	pt.vecLordCards.resize(proto.veclordcards_size());
+	for (int idx = 0; idx < proto.veclordcards_size(); ++idx) {
+		CopyFrom(pt.vecLordCards[idx], proto.veclordcards(idx));
+	}
+	pt.vecData.resize(proto.vecdata_size());
+	for (int idx = 0; idx < proto.vecdata_size(); ++idx) {
+		CopyFrom(pt.vecData[idx], proto.vecdata(idx));
+	}
+	pt.nLetNum = proto.nletnum();
+	pt.nStart = proto.nstart();
 }
 
-// pt_gc_send_dizhu_not CopyTo
-void CopyTo(const pt_gc_send_dizhu_not& pt, proto_gc_send_dizhu_not& proto) {
+// pt_gc_two_complete_data_not CopyTo
+void CopyTo(const pt_gc_two_complete_data_not& pt, proto_gc_two_complete_data_not& proto) {
 	proto.set_ngamemoney(pt.nGameMoney);
+	proto.set_ndouble(pt.nDouble);
+	proto.set_clord(pt.cLord);
+	for (size_t idx = 0; idx < pt.vecLordCards.size(); ++idx) {
+		CopyTo(pt.vecLordCards[idx], *(proto.add_veclordcards()));
+	}
+	for (size_t idx = 0; idx < pt.vecData.size(); ++idx) {
+		CopyTo(pt.vecData[idx], *(proto.add_vecdata()));
+	}
+	proto.set_nletnum(pt.nLetNum);
+	proto.set_nstart(pt.nStart);
 }
 
-// pt_gc_send_dizhu_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_send_dizhu_not& msg) {
+// pt_gc_two_complete_data_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_complete_data_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_send_dizhu_not proto;
+	proto_gc_two_complete_data_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_send_dizhu_not& msg) {
-	proto_gc_send_dizhu_not proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_two_complete_data_not& msg) {
+	proto_gc_two_complete_data_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_magic_emoji_noti CopyFrom
+void CopyFrom(pt_magic_emoji_noti& pt , const proto_magic_emoji_noti& proto) {
+	pt.cIsError = proto.ciserror();
+	pt.cEmojiIndex = proto.cemojiindex();
+	pt.cFromChairID = proto.cfromchairid();
+	pt.cToChairID = proto.ctochairid();
+	pt.cEmojiNum = proto.cemojinum();
+}
+
+// pt_magic_emoji_noti CopyTo
+void CopyTo(const pt_magic_emoji_noti& pt, proto_magic_emoji_noti& proto) {
+	proto.set_ciserror(pt.cIsError);
+	proto.set_cemojiindex(pt.cEmojiIndex);
+	proto.set_cfromchairid(pt.cFromChairID);
+	proto.set_ctochairid(pt.cToChairID);
+	proto.set_cemojinum(pt.cEmojiNum);
+}
+
+// pt_magic_emoji_noti serialization
+void ReadPacketFromProto(CInputStream& is,pt_magic_emoji_noti& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_magic_emoji_noti proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_magic_emoji_noti& msg) {
+	proto_magic_emoji_noti proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -1248,343 +758,31 @@ void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_item_add_not CopyFrom
-void CopyFrom(pt_gc_item_add_not& pt , const proto_gc_item_add_not& proto) {
-	pt.nItemIndex = proto.nitemindex();
-	pt.nItemCount = proto.nitemcount();
+// Kind_Rate CopyFrom
+void CopyFrom(Kind_Rate& pt , const proto_Kind_Rate& proto) {
+	pt.strKind = proto.strkind();
+	pt.strRate = proto.strrate();
 }
 
-// pt_gc_item_add_not CopyTo
-void CopyTo(const pt_gc_item_add_not& pt, proto_gc_item_add_not& proto) {
-	proto.set_nitemindex(pt.nItemIndex);
-	proto.set_nitemcount(pt.nItemCount);
+// Kind_Rate CopyTo
+void CopyTo(const Kind_Rate& pt, proto_Kind_Rate& proto) {
+	proto.set_strkind(pt.strKind);
+	proto.set_strrate(pt.strRate);
 }
 
-// pt_gc_item_add_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_item_add_not& msg) {
+// Kind_Rate serialization
+void ReadPacketFromProto(CInputStream& is,Kind_Rate& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_item_add_not proto;
+	proto_Kind_Rate proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_item_add_not& msg) {
-	proto_gc_item_add_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_bet_lord_card_ack CopyFrom
-void CopyFrom(pt_gc_bet_lord_card_ack& pt , const proto_gc_bet_lord_card_ack& proto) {
-	pt.ret = proto.ret();
-	pt.index = proto.index();
-}
-
-// pt_gc_bet_lord_card_ack CopyTo
-void CopyTo(const pt_gc_bet_lord_card_ack& pt, proto_gc_bet_lord_card_ack& proto) {
-	proto.set_ret(pt.ret);
-	proto.set_index(pt.index);
-}
-
-// pt_gc_bet_lord_card_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_bet_lord_card_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_bet_lord_card_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_ack& msg) {
-	proto_gc_bet_lord_card_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_replay_data_not CopyFrom
-void CopyFrom(pt_gc_replay_data_not& pt , const proto_gc_replay_data_not& proto) {
-	pt.vecChangeCards.resize(proto.vecchangecards_size());
-	for (int idx = 0; idx < proto.vecchangecards_size(); ++idx) {
-		CopyFrom(pt.vecChangeCards[idx], proto.vecchangecards(idx));
-	}
-}
-
-// pt_gc_replay_data_not CopyTo
-void CopyTo(const pt_gc_replay_data_not& pt, proto_gc_replay_data_not& proto) {
-	for (size_t idx = 0; idx < pt.vecChangeCards.size(); ++idx) {
-		CopyTo(pt.vecChangeCards[idx], *(proto.add_vecchangecards()));
-	}
-}
-
-// pt_gc_replay_data_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_replay_data_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_replay_data_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_replay_data_not& msg) {
-	proto_gc_replay_data_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_ju_count_not CopyFrom
-void CopyFrom(pt_gc_ju_count_not& pt , const proto_gc_ju_count_not& proto) {
-	pt.nJuCount = proto.njucount();
-}
-
-// pt_gc_ju_count_not CopyTo
-void CopyTo(const pt_gc_ju_count_not& pt, proto_gc_ju_count_not& proto) {
-	proto.set_njucount(pt.nJuCount);
-}
-
-// pt_gc_ju_count_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_ju_count_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_ju_count_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_ju_count_not& msg) {
-	proto_gc_ju_count_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_had_start_not CopyFrom
-void CopyFrom(pt_gc_had_start_not& pt , const proto_gc_had_start_not& proto) {
-}
-
-// pt_gc_had_start_not CopyTo
-void CopyTo(const pt_gc_had_start_not& pt, proto_gc_had_start_not& proto) {
-}
-
-// pt_gc_had_start_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_had_start_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_had_start_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_had_start_not& msg) {
-	proto_gc_had_start_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_double_score_not CopyFrom
-void CopyFrom(pt_gc_double_score_not& pt , const proto_gc_double_score_not& proto) {
-	pt.nDouble = proto.ndouble();
-	pt.nSerialID = proto.nserialid();
-	pt.cChairID = proto.cchairid();
-}
-
-// pt_gc_double_score_not CopyTo
-void CopyTo(const pt_gc_double_score_not& pt, proto_gc_double_score_not& proto) {
-	proto.set_ndouble(pt.nDouble);
-	proto.set_nserialid(pt.nSerialID);
-	proto.set_cchairid(pt.cChairID);
-}
-
-// pt_gc_double_score_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_double_score_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_double_score_not& msg) {
-	proto_gc_double_score_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_sic_new_round_not CopyFrom
-void CopyFrom(pt_sic_new_round_not& pt , const proto_sic_new_round_not& proto) {
-}
-
-// pt_sic_new_round_not CopyTo
-void CopyTo(const pt_sic_new_round_not& pt, proto_sic_new_round_not& proto) {
-}
-
-// pt_sic_new_round_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_new_round_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_sic_new_round_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_sic_new_round_not& msg) {
-	proto_sic_new_round_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_pause_game_not CopyFrom
-void CopyFrom(pt_gc_pause_game_not& pt , const proto_gc_pause_game_not& proto) {
-	pt.nFlag = proto.nflag();
-	pt.nMinTime = proto.nmintime();
-	pt.nSecTime = proto.nsectime();
-	pt.cChairId = proto.cchairid();
-	pt.sNickName = proto.snickname();
-}
-
-// pt_gc_pause_game_not CopyTo
-void CopyTo(const pt_gc_pause_game_not& pt, proto_gc_pause_game_not& proto) {
-	proto.set_nflag(pt.nFlag);
-	proto.set_nmintime(pt.nMinTime);
-	proto.set_nsectime(pt.nSecTime);
-	proto.set_cchairid(pt.cChairId);
-	proto.set_snickname(pt.sNickName);
-}
-
-// pt_gc_pause_game_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_pause_game_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_pause_game_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_pause_game_not& msg) {
-	proto_gc_pause_game_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_private_room_result_not CopyFrom
-void CopyFrom(pt_gc_private_room_result_not& pt , const proto_gc_private_room_result_not& proto) {
-	pt.ret_ = proto.ret();
-	pt.vecGameStatiscs.resize(proto.vecgamestatiscs_size());
-	for (int idx = 0; idx < proto.vecgamestatiscs_size(); ++idx) {
-		CopyFrom(pt.vecGameStatiscs[idx], proto.vecgamestatiscs(idx));
-	}
-}
-
-// pt_gc_private_room_result_not CopyTo
-void CopyTo(const pt_gc_private_room_result_not& pt, proto_gc_private_room_result_not& proto) {
-	proto.set_ret(pt.ret_);
-	for (size_t idx = 0; idx < pt.vecGameStatiscs.size(); ++idx) {
-		CopyTo(pt.vecGameStatiscs[idx], *(proto.add_vecgamestatiscs()));
-	}
-}
-
-// pt_gc_private_room_result_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_private_room_result_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_not& msg) {
-	proto_gc_private_room_result_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// st_sic_cell CopyFrom
-void CopyFrom(st_sic_cell& pt , const proto_st_sic_cell& proto) {
-	pt.cCellID = proto.ccellid();
-	pt.nAmount = proto.namount();
-}
-
-// st_sic_cell CopyTo
-void CopyTo(const st_sic_cell& pt, proto_st_sic_cell& proto) {
-	proto.set_ccellid(pt.cCellID);
-	proto.set_namount(pt.nAmount);
-}
-
-// st_sic_cell serialization
-void ReadPacketFromProto(CInputStream& is,st_sic_cell& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_st_sic_cell proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const st_sic_cell& msg) {
-	proto_st_sic_cell proto;
+void SendPacketToProto(COutputStream& os, const Kind_Rate& msg) {
+	proto_Kind_Rate proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -1635,31 +833,36 @@ void SendPacketToProto(COutputStream& os, const pt_gc_play_card_not& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_item_info_not CopyFrom
-void CopyFrom(pt_gc_item_info_not& pt , const proto_gc_item_info_not& proto) {
-	pt.nItemIndex = proto.nitemindex();
-	pt.nItemCount = proto.nitemcount();
+// pt_gc_baiyuan_win_double_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_win_double_ack& pt , const proto_gc_baiyuan_win_double_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
 }
 
-// pt_gc_item_info_not CopyTo
-void CopyTo(const pt_gc_item_info_not& pt, proto_gc_item_info_not& proto) {
-	proto.set_nitemindex(pt.nItemIndex);
-	proto.set_nitemcount(pt.nItemCount);
+// pt_gc_baiyuan_win_double_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_win_double_ack& pt, proto_gc_baiyuan_win_double_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
 }
 
-// pt_gc_item_info_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_item_info_not& msg) {
+// pt_gc_baiyuan_win_double_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_win_double_ack& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_item_info_not proto;
+	proto_gc_baiyuan_win_double_ack proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_item_info_not& msg) {
-	proto_gc_item_info_not proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_win_double_ack& msg) {
+	proto_gc_baiyuan_win_double_ack proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -1669,93 +872,31 @@ void SendPacketToProto(COutputStream& os, const pt_gc_item_info_not& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_cg_private_room_result_req CopyFrom
-void CopyFrom(pt_cg_private_room_result_req& pt , const proto_cg_private_room_result_req& proto) {
+// Money_DiZhu CopyFrom
+void CopyFrom(Money_DiZhu& pt , const proto_Money_DiZhu& proto) {
+	pt.nMoney = proto.nmoney();
+	pt.nDiZhu = proto.ndizhu();
 }
 
-// pt_cg_private_room_result_req CopyTo
-void CopyTo(const pt_cg_private_room_result_req& pt, proto_cg_private_room_result_req& proto) {
+// Money_DiZhu CopyTo
+void CopyTo(const Money_DiZhu& pt, proto_Money_DiZhu& proto) {
+	proto.set_nmoney(pt.nMoney);
+	proto.set_ndizhu(pt.nDiZhu);
 }
 
-// pt_cg_private_room_result_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_private_room_result_req& msg) {
+// Money_DiZhu serialization
+void ReadPacketFromProto(CInputStream& is,Money_DiZhu& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_cg_private_room_result_req proto;
+	proto_Money_DiZhu proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_cg_private_room_result_req& msg) {
-	proto_cg_private_room_result_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// stUserResult CopyFrom
-void CopyFrom(stUserResult& pt , const proto_stUserResult& proto) {
-	pt.nChairID = proto.nchairid();
-	pt.nScore = proto.nscore();
-}
-
-// stUserResult CopyTo
-void CopyTo(const stUserResult& pt, proto_stUserResult& proto) {
-	proto.set_nchairid(pt.nChairID);
-	proto.set_nscore(pt.nScore);
-}
-
-// stUserResult serialization
-void ReadPacketFromProto(CInputStream& is,stUserResult& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_stUserResult proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const stUserResult& msg) {
-	proto_stUserResult proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_starsky_season_noti CopyFrom
-void CopyFrom(pt_cg_starsky_season_noti& pt , const proto_cg_starsky_season_noti& proto) {
-	pt.season_ = proto.season();
-}
-
-// pt_cg_starsky_season_noti CopyTo
-void CopyTo(const pt_cg_starsky_season_noti& pt, proto_cg_starsky_season_noti& proto) {
-	proto.set_season(pt.season_);
-}
-
-// pt_cg_starsky_season_noti serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_starsky_season_noti& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_starsky_season_noti proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_starsky_season_noti& msg) {
-	proto_cg_starsky_season_noti proto;
+void SendPacketToProto(COutputStream& os, const Money_DiZhu& msg) {
+	proto_Money_DiZhu proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -1796,60 +937,6 @@ void ReadPacketFromProto(CInputStream& is,GameStatisc& msg) {
 
 void SendPacketToProto(COutputStream& os, const GameStatisc& msg) {
 	proto_GameStatisc proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_two_complete_data_not CopyFrom
-void CopyFrom(pt_gc_two_complete_data_not& pt , const proto_gc_two_complete_data_not& proto) {
-	pt.nGameMoney = proto.ngamemoney();
-	pt.nDouble = proto.ndouble();
-	pt.cLord = proto.clord();
-	pt.vecLordCards.resize(proto.veclordcards_size());
-	for (int idx = 0; idx < proto.veclordcards_size(); ++idx) {
-		CopyFrom(pt.vecLordCards[idx], proto.veclordcards(idx));
-	}
-	pt.vecData.resize(proto.vecdata_size());
-	for (int idx = 0; idx < proto.vecdata_size(); ++idx) {
-		CopyFrom(pt.vecData[idx], proto.vecdata(idx));
-	}
-	pt.nLetNum = proto.nletnum();
-	pt.nStart = proto.nstart();
-}
-
-// pt_gc_two_complete_data_not CopyTo
-void CopyTo(const pt_gc_two_complete_data_not& pt, proto_gc_two_complete_data_not& proto) {
-	proto.set_ngamemoney(pt.nGameMoney);
-	proto.set_ndouble(pt.nDouble);
-	proto.set_clord(pt.cLord);
-	for (size_t idx = 0; idx < pt.vecLordCards.size(); ++idx) {
-		CopyTo(pt.vecLordCards[idx], *(proto.add_veclordcards()));
-	}
-	for (size_t idx = 0; idx < pt.vecData.size(); ++idx) {
-		CopyTo(pt.vecData[idx], *(proto.add_vecdata()));
-	}
-	proto.set_nletnum(pt.nLetNum);
-	proto.set_nstart(pt.nStart);
-}
-
-// pt_gc_two_complete_data_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_complete_data_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_two_complete_data_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_two_complete_data_not& msg) {
-	proto_gc_two_complete_data_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -2007,316 +1094,29 @@ void SendPacketToProto(COutputStream& os, const pt_sic_show_result_not& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_cg_three_draw_req_card CopyFrom
-void CopyFrom(pt_cg_three_draw_req_card& pt , const proto_cg_three_draw_req_card& proto) {
+// pt_sic_bet_update_req CopyFrom
+void CopyFrom(pt_sic_bet_update_req& pt , const proto_sic_bet_update_req& proto) {
+	pt.nBetUpdateAckTag = proto.nbetupdateacktag();
 }
 
-// pt_cg_three_draw_req_card CopyTo
-void CopyTo(const pt_cg_three_draw_req_card& pt, proto_cg_three_draw_req_card& proto) {
+// pt_sic_bet_update_req CopyTo
+void CopyTo(const pt_sic_bet_update_req& pt, proto_sic_bet_update_req& proto) {
+	proto.set_nbetupdateacktag(pt.nBetUpdateAckTag);
 }
 
-// pt_cg_three_draw_req_card serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_three_draw_req_card& msg) {
+// pt_sic_bet_update_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_update_req& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_cg_three_draw_req_card proto;
+	proto_sic_bet_update_req proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_cg_three_draw_req_card& msg) {
-	proto_cg_three_draw_req_card proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_game_model CopyFrom
-void CopyFrom(pt_gc_game_model& pt , const proto_gc_game_model& proto) {
-	pt.cModelType = proto.cmodeltype();
-}
-
-// pt_gc_game_model CopyTo
-void CopyTo(const pt_gc_game_model& pt, proto_gc_game_model& proto) {
-	proto.set_cmodeltype(pt.cModelType);
-}
-
-// pt_gc_game_model serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_model& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_game_model proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_game_model& msg) {
-	proto_gc_game_model proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_magic_emoji_config_not CopyFrom
-void CopyFrom(pt_gc_magic_emoji_config_not& pt , const proto_gc_magic_emoji_config_not& proto) {
-	pt.emojiConfigs.resize(proto.emojiconfigs_size());
-	for (int idx = 0; idx < proto.emojiconfigs_size(); ++idx) {
-		CopyFrom(pt.emojiConfigs[idx], proto.emojiconfigs(idx));
-	}
-}
-
-// pt_gc_magic_emoji_config_not CopyTo
-void CopyTo(const pt_gc_magic_emoji_config_not& pt, proto_gc_magic_emoji_config_not& proto) {
-	for (size_t idx = 0; idx < pt.emojiConfigs.size(); ++idx) {
-		CopyTo(pt.emojiConfigs[idx], *(proto.add_emojiconfigs()));
-	}
-}
-
-// pt_gc_magic_emoji_config_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_magic_emoji_config_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_magic_emoji_config_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_magic_emoji_config_not& msg) {
-	proto_gc_magic_emoji_config_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// emojiConfig CopyFrom
-void CopyFrom(emojiConfig& pt , const proto_emojiConfig& proto) {
-	pt.cEmojiIndex = proto.cemojiindex();
-	pt.cCostType = proto.ccosttype();
-	pt.cCostValue = proto.ccostvalue();
-	pt.nTenItemIndex = proto.ntenitemindex();
-	pt.nTenItemNum = proto.ntenitemnum();
-	pt.nTenEmojiNum = proto.ntenemojinum();
-}
-
-// emojiConfig CopyTo
-void CopyTo(const emojiConfig& pt, proto_emojiConfig& proto) {
-	proto.set_cemojiindex(pt.cEmojiIndex);
-	proto.set_ccosttype(pt.cCostType);
-	proto.set_ccostvalue(pt.cCostValue);
-	proto.set_ntenitemindex(pt.nTenItemIndex);
-	proto.set_ntenitemnum(pt.nTenItemNum);
-	proto.set_ntenemojinum(pt.nTenEmojiNum);
-}
-
-// emojiConfig serialization
-void ReadPacketFromProto(CInputStream& is,emojiConfig& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_emojiConfig proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const emojiConfig& msg) {
-	proto_emojiConfig proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_show_card_req CopyFrom
-void CopyFrom(pt_gc_show_card_req& pt , const proto_gc_show_card_req& proto) {
-	pt.nSerialID = proto.nserialid();
-	pt.nShowCardType = proto.nshowcardtype();
-	pt.nShowCardBet = proto.nshowcardbet();
-}
-
-// pt_gc_show_card_req CopyTo
-void CopyTo(const pt_gc_show_card_req& pt, proto_gc_show_card_req& proto) {
-	proto.set_nserialid(pt.nSerialID);
-	proto.set_nshowcardtype(pt.nShowCardType);
-	proto.set_nshowcardbet(pt.nShowCardBet);
-}
-
-// pt_gc_show_card_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_show_card_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_show_card_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_show_card_req& msg) {
-	proto_gc_show_card_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_extra_double_score_not CopyFrom
-void CopyFrom(pt_gc_extra_double_score_not& pt , const proto_gc_extra_double_score_not& proto) {
-	pt.nDouble = proto.ndouble();
-	pt.nLordDouble = proto.nlorddouble();
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_gc_extra_double_score_not CopyTo
-void CopyTo(const pt_gc_extra_double_score_not& pt, proto_gc_extra_double_score_not& proto) {
-	proto.set_ndouble(pt.nDouble);
-	proto.set_nlorddouble(pt.nLordDouble);
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_gc_extra_double_score_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_extra_double_score_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_extra_double_score_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_extra_double_score_not& msg) {
-	proto_gc_extra_double_score_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_enable_invincible_req CopyFrom
-void CopyFrom(pt_cg_enable_invincible_req& pt , const proto_cg_enable_invincible_req& proto) {
-	pt.nOp = proto.nop();
-}
-
-// pt_cg_enable_invincible_req CopyTo
-void CopyTo(const pt_cg_enable_invincible_req& pt, proto_cg_enable_invincible_req& proto) {
-	proto.set_nop(pt.nOp);
-}
-
-// pt_cg_enable_invincible_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_enable_invincible_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_enable_invincible_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_enable_invincible_req& msg) {
-	proto_cg_enable_invincible_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_magic_emoji_noti CopyFrom
-void CopyFrom(pt_magic_emoji_noti& pt , const proto_magic_emoji_noti& proto) {
-	pt.cIsError = proto.ciserror();
-	pt.cEmojiIndex = proto.cemojiindex();
-	pt.cFromChairID = proto.cfromchairid();
-	pt.cToChairID = proto.ctochairid();
-	pt.cEmojiNum = proto.cemojinum();
-}
-
-// pt_magic_emoji_noti CopyTo
-void CopyTo(const pt_magic_emoji_noti& pt, proto_magic_emoji_noti& proto) {
-	proto.set_ciserror(pt.cIsError);
-	proto.set_cemojiindex(pt.cEmojiIndex);
-	proto.set_cfromchairid(pt.cFromChairID);
-	proto.set_ctochairid(pt.cToChairID);
-	proto.set_cemojinum(pt.cEmojiNum);
-}
-
-// pt_magic_emoji_noti serialization
-void ReadPacketFromProto(CInputStream& is,pt_magic_emoji_noti& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_magic_emoji_noti proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_magic_emoji_noti& msg) {
-	proto_magic_emoji_noti proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_task_complete_not CopyFrom
-void CopyFrom(pt_gc_task_complete_not& pt , const proto_gc_task_complete_not& proto) {
-	pt.chair_id_ = proto.chair_id();
-	pt.task_status_ = proto.task_status();
-}
-
-// pt_gc_task_complete_not CopyTo
-void CopyTo(const pt_gc_task_complete_not& pt, proto_gc_task_complete_not& proto) {
-	proto.set_chair_id(pt.chair_id_);
-	proto.set_task_status(pt.task_status_);
-}
-
-// pt_gc_task_complete_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_task_complete_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_task_complete_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_task_complete_not& msg) {
-	proto_gc_task_complete_not proto;
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_req& msg) {
+	proto_sic_bet_update_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -2379,6 +1179,36 @@ void SendPacketToProto(COutputStream& os, const pt_gc_get_card_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
+// pt_cg_beishu_info_req CopyFrom
+void CopyFrom(pt_cg_beishu_info_req& pt , const proto_cg_beishu_info_req& proto) {
+}
+
+// pt_cg_beishu_info_req CopyTo
+void CopyTo(const pt_cg_beishu_info_req& pt, proto_cg_beishu_info_req& proto) {
+}
+
+// pt_cg_beishu_info_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_beishu_info_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_beishu_info_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_beishu_info_req& msg) {
+	proto_cg_beishu_info_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
 // pt_cg_lord_card_lottery_info CopyFrom
 void CopyFrom(pt_cg_lord_card_lottery_info& pt , const proto_cg_lord_card_lottery_info& proto) {
 }
@@ -2400,265 +1230,6 @@ void ReadPacketFromProto(CInputStream& is,pt_cg_lord_card_lottery_info& msg) {
 
 void SendPacketToProto(COutputStream& os, const pt_cg_lord_card_lottery_info& msg) {
 	proto_cg_lord_card_lottery_info proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_mj_completedata_req CopyFrom
-void CopyFrom(pt_mj_completedata_req& pt , const proto_mj_completedata_req& proto) {
-}
-
-// pt_mj_completedata_req CopyTo
-void CopyTo(const pt_mj_completedata_req& pt, proto_mj_completedata_req& proto) {
-}
-
-// pt_mj_completedata_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_mj_completedata_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_mj_completedata_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_mj_completedata_req& msg) {
-	proto_mj_completedata_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_two_show_card_not CopyFrom
-void CopyFrom(pt_gc_two_show_card_not& pt , const proto_gc_two_show_card_not& proto) {
-	pt.cChairID = proto.cchairid();
-	pt.nLordPos = proto.nlordpos();
-	CopyFrom(pt.cLordCard, proto.clordcard());
-}
-
-// pt_gc_two_show_card_not CopyTo
-void CopyTo(const pt_gc_two_show_card_not& pt, proto_gc_two_show_card_not& proto) {
-	proto.set_cchairid(pt.cChairID);
-	proto.set_nlordpos(pt.nLordPos);
-	CopyTo(pt.cLordCard, *(proto.mutable_clordcard()));
-}
-
-// pt_gc_two_show_card_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_two_show_card_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_two_show_card_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_two_show_card_not& msg) {
-	proto_gc_two_show_card_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_three_draw_ack_data CopyFrom
-void CopyFrom(pt_gc_three_draw_ack_data& pt , const proto_gc_three_draw_ack_data& proto) {
-	pt.ret_ = proto.ret();
-	pt.vecMoneyDiZhus.resize(proto.vecmoneydizhus_size());
-	for (int idx = 0; idx < proto.vecmoneydizhus_size(); ++idx) {
-		CopyFrom(pt.vecMoneyDiZhus[idx], proto.vecmoneydizhus(idx));
-	}
-	pt.vecKindRates.resize(proto.veckindrates_size());
-	for (int idx = 0; idx < proto.veckindrates_size(); ++idx) {
-		CopyFrom(pt.vecKindRates[idx], proto.veckindrates(idx));
-	}
-	pt.nBaoDiMoney = proto.nbaodimoney();
-	pt.nBaoDiRate = proto.nbaodirate();
-	pt.fMinRate = proto.fminrate();
-}
-
-// pt_gc_three_draw_ack_data CopyTo
-void CopyTo(const pt_gc_three_draw_ack_data& pt, proto_gc_three_draw_ack_data& proto) {
-	proto.set_ret(pt.ret_);
-	for (size_t idx = 0; idx < pt.vecMoneyDiZhus.size(); ++idx) {
-		CopyTo(pt.vecMoneyDiZhus[idx], *(proto.add_vecmoneydizhus()));
-	}
-	for (size_t idx = 0; idx < pt.vecKindRates.size(); ++idx) {
-		CopyTo(pt.vecKindRates[idx], *(proto.add_veckindrates()));
-	}
-	proto.set_nbaodimoney(pt.nBaoDiMoney);
-	proto.set_nbaodirate(pt.nBaoDiRate);
-	proto.set_fminrate(pt.fMinRate);
-}
-
-// pt_gc_three_draw_ack_data serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_data& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_three_draw_ack_data proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_data& msg) {
-	proto_gc_three_draw_ack_data proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// stUserResult1 CopyFrom
-void CopyFrom(stUserResult1& pt , const proto_stUserResult1& proto) {
-	pt.nChairID = proto.nchairid();
-	pt.nScore = proto.nscore();
-	pt.nJifen = proto.njifen();
-}
-
-// stUserResult1 CopyTo
-void CopyTo(const stUserResult1& pt, proto_stUserResult1& proto) {
-	proto.set_nchairid(pt.nChairID);
-	proto.set_nscore(pt.nScore);
-	proto.set_njifen(pt.nJifen);
-}
-
-// stUserResult1 serialization
-void ReadPacketFromProto(CInputStream& is,stUserResult1& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_stUserResult1 proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const stUserResult1& msg) {
-	proto_stUserResult1 proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// Kind_Rate CopyFrom
-void CopyFrom(Kind_Rate& pt , const proto_Kind_Rate& proto) {
-	pt.strKind = proto.strkind();
-	pt.strRate = proto.strrate();
-}
-
-// Kind_Rate CopyTo
-void CopyTo(const Kind_Rate& pt, proto_Kind_Rate& proto) {
-	proto.set_strkind(pt.strKind);
-	proto.set_strrate(pt.strRate);
-}
-
-// Kind_Rate serialization
-void ReadPacketFromProto(CInputStream& is,Kind_Rate& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_Kind_Rate proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const Kind_Rate& msg) {
-	proto_Kind_Rate proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_get_card_req CopyFrom
-void CopyFrom(pt_cg_get_card_req& pt , const proto_cg_get_card_req& proto) {
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_cg_get_card_req CopyTo
-void CopyTo(const pt_cg_get_card_req& pt, proto_cg_get_card_req& proto) {
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_cg_get_card_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_get_card_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_get_card_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_get_card_req& msg) {
-	proto_cg_get_card_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_lord_card_lottery_info CopyFrom
-void CopyFrom(pt_gc_lord_card_lottery_info& pt , const proto_gc_lord_card_lottery_info& proto) {
-	pt.fee = proto.fee();
-	pt.vecReward.resize(proto.vecreward_size());
-	for (int idx = 0; idx < proto.vecreward_size(); ++idx) {
-		pt.vecReward[idx] = proto.vecreward(idx);
-	}
-}
-
-// pt_gc_lord_card_lottery_info CopyTo
-void CopyTo(const pt_gc_lord_card_lottery_info& pt, proto_gc_lord_card_lottery_info& proto) {
-	proto.set_fee(pt.fee);
-	for (size_t idx = 0; idx < pt.vecReward.size(); ++idx) {
-		proto.add_vecreward(pt.vecReward[idx]);
-	}
-}
-
-// pt_gc_lord_card_lottery_info serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_info& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_lord_card_lottery_info proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_info& msg) {
-	proto_gc_lord_card_lottery_info proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -2702,158 +1273,31 @@ void SendPacketToProto(COutputStream& os, const pt_gc_get_lord_card_reward& msg)
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// Money_DiZhu CopyFrom
-void CopyFrom(Money_DiZhu& pt , const proto_Money_DiZhu& proto) {
-	pt.nMoney = proto.nmoney();
-	pt.nDiZhu = proto.ndizhu();
+// TocashItemInfo CopyFrom
+void CopyFrom(TocashItemInfo& pt , const proto_TocashItemInfo& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.nItemChange = proto.nitemchange();
 }
 
-// Money_DiZhu CopyTo
-void CopyTo(const Money_DiZhu& pt, proto_Money_DiZhu& proto) {
-	proto.set_nmoney(pt.nMoney);
-	proto.set_ndizhu(pt.nDiZhu);
+// TocashItemInfo CopyTo
+void CopyTo(const TocashItemInfo& pt, proto_TocashItemInfo& proto) {
+	proto.set_cchairid(pt.cChairID);
+	proto.set_nitemchange(pt.nItemChange);
 }
 
-// Money_DiZhu serialization
-void ReadPacketFromProto(CInputStream& is,Money_DiZhu& msg) {
+// TocashItemInfo serialization
+void ReadPacketFromProto(CInputStream& is,TocashItemInfo& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_Money_DiZhu proto;
+	proto_TocashItemInfo proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const Money_DiZhu& msg) {
-	proto_Money_DiZhu proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_three_draw_ack_card CopyFrom
-void CopyFrom(pt_gc_three_draw_ack_card& pt , const proto_gc_three_draw_ack_card& proto) {
-	pt.ret_ = proto.ret();
-	pt.vecCards.resize(proto.veccards_size());
-	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
-		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
-	}
-	pt.vecRates.resize(proto.vecrates_size());
-	for (int idx = 0; idx < proto.vecrates_size(); ++idx) {
-		pt.vecRates[idx] = proto.vecrates(idx);
-	}
-	pt.nMoney = proto.nmoney();
-	pt.nDiZhu = proto.ndizhu();
-	pt.fRate = proto.frate();
-}
-
-// pt_gc_three_draw_ack_card CopyTo
-void CopyTo(const pt_gc_three_draw_ack_card& pt, proto_gc_three_draw_ack_card& proto) {
-	proto.set_ret(pt.ret_);
-	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
-		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
-	}
-	for (size_t idx = 0; idx < pt.vecRates.size(); ++idx) {
-		proto.add_vecrates(pt.vecRates[idx]);
-	}
-	proto.set_nmoney(pt.nMoney);
-	proto.set_ndizhu(pt.nDiZhu);
-	proto.set_frate(pt.fRate);
-}
-
-// pt_gc_three_draw_ack_card serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_card& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_three_draw_ack_card proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_card& msg) {
-	proto_gc_three_draw_ack_card proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_svr_test_not CopyFrom
-void CopyFrom(pt_svr_test_not& pt , const proto_svr_test_not& proto) {
-	pt.cTest = proto.ctest();
-	pt.nTest = proto.ntest();
-	pt.vecTest.resize(proto.vectest_size());
-	for (int idx = 0; idx < proto.vectest_size(); ++idx) {
-		pt.vecTest[idx] = proto.vectest(idx);
-	}
-}
-
-// pt_svr_test_not CopyTo
-void CopyTo(const pt_svr_test_not& pt, proto_svr_test_not& proto) {
-	proto.set_ctest(pt.cTest);
-	proto.set_ntest(pt.nTest);
-	for (size_t idx = 0; idx < pt.vecTest.size(); ++idx) {
-		proto.add_vectest(pt.vecTest[idx]);
-	}
-}
-
-// pt_svr_test_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_svr_test_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_svr_test_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_svr_test_not& msg) {
-	proto_svr_test_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_get_redpackets_newbie_award_not CopyFrom
-void CopyFrom(pt_gc_get_redpackets_newbie_award_not& pt , const proto_gc_get_redpackets_newbie_award_not& proto) {
-	pt.nRet = proto.nret();
-	pt.nAmount = proto.namount();
-}
-
-// pt_gc_get_redpackets_newbie_award_not CopyTo
-void CopyTo(const pt_gc_get_redpackets_newbie_award_not& pt, proto_gc_get_redpackets_newbie_award_not& proto) {
-	proto.set_nret(pt.nRet);
-	proto.set_namount(pt.nAmount);
-}
-
-// pt_gc_get_redpackets_newbie_award_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_get_redpackets_newbie_award_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_not& msg) {
-	proto_gc_get_redpackets_newbie_award_not proto;
+void SendPacketToProto(COutputStream& os, const TocashItemInfo& msg) {
+	proto_TocashItemInfo proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -2890,77 +1334,6 @@ void ReadPacketFromProto(CInputStream& is,CCard& msg) {
 
 void SendPacketToProto(COutputStream& os, const CCard& msg) {
 	proto_CCard proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_lord_card_not CopyFrom
-void CopyFrom(pt_gc_lord_card_not& pt , const proto_gc_lord_card_not& proto) {
-	pt.cLord = proto.clord();
-	pt.vecCards.resize(proto.veccards_size());
-	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
-		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
-	}
-}
-
-// pt_gc_lord_card_not CopyTo
-void CopyTo(const pt_gc_lord_card_not& pt, proto_gc_lord_card_not& proto) {
-	proto.set_clord(pt.cLord);
-	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
-		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
-	}
-}
-
-// pt_gc_lord_card_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_lord_card_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_not& msg) {
-	proto_gc_lord_card_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_counts_not CopyFrom
-void CopyFrom(pt_gc_counts_not& pt , const proto_gc_counts_not& proto) {
-	pt.counts_num_ = proto.counts_num();
-}
-
-// pt_gc_counts_not CopyTo
-void CopyTo(const pt_gc_counts_not& pt, proto_gc_counts_not& proto) {
-	proto.set_counts_num(pt.counts_num_);
-}
-
-// pt_gc_counts_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_counts_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_counts_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_counts_not& msg) {
-	proto_gc_counts_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3049,113 +1422,6 @@ void SendPacketToProto(COutputStream& os, const pt_cli_my_req& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_sic_bet_ack CopyFrom
-void CopyFrom(pt_sic_bet_ack& pt , const proto_sic_bet_ack& proto) {
-	pt.bAllow = proto.ballow();
-	pt.cCellID = proto.ccellid();
-	pt.nAmountCell = proto.namountcell();
-	pt.nAmountCellTotal = proto.namountcelltotal();
-}
-
-// pt_sic_bet_ack CopyTo
-void CopyTo(const pt_sic_bet_ack& pt, proto_sic_bet_ack& proto) {
-	proto.set_ballow(pt.bAllow);
-	proto.set_ccellid(pt.cCellID);
-	proto.set_namountcell(pt.nAmountCell);
-	proto.set_namountcelltotal(pt.nAmountCellTotal);
-}
-
-// pt_sic_bet_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_sic_bet_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_ack& msg) {
-	proto_sic_bet_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_card_count_ack1 CopyFrom
-void CopyFrom(pt_gc_card_count_ack1& pt , const proto_gc_card_count_ack1& proto) {
-	pt.counts_num_ = proto.counts_num();
-	pt.m_vecPutCard.resize(proto.m_vecputcard_size());
-	for (int idx = 0; idx < proto.m_vecputcard_size(); ++idx) {
-		CopyFrom(pt.m_vecPutCard[idx], proto.m_vecputcard(idx));
-	}
-}
-
-// pt_gc_card_count_ack1 CopyTo
-void CopyTo(const pt_gc_card_count_ack1& pt, proto_gc_card_count_ack1& proto) {
-	proto.set_counts_num(pt.counts_num_);
-	for (size_t idx = 0; idx < pt.m_vecPutCard.size(); ++idx) {
-		CopyTo(pt.m_vecPutCard[idx], *(proto.add_m_vecputcard()));
-	}
-}
-
-// pt_gc_card_count_ack1 serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack1& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_card_count_ack1 proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack1& msg) {
-	proto_gc_card_count_ack1 proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_sic_bet_clear_req CopyFrom
-void CopyFrom(pt_sic_bet_clear_req& pt , const proto_sic_bet_clear_req& proto) {
-}
-
-// pt_sic_bet_clear_req CopyTo
-void CopyTo(const pt_sic_bet_clear_req& pt, proto_sic_bet_clear_req& proto) {
-}
-
-// pt_sic_bet_clear_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_sic_bet_clear_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_req& msg) {
-	proto_sic_bet_clear_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
 // CCardsType CopyFrom
 void CopyFrom(CCardsType& pt , const proto_CCardsType& proto) {
 	pt.m_nTypeBomb = proto.m_ntypebomb();
@@ -3192,127 +1458,27 @@ void SendPacketToProto(COutputStream& os, const CCardsType& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_sic_bet_update_req CopyFrom
-void CopyFrom(pt_sic_bet_update_req& pt , const proto_sic_bet_update_req& proto) {
-	pt.nBetUpdateAckTag = proto.nbetupdateacktag();
+// pt_cg_baiyuan_regain_lose_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_regain_lose_req& pt , const proto_cg_baiyuan_regain_lose_req& proto) {
 }
 
-// pt_sic_bet_update_req CopyTo
-void CopyTo(const pt_sic_bet_update_req& pt, proto_sic_bet_update_req& proto) {
-	proto.set_nbetupdateacktag(pt.nBetUpdateAckTag);
+// pt_cg_baiyuan_regain_lose_req CopyTo
+void CopyTo(const pt_cg_baiyuan_regain_lose_req& pt, proto_cg_baiyuan_regain_lose_req& proto) {
 }
 
-// pt_sic_bet_update_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_update_req& msg) {
+// pt_cg_baiyuan_regain_lose_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_regain_lose_req& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_sic_bet_update_req proto;
+	proto_cg_baiyuan_regain_lose_req proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_update_req& msg) {
-	proto_sic_bet_update_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_sic_bet_clear_ack CopyFrom
-void CopyFrom(pt_sic_bet_clear_ack& pt , const proto_sic_bet_clear_ack& proto) {
-	pt.nBetUpdateAckTag = proto.nbetupdateacktag();
-	pt.nAmountBack = proto.namountback();
-	pt.nAmountTotal = proto.namounttotal();
-}
-
-// pt_sic_bet_clear_ack CopyTo
-void CopyTo(const pt_sic_bet_clear_ack& pt, proto_sic_bet_clear_ack& proto) {
-	proto.set_nbetupdateacktag(pt.nBetUpdateAckTag);
-	proto.set_namountback(pt.nAmountBack);
-	proto.set_namounttotal(pt.nAmountTotal);
-}
-
-// pt_sic_bet_clear_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_sic_bet_clear_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_ack& msg) {
-	proto_sic_bet_clear_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_bomb_not CopyFrom
-void CopyFrom(pt_gc_bomb_not& pt , const proto_gc_bomb_not& proto) {
-	pt.nDouble = proto.ndouble();
-}
-
-// pt_gc_bomb_not CopyTo
-void CopyTo(const pt_gc_bomb_not& pt, proto_gc_bomb_not& proto) {
-	proto.set_ndouble(pt.nDouble);
-}
-
-// pt_gc_bomb_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_bomb_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_bomb_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_bomb_not& msg) {
-	proto_gc_bomb_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_look_lord_card_req CopyFrom
-void CopyFrom(pt_cg_look_lord_card_req& pt , const proto_cg_look_lord_card_req& proto) {
-}
-
-// pt_cg_look_lord_card_req CopyTo
-void CopyTo(const pt_cg_look_lord_card_req& pt, proto_cg_look_lord_card_req& proto) {
-}
-
-// pt_cg_look_lord_card_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_look_lord_card_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_req& msg) {
-	proto_cg_look_lord_card_req proto;
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_regain_lose_req& msg) {
+	proto_cg_baiyuan_regain_lose_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3384,99 +1550,38 @@ void SendPacketToProto(COutputStream& os, const pt_sic_history_req& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_auto_not CopyFrom
-void CopyFrom(pt_gc_auto_not& pt , const proto_gc_auto_not& proto) {
-	pt.cChairID = proto.cchairid();
-	pt.cAuto = proto.cauto();
-}
-
-// pt_gc_auto_not CopyTo
-void CopyTo(const pt_gc_auto_not& pt, proto_gc_auto_not& proto) {
-	proto.set_cchairid(pt.cChairID);
-	proto.set_cauto(pt.cAuto);
-}
-
-// pt_gc_auto_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_auto_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_auto_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_auto_not& msg) {
-	proto_gc_auto_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_call_score_req CopyFrom
-void CopyFrom(pt_gc_call_score_req& pt , const proto_gc_call_score_req& proto) {
-	pt.nScore = proto.nscore();
+// pt_cg_play_card_ack CopyFrom
+void CopyFrom(pt_cg_play_card_ack& pt , const proto_cg_play_card_ack& proto) {
 	pt.nSerialID = proto.nserialid();
+	pt.cTimeOut = proto.ctimeout();
+	pt.vecCards.resize(proto.veccards_size());
+	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
+		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
+	}
 }
 
-// pt_gc_call_score_req CopyTo
-void CopyTo(const pt_gc_call_score_req& pt, proto_gc_call_score_req& proto) {
-	proto.set_nscore(pt.nScore);
+// pt_cg_play_card_ack CopyTo
+void CopyTo(const pt_cg_play_card_ack& pt, proto_cg_play_card_ack& proto) {
 	proto.set_nserialid(pt.nSerialID);
+	proto.set_ctimeout(pt.cTimeOut);
+	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
+		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
+	}
 }
 
-// pt_gc_call_score_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_call_score_req& msg) {
+// pt_cg_play_card_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_play_card_ack& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_call_score_req proto;
+	proto_cg_play_card_ack proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_call_score_req& msg) {
-	proto_gc_call_score_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_call_score_ack CopyFrom
-void CopyFrom(pt_cg_call_score_ack& pt , const proto_cg_call_score_ack& proto) {
-	pt.nScore = proto.nscore();
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_cg_call_score_ack CopyTo
-void CopyTo(const pt_cg_call_score_ack& pt, proto_cg_call_score_ack& proto) {
-	proto.set_nscore(pt.nScore);
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_cg_call_score_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_call_score_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_call_score_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_call_score_ack& msg) {
-	proto_cg_call_score_ack proto;
+void SendPacketToProto(COutputStream& os, const pt_cg_play_card_ack& msg) {
+	proto_cg_play_card_ack proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3507,154 +1612,6 @@ void ReadPacketFromProto(CInputStream& is,pt_sic_show_light_cell_not& msg) {
 
 void SendPacketToProto(COutputStream& os, const pt_sic_show_light_cell_not& msg) {
 	proto_sic_show_light_cell_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_get_redpackets_88yuan_award_ack CopyFrom
-void CopyFrom(pt_gc_get_redpackets_88yuan_award_ack& pt , const proto_gc_get_redpackets_88yuan_award_ack& proto) {
-	pt.ret_ = proto.ret();
-	pt.cur_rounds_ = proto.cur_rounds();
-	pt.limit_rounds_ = proto.limit_rounds();
-	pt.nAmount = proto.namount();
-	pt.cItemtype = proto.citemtype();
-	pt.task_id_ = proto.task_id();
-}
-
-// pt_gc_get_redpackets_88yuan_award_ack CopyTo
-void CopyTo(const pt_gc_get_redpackets_88yuan_award_ack& pt, proto_gc_get_redpackets_88yuan_award_ack& proto) {
-	proto.set_ret(pt.ret_);
-	proto.set_cur_rounds(pt.cur_rounds_);
-	proto.set_limit_rounds(pt.limit_rounds_);
-	proto.set_namount(pt.nAmount);
-	proto.set_citemtype(pt.cItemtype);
-	proto.set_task_id(pt.task_id_);
-}
-
-// pt_gc_get_redpackets_88yuan_award_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_88yuan_award_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_get_redpackets_88yuan_award_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_88yuan_award_ack& msg) {
-	proto_gc_get_redpackets_88yuan_award_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// TaskItem CopyFrom
-void CopyFrom(TaskItem& pt , const proto_TaskItem& proto) {
-	pt.task_id_ = proto.task_id();
-	pt.task_desc_ = proto.task_desc();
-	pt.task_mission_ = proto.task_mission();
-	pt.task_money_type_ = proto.task_money_type();
-	pt.task_money_ = proto.task_money();
-	pt.task_rate_ = proto.task_rate();
-}
-
-// TaskItem CopyTo
-void CopyTo(const TaskItem& pt, proto_TaskItem& proto) {
-	proto.set_task_id(pt.task_id_);
-	proto.set_task_desc(pt.task_desc_);
-	proto.set_task_mission(pt.task_mission_);
-	proto.set_task_money_type(pt.task_money_type_);
-	proto.set_task_money(pt.task_money_);
-	proto.set_task_rate(pt.task_rate_);
-}
-
-// TaskItem serialization
-void ReadPacketFromProto(CInputStream& is,TaskItem& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_TaskItem proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const TaskItem& msg) {
-	proto_TaskItem proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_clienttimer_not CopyFrom
-void CopyFrom(pt_gc_clienttimer_not& pt , const proto_gc_clienttimer_not& proto) {
-	pt.chairId = proto.chairid();
-	pt.sPeriod = proto.speriod();
-}
-
-// pt_gc_clienttimer_not CopyTo
-void CopyTo(const pt_gc_clienttimer_not& pt, proto_gc_clienttimer_not& proto) {
-	proto.set_chairid(pt.chairId);
-	proto.set_speriod(pt.sPeriod);
-}
-
-// pt_gc_clienttimer_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_clienttimer_not& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_clienttimer_not proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_clienttimer_not& msg) {
-	proto_gc_clienttimer_not proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_card_count_req CopyFrom
-void CopyFrom(pt_cg_card_count_req& pt , const proto_cg_card_count_req& proto) {
-}
-
-// pt_cg_card_count_req CopyTo
-void CopyTo(const pt_cg_card_count_req& pt, proto_cg_card_count_req& proto) {
-}
-
-// pt_cg_card_count_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_card_count_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_card_count_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_card_count_req& msg) {
-	proto_cg_card_count_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3696,29 +1653,29 @@ void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_notify& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_laizi_not CopyFrom
-void CopyFrom(pt_gc_laizi_not& pt , const proto_gc_laizi_not& proto) {
-	pt.card_value = proto.card_value();
+// pt_gc_two_let_card_not CopyFrom
+void CopyFrom(pt_gc_two_let_card_not& pt , const proto_gc_two_let_card_not& proto) {
+	pt.nLetNum = proto.nletnum();
 }
 
-// pt_gc_laizi_not CopyTo
-void CopyTo(const pt_gc_laizi_not& pt, proto_gc_laizi_not& proto) {
-	proto.set_card_value(pt.card_value);
+// pt_gc_two_let_card_not CopyTo
+void CopyTo(const pt_gc_two_let_card_not& pt, proto_gc_two_let_card_not& proto) {
+	proto.set_nletnum(pt.nLetNum);
 }
 
-// pt_gc_laizi_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_laizi_not& msg) {
+// pt_gc_two_let_card_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_let_card_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_laizi_not proto;
+	proto_gc_two_let_card_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_laizi_not& msg) {
-	proto_gc_laizi_not proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_two_let_card_not& msg) {
+	proto_gc_two_let_card_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3764,31 +1721,36 @@ void SendPacketToProto(COutputStream& os, const pt_magic_emoji_req& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_cg_double_score_ack CopyFrom
-void CopyFrom(pt_cg_double_score_ack& pt , const proto_cg_double_score_ack& proto) {
-	pt.nScore = proto.nscore();
-	pt.nSerialID = proto.nserialid();
+// pt_gc_lord_card_not CopyFrom
+void CopyFrom(pt_gc_lord_card_not& pt , const proto_gc_lord_card_not& proto) {
+	pt.cLord = proto.clord();
+	pt.vecCards.resize(proto.veccards_size());
+	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
+		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
+	}
 }
 
-// pt_cg_double_score_ack CopyTo
-void CopyTo(const pt_cg_double_score_ack& pt, proto_cg_double_score_ack& proto) {
-	proto.set_nscore(pt.nScore);
-	proto.set_nserialid(pt.nSerialID);
+// pt_gc_lord_card_not CopyTo
+void CopyTo(const pt_gc_lord_card_not& pt, proto_gc_lord_card_not& proto) {
+	proto.set_clord(pt.cLord);
+	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
+		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
+	}
 }
 
-// pt_cg_double_score_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_double_score_ack& msg) {
+// pt_gc_lord_card_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_cg_double_score_ack proto;
+	proto_gc_lord_card_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_cg_double_score_ack& msg) {
-	proto_cg_double_score_ack proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_not& msg) {
+	proto_gc_lord_card_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3837,27 +1799,34 @@ void SendPacketToProto(COutputStream& os, const pt_gc_win_doubel_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_sic_bet_begin_not CopyFrom
-void CopyFrom(pt_sic_bet_begin_not& pt , const proto_sic_bet_begin_not& proto) {
+// pt_gc_baiyuan_luck_welfare_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_luck_welfare_not& pt , const proto_gc_baiyuan_luck_welfare_not& proto) {
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
 }
 
-// pt_sic_bet_begin_not CopyTo
-void CopyTo(const pt_sic_bet_begin_not& pt, proto_sic_bet_begin_not& proto) {
+// pt_gc_baiyuan_luck_welfare_not CopyTo
+void CopyTo(const pt_gc_baiyuan_luck_welfare_not& pt, proto_gc_baiyuan_luck_welfare_not& proto) {
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
 }
 
-// pt_sic_bet_begin_not serialization
-void ReadPacketFromProto(CInputStream& is,pt_sic_bet_begin_not& msg) {
+// pt_gc_baiyuan_luck_welfare_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_luck_welfare_not& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_sic_bet_begin_not proto;
+	proto_gc_baiyuan_luck_welfare_not proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_sic_bet_begin_not& msg) {
-	proto_sic_bet_begin_not proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_luck_welfare_not& msg) {
+	proto_gc_baiyuan_luck_welfare_not proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -3933,106 +1902,6 @@ void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_result_ack& 
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_svr_my_ack CopyFrom
-void CopyFrom(pt_svr_my_ack& pt , const proto_svr_my_ack& proto) {
-	pt.b = proto.b();
-}
-
-// pt_svr_my_ack CopyTo
-void CopyTo(const pt_svr_my_ack& pt, proto_svr_my_ack& proto) {
-	proto.set_b(pt.b);
-}
-
-// pt_svr_my_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_svr_my_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_svr_my_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_svr_my_ack& msg) {
-	proto_svr_my_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_get_redpackets_newbie_award_req CopyFrom
-void CopyFrom(pt_gc_get_redpackets_newbie_award_req& pt , const proto_gc_get_redpackets_newbie_award_req& proto) {
-	pt.nAmount = proto.namount();
-	pt.cDouble = proto.cdouble();
-}
-
-// pt_gc_get_redpackets_newbie_award_req CopyTo
-void CopyTo(const pt_gc_get_redpackets_newbie_award_req& pt, proto_gc_get_redpackets_newbie_award_req& proto) {
-	proto.set_namount(pt.nAmount);
-	proto.set_cdouble(pt.cDouble);
-}
-
-// pt_gc_get_redpackets_newbie_award_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_get_redpackets_newbie_award_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_req& msg) {
-	proto_gc_get_redpackets_newbie_award_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_play_card_req CopyFrom
-void CopyFrom(pt_gc_play_card_req& pt , const proto_gc_play_card_req& proto) {
-	pt.cAuto = proto.cauto();
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_gc_play_card_req CopyTo
-void CopyTo(const pt_gc_play_card_req& pt, proto_gc_play_card_req& proto) {
-	proto.set_cauto(pt.cAuto);
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_gc_play_card_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_play_card_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_play_card_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_play_card_req& msg) {
-	proto_gc_play_card_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
 // pt_gc_lord_card_lottery_base CopyFrom
 void CopyFrom(pt_gc_lord_card_lottery_base& pt , const proto_gc_lord_card_lottery_base& proto) {
 	pt.ret = proto.ret();
@@ -4058,111 +1927,6 @@ void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_base& msg) {
 
 void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_base& msg) {
 	proto_gc_lord_card_lottery_base proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_play_card_ack CopyFrom
-void CopyFrom(pt_cg_play_card_ack& pt , const proto_cg_play_card_ack& proto) {
-	pt.nSerialID = proto.nserialid();
-	pt.cTimeOut = proto.ctimeout();
-	pt.vecCards.resize(proto.veccards_size());
-	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
-		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
-	}
-}
-
-// pt_cg_play_card_ack CopyTo
-void CopyTo(const pt_cg_play_card_ack& pt, proto_cg_play_card_ack& proto) {
-	proto.set_nserialid(pt.nSerialID);
-	proto.set_ctimeout(pt.cTimeOut);
-	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
-		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
-	}
-}
-
-// pt_cg_play_card_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_play_card_ack& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_play_card_ack proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_play_card_ack& msg) {
-	proto_cg_play_card_ack proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_cg_beishu_info_req CopyFrom
-void CopyFrom(pt_cg_beishu_info_req& pt , const proto_cg_beishu_info_req& proto) {
-}
-
-// pt_cg_beishu_info_req CopyTo
-void CopyTo(const pt_cg_beishu_info_req& pt, proto_cg_beishu_info_req& proto) {
-}
-
-// pt_cg_beishu_info_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_beishu_info_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_cg_beishu_info_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_cg_beishu_info_req& msg) {
-	proto_cg_beishu_info_req proto;
-	CopyTo(msg, proto);
-	short msg_code = htons(msg.opcode);
-	os.WriteData(&msg_code, sizeof(msg_code));
-	int length = proto.ByteSize();
-	char* buff = new char[length];
-	proto.SerializeToArray(buff, length);
-	os.WriteData(buff, length);
-	delete [] buff;
-}
-// pt_gc_rob_lord_req CopyFrom
-void CopyFrom(pt_gc_rob_lord_req& pt , const proto_gc_rob_lord_req& proto) {
-	pt.cDefaultLord = proto.cdefaultlord();
-	pt.nSerialID = proto.nserialid();
-}
-
-// pt_gc_rob_lord_req CopyTo
-void CopyTo(const pt_gc_rob_lord_req& pt, proto_gc_rob_lord_req& proto) {
-	proto.set_cdefaultlord(pt.cDefaultLord);
-	proto.set_nserialid(pt.nSerialID);
-}
-
-// pt_gc_rob_lord_req serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_rob_lord_req& msg) {
-	short msg_code = 0;
-	is.ReadData(&msg_code, sizeof(msg_code));
-	msg_code = ntohs(msg_code);
-	proto_gc_rob_lord_req proto;
-	proto.ParseFromArray(is.RawData(), is.ByteSize());
-	CopyFrom(msg, proto);
-	msg.opcode = msg_code;
-}
-
-void SendPacketToProto(COutputStream& os, const pt_gc_rob_lord_req& msg) {
-	proto_gc_rob_lord_req proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -4233,31 +1997,50 @@ void SendPacketToProto(COutputStream& os, const pt_sic_history_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_cg_rob_lord_ack CopyFrom
-void CopyFrom(pt_cg_rob_lord_ack& pt , const proto_cg_rob_lord_ack& proto) {
-	pt.cRob = proto.crob();
-	pt.nSerialID = proto.nserialid();
+// pt_gc_game_result_not1 CopyFrom
+void CopyFrom(pt_gc_game_result_not1& pt , const proto_gc_game_result_not1& proto) {
+	pt.bType = proto.btype();
+	pt.cDouble = proto.cdouble();
+	pt.cCallScore = proto.ccallscore();
+	pt.bShowCard = proto.bshowcard();
+	pt.nBombCount = proto.nbombcount();
+	pt.bSpring = proto.bspring();
+	pt.bReverseSpring = proto.breversespring();
+	pt.bRobLord = proto.broblord();
+	pt.vecUserResult1.resize(proto.vecuserresult1_size());
+	for (int idx = 0; idx < proto.vecuserresult1_size(); ++idx) {
+		CopyFrom(pt.vecUserResult1[idx], proto.vecuserresult1(idx));
+	}
 }
 
-// pt_cg_rob_lord_ack CopyTo
-void CopyTo(const pt_cg_rob_lord_ack& pt, proto_cg_rob_lord_ack& proto) {
-	proto.set_crob(pt.cRob);
-	proto.set_nserialid(pt.nSerialID);
+// pt_gc_game_result_not1 CopyTo
+void CopyTo(const pt_gc_game_result_not1& pt, proto_gc_game_result_not1& proto) {
+	proto.set_btype(pt.bType);
+	proto.set_cdouble(pt.cDouble);
+	proto.set_ccallscore(pt.cCallScore);
+	proto.set_bshowcard(pt.bShowCard);
+	proto.set_nbombcount(pt.nBombCount);
+	proto.set_bspring(pt.bSpring);
+	proto.set_breversespring(pt.bReverseSpring);
+	proto.set_broblord(pt.bRobLord);
+	for (size_t idx = 0; idx < pt.vecUserResult1.size(); ++idx) {
+		CopyTo(pt.vecUserResult1[idx], *(proto.add_vecuserresult1()));
+	}
 }
 
-// pt_cg_rob_lord_ack serialization
-void ReadPacketFromProto(CInputStream& is,pt_cg_rob_lord_ack& msg) {
+// pt_gc_game_result_not1 serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_result_not1& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_cg_rob_lord_ack proto;
+	proto_gc_game_result_not1 proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_cg_rob_lord_ack& msg) {
-	proto_cg_rob_lord_ack proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_game_result_not1& msg) {
+	proto_gc_game_result_not1 proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
@@ -4445,50 +2228,2972 @@ void SendPacketToProto(COutputStream& os, const pt_cg_send_card_ok_ack& msg) {
 	os.WriteData(buff, length);
 	delete [] buff;
 }
-// pt_gc_game_result_not1 CopyFrom
-void CopyFrom(pt_gc_game_result_not1& pt , const proto_gc_game_result_not1& proto) {
-	pt.bType = proto.btype();
-	pt.cDouble = proto.cdouble();
-	pt.cCallScore = proto.ccallscore();
-	pt.bShowCard = proto.bshowcard();
-	pt.nBombCount = proto.nbombcount();
-	pt.bSpring = proto.bspring();
-	pt.bReverseSpring = proto.breversespring();
-	pt.bRobLord = proto.broblord();
-	pt.vecUserResult1.resize(proto.vecuserresult1_size());
-	for (int idx = 0; idx < proto.vecuserresult1_size(); ++idx) {
-		CopyFrom(pt.vecUserResult1[idx], proto.vecuserresult1(idx));
+// pt_gc_baiyuan_bankruptcy_defend_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_bankruptcy_defend_ack& pt , const proto_gc_baiyuan_bankruptcy_defend_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
 	}
 }
 
-// pt_gc_game_result_not1 CopyTo
-void CopyTo(const pt_gc_game_result_not1& pt, proto_gc_game_result_not1& proto) {
-	proto.set_btype(pt.bType);
-	proto.set_cdouble(pt.cDouble);
-	proto.set_ccallscore(pt.cCallScore);
-	proto.set_bshowcard(pt.bShowCard);
-	proto.set_nbombcount(pt.nBombCount);
-	proto.set_bspring(pt.bSpring);
-	proto.set_breversespring(pt.bReverseSpring);
-	proto.set_broblord(pt.bRobLord);
-	for (size_t idx = 0; idx < pt.vecUserResult1.size(); ++idx) {
-		CopyTo(pt.vecUserResult1[idx], *(proto.add_vecuserresult1()));
+// pt_gc_baiyuan_bankruptcy_defend_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_bankruptcy_defend_ack& pt, proto_gc_baiyuan_bankruptcy_defend_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
 	}
 }
 
-// pt_gc_game_result_not1 serialization
-void ReadPacketFromProto(CInputStream& is,pt_gc_game_result_not1& msg) {
+// pt_gc_baiyuan_bankruptcy_defend_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_bankruptcy_defend_ack& msg) {
 	short msg_code = 0;
 	is.ReadData(&msg_code, sizeof(msg_code));
 	msg_code = ntohs(msg_code);
-	proto_gc_game_result_not1 proto;
+	proto_gc_baiyuan_bankruptcy_defend_ack proto;
 	proto.ParseFromArray(is.RawData(), is.ByteSize());
 	CopyFrom(msg, proto);
 	msg.opcode = msg_code;
 }
 
-void SendPacketToProto(COutputStream& os, const pt_gc_game_result_not1& msg) {
-	proto_gc_game_result_not1 proto;
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_bankruptcy_defend_ack& msg) {
+	proto_gc_baiyuan_bankruptcy_defend_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_task_not CopyFrom
+void CopyFrom(pt_gc_task_not& pt , const proto_gc_task_not& proto) {
+	CopyFrom(pt.task_item_, proto.task_item());
+}
+
+// pt_gc_task_not CopyTo
+void CopyTo(const pt_gc_task_not& pt, proto_gc_task_not& proto) {
+	CopyTo(pt.task_item_, *(proto.mutable_task_item()));
+}
+
+// pt_gc_task_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_task_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_task_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_task_not& msg) {
+	proto_gc_task_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_get_redpackets_88yuan_award_req CopyFrom
+void CopyFrom(pt_cg_get_redpackets_88yuan_award_req& pt , const proto_cg_get_redpackets_88yuan_award_req& proto) {
+	pt.type_ = proto.type();
+}
+
+// pt_cg_get_redpackets_88yuan_award_req CopyTo
+void CopyTo(const pt_cg_get_redpackets_88yuan_award_req& pt, proto_cg_get_redpackets_88yuan_award_req& proto) {
+	proto.set_type(pt.type_);
+}
+
+// pt_cg_get_redpackets_88yuan_award_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_88yuan_award_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_get_redpackets_88yuan_award_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_88yuan_award_req& msg) {
+	proto_cg_get_redpackets_88yuan_award_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_win_double_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_win_double_not& pt , const proto_gc_baiyuan_win_double_not& proto) {
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_win_double_not CopyTo
+void CopyTo(const pt_gc_baiyuan_win_double_not& pt, proto_gc_baiyuan_win_double_not& proto) {
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_win_double_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_win_double_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_win_double_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_win_double_not& msg) {
+	proto_gc_baiyuan_win_double_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_use_card_recode_noti CopyFrom
+void CopyFrom(pt_gc_use_card_recode_noti& pt , const proto_gc_use_card_recode_noti& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.cReconnection = proto.creconnection();
+}
+
+// pt_gc_use_card_recode_noti CopyTo
+void CopyTo(const pt_gc_use_card_recode_noti& pt, proto_gc_use_card_recode_noti& proto) {
+	proto.set_cchairid(pt.cChairID);
+	proto.set_creconnection(pt.cReconnection);
+}
+
+// pt_gc_use_card_recode_noti serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_use_card_recode_noti& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_use_card_recode_noti proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_use_card_recode_noti& msg) {
+	proto_gc_use_card_recode_noti proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_regain_lose_score_req CopyFrom
+void CopyFrom(pt_cg_regain_lose_score_req& pt , const proto_cg_regain_lose_score_req& proto) {
+	pt.nOp = proto.nop();
+	pt.nItemIndex = proto.nitemindex();
+	pt.nItemNum = proto.nitemnum();
+}
+
+// pt_cg_regain_lose_score_req CopyTo
+void CopyTo(const pt_cg_regain_lose_score_req& pt, proto_cg_regain_lose_score_req& proto) {
+	proto.set_nop(pt.nOp);
+	proto.set_nitemindex(pt.nItemIndex);
+	proto.set_nitemnum(pt.nItemNum);
+}
+
+// pt_cg_regain_lose_score_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_regain_lose_score_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_regain_lose_score_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_regain_lose_score_req& msg) {
+	proto_cg_regain_lose_score_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_private_room_result_ack CopyFrom
+void CopyFrom(pt_gc_private_room_result_ack& pt , const proto_gc_private_room_result_ack& proto) {
+	pt.vecGameStatiscs.resize(proto.vecgamestatiscs_size());
+	for (int idx = 0; idx < proto.vecgamestatiscs_size(); ++idx) {
+		CopyFrom(pt.vecGameStatiscs[idx], proto.vecgamestatiscs(idx));
+	}
+}
+
+// pt_gc_private_room_result_ack CopyTo
+void CopyTo(const pt_gc_private_room_result_ack& pt, proto_gc_private_room_result_ack& proto) {
+	for (size_t idx = 0; idx < pt.vecGameStatiscs.size(); ++idx) {
+		CopyTo(pt.vecGameStatiscs[idx], *(proto.add_vecgamestatiscs()));
+	}
+}
+
+// pt_gc_private_room_result_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_private_room_result_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_ack& msg) {
+	proto_gc_private_room_result_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_replay_data_not CopyFrom
+void CopyFrom(pt_gc_replay_data_not& pt , const proto_gc_replay_data_not& proto) {
+	pt.vecChangeCards.resize(proto.vecchangecards_size());
+	for (int idx = 0; idx < proto.vecchangecards_size(); ++idx) {
+		CopyFrom(pt.vecChangeCards[idx], proto.vecchangecards(idx));
+	}
+}
+
+// pt_gc_replay_data_not CopyTo
+void CopyTo(const pt_gc_replay_data_not& pt, proto_gc_replay_data_not& proto) {
+	for (size_t idx = 0; idx < pt.vecChangeCards.size(); ++idx) {
+		CopyTo(pt.vecChangeCards[idx], *(proto.add_vecchangecards()));
+	}
+}
+
+// pt_gc_replay_data_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_replay_data_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_replay_data_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_replay_data_not& msg) {
+	proto_gc_replay_data_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_bet_lord_card_req CopyFrom
+void CopyFrom(pt_cg_bet_lord_card_req& pt , const proto_cg_bet_lord_card_req& proto) {
+	pt.index = proto.index();
+}
+
+// pt_cg_bet_lord_card_req CopyTo
+void CopyTo(const pt_cg_bet_lord_card_req& pt, proto_cg_bet_lord_card_req& proto) {
+	proto.set_index(pt.index);
+}
+
+// pt_cg_bet_lord_card_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_bet_lord_card_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_bet_lord_card_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_bet_lord_card_req& msg) {
+	proto_cg_bet_lord_card_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_look_lord_card_item_ack CopyFrom
+void CopyFrom(pt_gc_look_lord_card_item_ack& pt , const proto_gc_look_lord_card_item_ack& proto) {
+	pt.nRet = proto.nret();
+}
+
+// pt_gc_look_lord_card_item_ack CopyTo
+void CopyTo(const pt_gc_look_lord_card_item_ack& pt, proto_gc_look_lord_card_item_ack& proto) {
+	proto.set_nret(pt.nRet);
+}
+
+// pt_gc_look_lord_card_item_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_look_lord_card_item_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_look_lord_card_item_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_look_lord_card_item_ack& msg) {
+	proto_gc_look_lord_card_item_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// stUserData CopyFrom
+void CopyFrom(stUserData& pt , const proto_stUserData& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.vecHandCards.resize(proto.vechandcards_size());
+	for (int idx = 0; idx < proto.vechandcards_size(); ++idx) {
+		CopyFrom(pt.vecHandCards[idx], proto.vechandcards(idx));
+	}
+	pt.vecPutCards.resize(proto.vecputcards_size());
+	for (int idx = 0; idx < proto.vecputcards_size(); ++idx) {
+		CopyFrom(pt.vecPutCards[idx], proto.vecputcards(idx));
+	}
+}
+
+// stUserData CopyTo
+void CopyTo(const stUserData& pt, proto_stUserData& proto) {
+	proto.set_cchairid(pt.cChairID);
+	for (size_t idx = 0; idx < pt.vecHandCards.size(); ++idx) {
+		CopyTo(pt.vecHandCards[idx], *(proto.add_vechandcards()));
+	}
+	for (size_t idx = 0; idx < pt.vecPutCards.size(); ++idx) {
+		CopyTo(pt.vecPutCards[idx], *(proto.add_vecputcards()));
+	}
+}
+
+// stUserData serialization
+void ReadPacketFromProto(CInputStream& is,stUserData& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_stUserData proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const stUserData& msg) {
+	proto_stUserData proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_double_score_req CopyFrom
+void CopyFrom(pt_gc_double_score_req& pt , const proto_gc_double_score_req& proto) {
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_gc_double_score_req CopyTo
+void CopyTo(const pt_gc_double_score_req& pt, proto_gc_double_score_req& proto) {
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_gc_double_score_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_double_score_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_double_score_req& msg) {
+	proto_gc_double_score_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_sic_bet_ack CopyFrom
+void CopyFrom(pt_sic_bet_ack& pt , const proto_sic_bet_ack& proto) {
+	pt.bAllow = proto.ballow();
+	pt.cCellID = proto.ccellid();
+	pt.nAmountCell = proto.namountcell();
+	pt.nAmountCellTotal = proto.namountcelltotal();
+}
+
+// pt_sic_bet_ack CopyTo
+void CopyTo(const pt_sic_bet_ack& pt, proto_sic_bet_ack& proto) {
+	proto.set_ballow(pt.bAllow);
+	proto.set_ccellid(pt.cCellID);
+	proto.set_namountcell(pt.nAmountCell);
+	proto.set_namountcelltotal(pt.nAmountCellTotal);
+}
+
+// pt_sic_bet_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_sic_bet_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_ack& msg) {
+	proto_sic_bet_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_look_lord_card_item_req CopyFrom
+void CopyFrom(pt_cg_look_lord_card_item_req& pt , const proto_cg_look_lord_card_item_req& proto) {
+}
+
+// pt_cg_look_lord_card_item_req CopyTo
+void CopyTo(const pt_cg_look_lord_card_item_req& pt, proto_cg_look_lord_card_item_req& proto) {
+}
+
+// pt_cg_look_lord_card_item_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_item_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_look_lord_card_item_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_item_req& msg) {
+	proto_cg_look_lord_card_item_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_luck_welfare_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_luck_welfare_ack& pt , const proto_gc_baiyuan_luck_welfare_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_luck_welfare_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_luck_welfare_ack& pt, proto_gc_baiyuan_luck_welfare_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_luck_welfare_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_luck_welfare_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_luck_welfare_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_luck_welfare_ack& msg) {
+	proto_gc_baiyuan_luck_welfare_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_get_redpackets_newbie_award_req CopyFrom
+void CopyFrom(pt_gc_get_redpackets_newbie_award_req& pt , const proto_gc_get_redpackets_newbie_award_req& proto) {
+	pt.nAmount = proto.namount();
+	pt.cDouble = proto.cdouble();
+}
+
+// pt_gc_get_redpackets_newbie_award_req CopyTo
+void CopyTo(const pt_gc_get_redpackets_newbie_award_req& pt, proto_gc_get_redpackets_newbie_award_req& proto) {
+	proto.set_namount(pt.nAmount);
+	proto.set_cdouble(pt.cDouble);
+}
+
+// pt_gc_get_redpackets_newbie_award_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_get_redpackets_newbie_award_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_req& msg) {
+	proto_gc_get_redpackets_newbie_award_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_bet_lord_card_ack CopyFrom
+void CopyFrom(pt_gc_bet_lord_card_ack& pt , const proto_gc_bet_lord_card_ack& proto) {
+	pt.ret = proto.ret();
+	pt.index = proto.index();
+}
+
+// pt_gc_bet_lord_card_ack CopyTo
+void CopyTo(const pt_gc_bet_lord_card_ack& pt, proto_gc_bet_lord_card_ack& proto) {
+	proto.set_ret(pt.ret);
+	proto.set_index(pt.index);
+}
+
+// pt_gc_bet_lord_card_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_bet_lord_card_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_bet_lord_card_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_bet_lord_card_ack& msg) {
+	proto_gc_bet_lord_card_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_double_score_not CopyFrom
+void CopyFrom(pt_gc_double_score_not& pt , const proto_gc_double_score_not& proto) {
+	pt.nDouble = proto.ndouble();
+	pt.nSerialID = proto.nserialid();
+	pt.cChairID = proto.cchairid();
+}
+
+// pt_gc_double_score_not CopyTo
+void CopyTo(const pt_gc_double_score_not& pt, proto_gc_double_score_not& proto) {
+	proto.set_ndouble(pt.nDouble);
+	proto.set_nserialid(pt.nSerialID);
+	proto.set_cchairid(pt.cChairID);
+}
+
+// pt_gc_double_score_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_double_score_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_double_score_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_double_score_not& msg) {
+	proto_gc_double_score_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_sic_new_round_not CopyFrom
+void CopyFrom(pt_sic_new_round_not& pt , const proto_sic_new_round_not& proto) {
+}
+
+// pt_sic_new_round_not CopyTo
+void CopyTo(const pt_sic_new_round_not& pt, proto_sic_new_round_not& proto) {
+}
+
+// pt_sic_new_round_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_new_round_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_sic_new_round_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_sic_new_round_not& msg) {
+	proto_sic_new_round_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// st_sic_cell CopyFrom
+void CopyFrom(st_sic_cell& pt , const proto_st_sic_cell& proto) {
+	pt.cCellID = proto.ccellid();
+	pt.nAmount = proto.namount();
+}
+
+// st_sic_cell CopyTo
+void CopyTo(const st_sic_cell& pt, proto_st_sic_cell& proto) {
+	proto.set_ccellid(pt.cCellID);
+	proto.set_namount(pt.nAmount);
+}
+
+// st_sic_cell serialization
+void ReadPacketFromProto(CInputStream& is,st_sic_cell& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_st_sic_cell proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const st_sic_cell& msg) {
+	proto_st_sic_cell proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_item_info_not CopyFrom
+void CopyFrom(pt_gc_item_info_not& pt , const proto_gc_item_info_not& proto) {
+	pt.nItemIndex = proto.nitemindex();
+	pt.nItemCount = proto.nitemcount();
+}
+
+// pt_gc_item_info_not CopyTo
+void CopyTo(const pt_gc_item_info_not& pt, proto_gc_item_info_not& proto) {
+	proto.set_nitemindex(pt.nItemIndex);
+	proto.set_nitemcount(pt.nItemCount);
+}
+
+// pt_gc_item_info_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_item_info_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_item_info_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_item_info_not& msg) {
+	proto_gc_item_info_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// stUserResult CopyFrom
+void CopyFrom(stUserResult& pt , const proto_stUserResult& proto) {
+	pt.nChairID = proto.nchairid();
+	pt.nScore = proto.nscore();
+}
+
+// stUserResult CopyTo
+void CopyTo(const stUserResult& pt, proto_stUserResult& proto) {
+	proto.set_nchairid(pt.nChairID);
+	proto.set_nscore(pt.nScore);
+}
+
+// stUserResult serialization
+void ReadPacketFromProto(CInputStream& is,stUserResult& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_stUserResult proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const stUserResult& msg) {
+	proto_stUserResult proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_starsky_season_noti CopyFrom
+void CopyFrom(pt_cg_starsky_season_noti& pt , const proto_cg_starsky_season_noti& proto) {
+	pt.season_ = proto.season();
+}
+
+// pt_cg_starsky_season_noti CopyTo
+void CopyTo(const pt_cg_starsky_season_noti& pt, proto_cg_starsky_season_noti& proto) {
+	proto.set_season(pt.season_);
+}
+
+// pt_cg_starsky_season_noti serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_starsky_season_noti& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_starsky_season_noti proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_starsky_season_noti& msg) {
+	proto_cg_starsky_season_noti proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_extra_double_score_not CopyFrom
+void CopyFrom(pt_gc_extra_double_score_not& pt , const proto_gc_extra_double_score_not& proto) {
+	pt.nDouble = proto.ndouble();
+	pt.nLordDouble = proto.nlorddouble();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_gc_extra_double_score_not CopyTo
+void CopyTo(const pt_gc_extra_double_score_not& pt, proto_gc_extra_double_score_not& proto) {
+	proto.set_ndouble(pt.nDouble);
+	proto.set_nlorddouble(pt.nLordDouble);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_gc_extra_double_score_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_extra_double_score_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_extra_double_score_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_extra_double_score_not& msg) {
+	proto_gc_extra_double_score_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_enable_invincible_req CopyFrom
+void CopyFrom(pt_cg_enable_invincible_req& pt , const proto_cg_enable_invincible_req& proto) {
+	pt.nOp = proto.nop();
+}
+
+// pt_cg_enable_invincible_req CopyTo
+void CopyTo(const pt_cg_enable_invincible_req& pt, proto_cg_enable_invincible_req& proto) {
+	proto.set_nop(pt.nOp);
+}
+
+// pt_cg_enable_invincible_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_enable_invincible_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_enable_invincible_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_enable_invincible_req& msg) {
+	proto_cg_enable_invincible_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_get_redpackets_award_req CopyFrom
+void CopyFrom(pt_cg_get_redpackets_award_req& pt , const proto_cg_get_redpackets_award_req& proto) {
+	pt.type_ = proto.type();
+}
+
+// pt_cg_get_redpackets_award_req CopyTo
+void CopyTo(const pt_cg_get_redpackets_award_req& pt, proto_cg_get_redpackets_award_req& proto) {
+	proto.set_type(pt.type_);
+}
+
+// pt_cg_get_redpackets_award_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_redpackets_award_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_get_redpackets_award_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_redpackets_award_req& msg) {
+	proto_cg_get_redpackets_award_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_can_bankruptcy_defend_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_can_bankruptcy_defend_ack& pt , const proto_gc_baiyuan_can_bankruptcy_defend_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_can_bankruptcy_defend_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_can_bankruptcy_defend_ack& pt, proto_gc_baiyuan_can_bankruptcy_defend_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_can_bankruptcy_defend_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_can_bankruptcy_defend_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_can_bankruptcy_defend_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_can_bankruptcy_defend_ack& msg) {
+	proto_gc_baiyuan_can_bankruptcy_defend_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_baiyuan_luck_welfare_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_luck_welfare_req& pt , const proto_cg_baiyuan_luck_welfare_req& proto) {
+}
+
+// pt_cg_baiyuan_luck_welfare_req CopyTo
+void CopyTo(const pt_cg_baiyuan_luck_welfare_req& pt, proto_cg_baiyuan_luck_welfare_req& proto) {
+}
+
+// pt_cg_baiyuan_luck_welfare_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_luck_welfare_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_baiyuan_luck_welfare_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_luck_welfare_req& msg) {
+	proto_cg_baiyuan_luck_welfare_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_two_show_card_not CopyFrom
+void CopyFrom(pt_gc_two_show_card_not& pt , const proto_gc_two_show_card_not& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.nLordPos = proto.nlordpos();
+	CopyFrom(pt.cLordCard, proto.clordcard());
+}
+
+// pt_gc_two_show_card_not CopyTo
+void CopyTo(const pt_gc_two_show_card_not& pt, proto_gc_two_show_card_not& proto) {
+	proto.set_cchairid(pt.cChairID);
+	proto.set_nlordpos(pt.nLordPos);
+	CopyTo(pt.cLordCard, *(proto.mutable_clordcard()));
+}
+
+// pt_gc_two_show_card_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_two_show_card_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_two_show_card_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_two_show_card_not& msg) {
+	proto_gc_two_show_card_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_baiyuan_can_bankruptcy_defend_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_can_bankruptcy_defend_req& pt , const proto_cg_baiyuan_can_bankruptcy_defend_req& proto) {
+}
+
+// pt_cg_baiyuan_can_bankruptcy_defend_req CopyTo
+void CopyTo(const pt_cg_baiyuan_can_bankruptcy_defend_req& pt, proto_cg_baiyuan_can_bankruptcy_defend_req& proto) {
+}
+
+// pt_cg_baiyuan_can_bankruptcy_defend_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_can_bankruptcy_defend_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_baiyuan_can_bankruptcy_defend_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_can_bankruptcy_defend_req& msg) {
+	proto_cg_baiyuan_can_bankruptcy_defend_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_regain_lose_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_regain_lose_ack& pt , const proto_gc_baiyuan_regain_lose_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_regain_lose_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_regain_lose_ack& pt, proto_gc_baiyuan_regain_lose_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_regain_lose_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_regain_lose_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_regain_lose_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_regain_lose_ack& msg) {
+	proto_gc_baiyuan_regain_lose_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_hb_round_award_ack CopyFrom
+void CopyFrom(pt_gc_baiyuan_hb_round_award_ack& pt , const proto_gc_baiyuan_hb_round_award_ack& proto) {
+	pt.cRet = proto.cret();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_hb_round_award_ack CopyTo
+void CopyTo(const pt_gc_baiyuan_hb_round_award_ack& pt, proto_gc_baiyuan_hb_round_award_ack& proto) {
+	proto.set_cret(pt.cRet);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_hb_round_award_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_award_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_hb_round_award_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_award_ack& msg) {
+	proto_gc_baiyuan_hb_round_award_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_get_card_req CopyFrom
+void CopyFrom(pt_cg_get_card_req& pt , const proto_cg_get_card_req& proto) {
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_cg_get_card_req CopyTo
+void CopyTo(const pt_cg_get_card_req& pt, proto_cg_get_card_req& proto) {
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_cg_get_card_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_get_card_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_get_card_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_get_card_req& msg) {
+	proto_cg_get_card_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_lord_card_lottery_info CopyFrom
+void CopyFrom(pt_gc_lord_card_lottery_info& pt , const proto_gc_lord_card_lottery_info& proto) {
+	pt.fee = proto.fee();
+	pt.vecReward.resize(proto.vecreward_size());
+	for (int idx = 0; idx < proto.vecreward_size(); ++idx) {
+		pt.vecReward[idx] = proto.vecreward(idx);
+	}
+}
+
+// pt_gc_lord_card_lottery_info CopyTo
+void CopyTo(const pt_gc_lord_card_lottery_info& pt, proto_gc_lord_card_lottery_info& proto) {
+	proto.set_fee(pt.fee);
+	for (size_t idx = 0; idx < pt.vecReward.size(); ++idx) {
+		proto.add_vecreward(pt.vecReward[idx]);
+	}
+}
+
+// pt_gc_lord_card_lottery_info serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_lord_card_lottery_info& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_lord_card_lottery_info proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_lord_card_lottery_info& msg) {
+	proto_gc_lord_card_lottery_info proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_baiyuan_hb_round_award_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_hb_round_award_req& pt , const proto_cg_baiyuan_hb_round_award_req& proto) {
+}
+
+// pt_cg_baiyuan_hb_round_award_req CopyTo
+void CopyTo(const pt_cg_baiyuan_hb_round_award_req& pt, proto_cg_baiyuan_hb_round_award_req& proto) {
+}
+
+// pt_cg_baiyuan_hb_round_award_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_hb_round_award_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_baiyuan_hb_round_award_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_hb_round_award_req& msg) {
+	proto_cg_baiyuan_hb_round_award_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_hb_round_award_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_hb_round_award_not& pt , const proto_gc_baiyuan_hb_round_award_not& proto) {
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_hb_round_award_not CopyTo
+void CopyTo(const pt_gc_baiyuan_hb_round_award_not& pt, proto_gc_baiyuan_hb_round_award_not& proto) {
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_hb_round_award_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_award_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_hb_round_award_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_award_not& msg) {
+	proto_gc_baiyuan_hb_round_award_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_three_draw_ack_card CopyFrom
+void CopyFrom(pt_gc_three_draw_ack_card& pt , const proto_gc_three_draw_ack_card& proto) {
+	pt.ret_ = proto.ret();
+	pt.vecCards.resize(proto.veccards_size());
+	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
+		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
+	}
+	pt.vecRates.resize(proto.vecrates_size());
+	for (int idx = 0; idx < proto.vecrates_size(); ++idx) {
+		pt.vecRates[idx] = proto.vecrates(idx);
+	}
+	pt.nMoney = proto.nmoney();
+	pt.nDiZhu = proto.ndizhu();
+	pt.fRate = proto.frate();
+}
+
+// pt_gc_three_draw_ack_card CopyTo
+void CopyTo(const pt_gc_three_draw_ack_card& pt, proto_gc_three_draw_ack_card& proto) {
+	proto.set_ret(pt.ret_);
+	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
+		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
+	}
+	for (size_t idx = 0; idx < pt.vecRates.size(); ++idx) {
+		proto.add_vecrates(pt.vecRates[idx]);
+	}
+	proto.set_nmoney(pt.nMoney);
+	proto.set_ndizhu(pt.nDiZhu);
+	proto.set_frate(pt.fRate);
+}
+
+// pt_gc_three_draw_ack_card serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_card& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_three_draw_ack_card proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_card& msg) {
+	proto_gc_three_draw_ack_card proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_hb_round_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_hb_round_not& pt , const proto_gc_baiyuan_hb_round_not& proto) {
+	pt.nCurRound = proto.ncurround();
+	pt.nLimitRound = proto.nlimitround();
+}
+
+// pt_gc_baiyuan_hb_round_not CopyTo
+void CopyTo(const pt_gc_baiyuan_hb_round_not& pt, proto_gc_baiyuan_hb_round_not& proto) {
+	proto.set_ncurround(pt.nCurRound);
+	proto.set_nlimitround(pt.nLimitRound);
+}
+
+// pt_gc_baiyuan_hb_round_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_hb_round_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_hb_round_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_hb_round_not& msg) {
+	proto_gc_baiyuan_hb_round_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// item_info CopyFrom
+void CopyFrom(item_info& pt , const proto_item_info& proto) {
+	pt.nItemId = proto.nitemid();
+	pt.nItemNum = proto.nitemnum();
+}
+
+// item_info CopyTo
+void CopyTo(const item_info& pt, proto_item_info& proto) {
+	proto.set_nitemid(pt.nItemId);
+	proto.set_nitemnum(pt.nItemNum);
+}
+
+// item_info serialization
+void ReadPacketFromProto(CInputStream& is,item_info& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_item_info proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const item_info& msg) {
+	proto_item_info proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_game_start_not CopyFrom
+void CopyFrom(pt_gc_game_start_not& pt , const proto_gc_game_start_not& proto) {
+	pt.nGameMoney = proto.ngamemoney();
+	pt.nCardNum = proto.ncardnum();
+	pt.nLordPos = proto.nlordpos();
+	CopyFrom(pt.cLordCard, proto.clordcard());
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_gc_game_start_not CopyTo
+void CopyTo(const pt_gc_game_start_not& pt, proto_gc_game_start_not& proto) {
+	proto.set_ngamemoney(pt.nGameMoney);
+	proto.set_ncardnum(pt.nCardNum);
+	proto.set_nlordpos(pt.nLordPos);
+	CopyTo(pt.cLordCard, *(proto.mutable_clordcard()));
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_gc_game_start_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_start_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_game_start_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_game_start_not& msg) {
+	proto_gc_game_start_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_baiyuan_tocash_item_not CopyFrom
+void CopyFrom(pt_gc_baiyuan_tocash_item_not& pt , const proto_gc_baiyuan_tocash_item_not& proto) {
+	pt.cType = proto.ctype();
+	pt.vecItemInfo.resize(proto.veciteminfo_size());
+	for (int idx = 0; idx < proto.veciteminfo_size(); ++idx) {
+		CopyFrom(pt.vecItemInfo[idx], proto.veciteminfo(idx));
+	}
+}
+
+// pt_gc_baiyuan_tocash_item_not CopyTo
+void CopyTo(const pt_gc_baiyuan_tocash_item_not& pt, proto_gc_baiyuan_tocash_item_not& proto) {
+	proto.set_ctype(pt.cType);
+	for (size_t idx = 0; idx < pt.vecItemInfo.size(); ++idx) {
+		CopyTo(pt.vecItemInfo[idx], *(proto.add_veciteminfo()));
+	}
+}
+
+// pt_gc_baiyuan_tocash_item_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_baiyuan_tocash_item_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_baiyuan_tocash_item_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_baiyuan_tocash_item_not& msg) {
+	proto_gc_baiyuan_tocash_item_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_win_doubel_req CopyFrom
+void CopyFrom(pt_cg_win_doubel_req& pt , const proto_cg_win_doubel_req& proto) {
+}
+
+// pt_cg_win_doubel_req CopyTo
+void CopyTo(const pt_cg_win_doubel_req& pt, proto_cg_win_doubel_req& proto) {
+}
+
+// pt_cg_win_doubel_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_win_doubel_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_win_doubel_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_win_doubel_req& msg) {
+	proto_cg_win_doubel_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_update_player_tokenmoney_not CopyFrom
+void CopyFrom(pt_gc_update_player_tokenmoney_not& pt , const proto_gc_update_player_tokenmoney_not& proto) {
+	pt.ply_chairid_ = proto.ply_chairid();
+	pt.itemInfo.resize(proto.iteminfo_size());
+	for (int idx = 0; idx < proto.iteminfo_size(); ++idx) {
+		CopyFrom(pt.itemInfo[idx], proto.iteminfo(idx));
+	}
+}
+
+// pt_gc_update_player_tokenmoney_not CopyTo
+void CopyTo(const pt_gc_update_player_tokenmoney_not& pt, proto_gc_update_player_tokenmoney_not& proto) {
+	proto.set_ply_chairid(pt.ply_chairid_);
+	for (size_t idx = 0; idx < pt.itemInfo.size(); ++idx) {
+		CopyTo(pt.itemInfo[idx], *(proto.add_iteminfo()));
+	}
+}
+
+// pt_gc_update_player_tokenmoney_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_update_player_tokenmoney_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_update_player_tokenmoney_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_update_player_tokenmoney_not& msg) {
+	proto_gc_update_player_tokenmoney_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_card_count_ack CopyFrom
+void CopyFrom(pt_gc_card_count_ack& pt , const proto_gc_card_count_ack& proto) {
+	pt.counts_num_ = proto.counts_num();
+	pt.m_vecPutCard.resize(proto.m_vecputcard_size());
+	for (int idx = 0; idx < proto.m_vecputcard_size(); ++idx) {
+		CopyFrom(pt.m_vecPutCard[idx], proto.m_vecputcard(idx));
+	}
+}
+
+// pt_gc_card_count_ack CopyTo
+void CopyTo(const pt_gc_card_count_ack& pt, proto_gc_card_count_ack& proto) {
+	proto.set_counts_num(pt.counts_num_);
+	for (size_t idx = 0; idx < pt.m_vecPutCard.size(); ++idx) {
+		CopyTo(pt.m_vecPutCard[idx], *(proto.add_m_vecputcard()));
+	}
+}
+
+// pt_gc_card_count_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_card_count_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack& msg) {
+	proto_gc_card_count_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_enable_invincible_ack CopyFrom
+void CopyFrom(pt_gc_enable_invincible_ack& pt , const proto_gc_enable_invincible_ack& proto) {
+	pt.nRet = proto.nret();
+}
+
+// pt_gc_enable_invincible_ack CopyTo
+void CopyTo(const pt_gc_enable_invincible_ack& pt, proto_gc_enable_invincible_ack& proto) {
+	proto.set_nret(pt.nRet);
+}
+
+// pt_gc_enable_invincible_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_enable_invincible_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_enable_invincible_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_enable_invincible_ack& msg) {
+	proto_gc_enable_invincible_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_card_count_ack1 CopyFrom
+void CopyFrom(pt_gc_card_count_ack1& pt , const proto_gc_card_count_ack1& proto) {
+	pt.counts_num_ = proto.counts_num();
+	pt.m_vecPutCard.resize(proto.m_vecputcard_size());
+	for (int idx = 0; idx < proto.m_vecputcard_size(); ++idx) {
+		CopyFrom(pt.m_vecPutCard[idx], proto.m_vecputcard(idx));
+	}
+}
+
+// pt_gc_card_count_ack1 CopyTo
+void CopyTo(const pt_gc_card_count_ack1& pt, proto_gc_card_count_ack1& proto) {
+	proto.set_counts_num(pt.counts_num_);
+	for (size_t idx = 0; idx < pt.m_vecPutCard.size(); ++idx) {
+		CopyTo(pt.m_vecPutCard[idx], *(proto.add_m_vecputcard()));
+	}
+}
+
+// pt_gc_card_count_ack1 serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_card_count_ack1& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_card_count_ack1 proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_card_count_ack1& msg) {
+	proto_gc_card_count_ack1 proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_get_redpackets_award_ack CopyFrom
+void CopyFrom(pt_gc_get_redpackets_award_ack& pt , const proto_gc_get_redpackets_award_ack& proto) {
+	pt.ret_ = proto.ret();
+	pt.cur_rounds_ = proto.cur_rounds();
+	pt.limit_rounds_ = proto.limit_rounds();
+	pt.nAmount = proto.namount();
+	pt.cItemtype = proto.citemtype();
+	pt.task_id_ = proto.task_id();
+	pt.fakeItem.resize(proto.fakeitem_size());
+	for (int idx = 0; idx < proto.fakeitem_size(); ++idx) {
+		CopyFrom(pt.fakeItem[idx], proto.fakeitem(idx));
+	}
+}
+
+// pt_gc_get_redpackets_award_ack CopyTo
+void CopyTo(const pt_gc_get_redpackets_award_ack& pt, proto_gc_get_redpackets_award_ack& proto) {
+	proto.set_ret(pt.ret_);
+	proto.set_cur_rounds(pt.cur_rounds_);
+	proto.set_limit_rounds(pt.limit_rounds_);
+	proto.set_namount(pt.nAmount);
+	proto.set_citemtype(pt.cItemtype);
+	proto.set_task_id(pt.task_id_);
+	for (size_t idx = 0; idx < pt.fakeItem.size(); ++idx) {
+		CopyTo(pt.fakeItem[idx], *(proto.add_fakeitem()));
+	}
+}
+
+// pt_gc_get_redpackets_award_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_award_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_get_redpackets_award_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_award_ack& msg) {
+	proto_gc_get_redpackets_award_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_refresh_card_not CopyFrom
+void CopyFrom(pt_gc_refresh_card_not& pt , const proto_gc_refresh_card_not& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.vecCards.resize(proto.veccards_size());
+	for (int idx = 0; idx < proto.veccards_size(); ++idx) {
+		CopyFrom(pt.vecCards[idx], proto.veccards(idx));
+	}
+}
+
+// pt_gc_refresh_card_not CopyTo
+void CopyTo(const pt_gc_refresh_card_not& pt, proto_gc_refresh_card_not& proto) {
+	proto.set_cchairid(pt.cChairID);
+	for (size_t idx = 0; idx < pt.vecCards.size(); ++idx) {
+		CopyTo(pt.vecCards[idx], *(proto.add_veccards()));
+	}
+}
+
+// pt_gc_refresh_card_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_refresh_card_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_refresh_card_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_refresh_card_not& msg) {
+	proto_gc_refresh_card_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// player_itemInfo CopyFrom
+void CopyFrom(player_itemInfo& pt , const proto_player_itemInfo& proto) {
+	pt.nItemIndex = proto.nitemindex();
+	pt.nItemNum = proto.nitemnum();
+	pt.nItemNum64 = proto.nitemnum64();
+}
+
+// player_itemInfo CopyTo
+void CopyTo(const player_itemInfo& pt, proto_player_itemInfo& proto) {
+	proto.set_nitemindex(pt.nItemIndex);
+	proto.set_nitemnum(pt.nItemNum);
+	proto.set_nitemnum64(pt.nItemNum64);
+}
+
+// player_itemInfo serialization
+void ReadPacketFromProto(CInputStream& is,player_itemInfo& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_player_itemInfo proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const player_itemInfo& msg) {
+	proto_player_itemInfo proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_sic_bet_clear_ack CopyFrom
+void CopyFrom(pt_sic_bet_clear_ack& pt , const proto_sic_bet_clear_ack& proto) {
+	pt.nBetUpdateAckTag = proto.nbetupdateacktag();
+	pt.nAmountBack = proto.namountback();
+	pt.nAmountTotal = proto.namounttotal();
+}
+
+// pt_sic_bet_clear_ack CopyTo
+void CopyTo(const pt_sic_bet_clear_ack& pt, proto_sic_bet_clear_ack& proto) {
+	proto.set_nbetupdateacktag(pt.nBetUpdateAckTag);
+	proto.set_namountback(pt.nAmountBack);
+	proto.set_namounttotal(pt.nAmountTotal);
+}
+
+// pt_sic_bet_clear_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_sic_bet_clear_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_ack& msg) {
+	proto_sic_bet_clear_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_starsky_update_item_noti CopyFrom
+void CopyFrom(pt_gc_starsky_update_item_noti& pt , const proto_gc_starsky_update_item_noti& proto) {
+	pt.stamina_ = proto.stamina();
+	pt.match_ticket_ = proto.match_ticket();
+	pt.score_ = proto.score();
+	pt.savestar_card_ = proto.savestar_card();
+}
+
+// pt_gc_starsky_update_item_noti CopyTo
+void CopyTo(const pt_gc_starsky_update_item_noti& pt, proto_gc_starsky_update_item_noti& proto) {
+	proto.set_stamina(pt.stamina_);
+	proto.set_match_ticket(pt.match_ticket_);
+	proto.set_score(pt.score_);
+	proto.set_savestar_card(pt.savestar_card_);
+}
+
+// pt_gc_starsky_update_item_noti serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_starsky_update_item_noti& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_starsky_update_item_noti proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_starsky_update_item_noti& msg) {
+	proto_gc_starsky_update_item_noti proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_baiyuan_bankruptcy_defend_req CopyFrom
+void CopyFrom(pt_cg_baiyuan_bankruptcy_defend_req& pt , const proto_cg_baiyuan_bankruptcy_defend_req& proto) {
+}
+
+// pt_cg_baiyuan_bankruptcy_defend_req CopyTo
+void CopyTo(const pt_cg_baiyuan_bankruptcy_defend_req& pt, proto_cg_baiyuan_bankruptcy_defend_req& proto) {
+}
+
+// pt_cg_baiyuan_bankruptcy_defend_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_baiyuan_bankruptcy_defend_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_baiyuan_bankruptcy_defend_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_baiyuan_bankruptcy_defend_req& msg) {
+	proto_cg_baiyuan_bankruptcy_defend_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_svr_test_not CopyFrom
+void CopyFrom(pt_svr_test_not& pt , const proto_svr_test_not& proto) {
+	pt.cTest = proto.ctest();
+	pt.nTest = proto.ntest();
+	pt.vecTest.resize(proto.vectest_size());
+	for (int idx = 0; idx < proto.vectest_size(); ++idx) {
+		pt.vecTest[idx] = proto.vectest(idx);
+	}
+}
+
+// pt_svr_test_not CopyTo
+void CopyTo(const pt_svr_test_not& pt, proto_svr_test_not& proto) {
+	proto.set_ctest(pt.cTest);
+	proto.set_ntest(pt.nTest);
+	for (size_t idx = 0; idx < pt.vecTest.size(); ++idx) {
+		proto.add_vectest(pt.vecTest[idx]);
+	}
+}
+
+// pt_svr_test_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_svr_test_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_svr_test_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_svr_test_not& msg) {
+	proto_svr_test_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_send_dizhu_not CopyFrom
+void CopyFrom(pt_gc_send_dizhu_not& pt , const proto_gc_send_dizhu_not& proto) {
+	pt.nGameMoney = proto.ngamemoney();
+}
+
+// pt_gc_send_dizhu_not CopyTo
+void CopyTo(const pt_gc_send_dizhu_not& pt, proto_gc_send_dizhu_not& proto) {
+	proto.set_ngamemoney(pt.nGameMoney);
+}
+
+// pt_gc_send_dizhu_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_send_dizhu_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_send_dizhu_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_send_dizhu_not& msg) {
+	proto_gc_send_dizhu_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_card_count_req CopyFrom
+void CopyFrom(pt_cg_card_count_req& pt , const proto_cg_card_count_req& proto) {
+}
+
+// pt_cg_card_count_req CopyTo
+void CopyTo(const pt_cg_card_count_req& pt, proto_cg_card_count_req& proto) {
+}
+
+// pt_cg_card_count_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_card_count_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_card_count_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_card_count_req& msg) {
+	proto_cg_card_count_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_item_add_not CopyFrom
+void CopyFrom(pt_gc_item_add_not& pt , const proto_gc_item_add_not& proto) {
+	pt.nItemIndex = proto.nitemindex();
+	pt.nItemCount = proto.nitemcount();
+}
+
+// pt_gc_item_add_not CopyTo
+void CopyTo(const pt_gc_item_add_not& pt, proto_gc_item_add_not& proto) {
+	proto.set_nitemindex(pt.nItemIndex);
+	proto.set_nitemcount(pt.nItemCount);
+}
+
+// pt_gc_item_add_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_item_add_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_item_add_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_item_add_not& msg) {
+	proto_gc_item_add_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_ju_count_not CopyFrom
+void CopyFrom(pt_gc_ju_count_not& pt , const proto_gc_ju_count_not& proto) {
+	pt.nJuCount = proto.njucount();
+}
+
+// pt_gc_ju_count_not CopyTo
+void CopyTo(const pt_gc_ju_count_not& pt, proto_gc_ju_count_not& proto) {
+	proto.set_njucount(pt.nJuCount);
+}
+
+// pt_gc_ju_count_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_ju_count_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_ju_count_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_ju_count_not& msg) {
+	proto_gc_ju_count_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_had_start_not CopyFrom
+void CopyFrom(pt_gc_had_start_not& pt , const proto_gc_had_start_not& proto) {
+}
+
+// pt_gc_had_start_not CopyTo
+void CopyTo(const pt_gc_had_start_not& pt, proto_gc_had_start_not& proto) {
+}
+
+// pt_gc_had_start_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_had_start_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_had_start_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_had_start_not& msg) {
+	proto_gc_had_start_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_get_redpackets_88yuan_award_ack CopyFrom
+void CopyFrom(pt_gc_get_redpackets_88yuan_award_ack& pt , const proto_gc_get_redpackets_88yuan_award_ack& proto) {
+	pt.ret_ = proto.ret();
+	pt.cur_rounds_ = proto.cur_rounds();
+	pt.limit_rounds_ = proto.limit_rounds();
+	pt.nAmount = proto.namount();
+	pt.cItemtype = proto.citemtype();
+	pt.task_id_ = proto.task_id();
+}
+
+// pt_gc_get_redpackets_88yuan_award_ack CopyTo
+void CopyTo(const pt_gc_get_redpackets_88yuan_award_ack& pt, proto_gc_get_redpackets_88yuan_award_ack& proto) {
+	proto.set_ret(pt.ret_);
+	proto.set_cur_rounds(pt.cur_rounds_);
+	proto.set_limit_rounds(pt.limit_rounds_);
+	proto.set_namount(pt.nAmount);
+	proto.set_citemtype(pt.cItemtype);
+	proto.set_task_id(pt.task_id_);
+}
+
+// pt_gc_get_redpackets_88yuan_award_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_88yuan_award_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_get_redpackets_88yuan_award_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_88yuan_award_ack& msg) {
+	proto_gc_get_redpackets_88yuan_award_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_pause_game_not CopyFrom
+void CopyFrom(pt_gc_pause_game_not& pt , const proto_gc_pause_game_not& proto) {
+	pt.nFlag = proto.nflag();
+	pt.nMinTime = proto.nmintime();
+	pt.nSecTime = proto.nsectime();
+	pt.cChairId = proto.cchairid();
+	pt.sNickName = proto.snickname();
+}
+
+// pt_gc_pause_game_not CopyTo
+void CopyTo(const pt_gc_pause_game_not& pt, proto_gc_pause_game_not& proto) {
+	proto.set_nflag(pt.nFlag);
+	proto.set_nmintime(pt.nMinTime);
+	proto.set_nsectime(pt.nSecTime);
+	proto.set_cchairid(pt.cChairId);
+	proto.set_snickname(pt.sNickName);
+}
+
+// pt_gc_pause_game_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_pause_game_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_pause_game_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_pause_game_not& msg) {
+	proto_gc_pause_game_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_clienttimer_not CopyFrom
+void CopyFrom(pt_gc_clienttimer_not& pt , const proto_gc_clienttimer_not& proto) {
+	pt.chairId = proto.chairid();
+	pt.sPeriod = proto.speriod();
+}
+
+// pt_gc_clienttimer_not CopyTo
+void CopyTo(const pt_gc_clienttimer_not& pt, proto_gc_clienttimer_not& proto) {
+	proto.set_chairid(pt.chairId);
+	proto.set_speriod(pt.sPeriod);
+}
+
+// pt_gc_clienttimer_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_clienttimer_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_clienttimer_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_clienttimer_not& msg) {
+	proto_gc_clienttimer_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_private_room_result_not CopyFrom
+void CopyFrom(pt_gc_private_room_result_not& pt , const proto_gc_private_room_result_not& proto) {
+	pt.ret_ = proto.ret();
+	pt.vecGameStatiscs.resize(proto.vecgamestatiscs_size());
+	for (int idx = 0; idx < proto.vecgamestatiscs_size(); ++idx) {
+		CopyFrom(pt.vecGameStatiscs[idx], proto.vecgamestatiscs(idx));
+	}
+}
+
+// pt_gc_private_room_result_not CopyTo
+void CopyTo(const pt_gc_private_room_result_not& pt, proto_gc_private_room_result_not& proto) {
+	proto.set_ret(pt.ret_);
+	for (size_t idx = 0; idx < pt.vecGameStatiscs.size(); ++idx) {
+		CopyTo(pt.vecGameStatiscs[idx], *(proto.add_vecgamestatiscs()));
+	}
+}
+
+// pt_gc_private_room_result_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_private_room_result_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_private_room_result_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_private_room_result_not& msg) {
+	proto_gc_private_room_result_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_three_draw_req_card CopyFrom
+void CopyFrom(pt_cg_three_draw_req_card& pt , const proto_cg_three_draw_req_card& proto) {
+}
+
+// pt_cg_three_draw_req_card CopyTo
+void CopyTo(const pt_cg_three_draw_req_card& pt, proto_cg_three_draw_req_card& proto) {
+}
+
+// pt_cg_three_draw_req_card serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_three_draw_req_card& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_three_draw_req_card proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_three_draw_req_card& msg) {
+	proto_cg_three_draw_req_card proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_laizi_not CopyFrom
+void CopyFrom(pt_gc_laizi_not& pt , const proto_gc_laizi_not& proto) {
+	pt.card_value = proto.card_value();
+}
+
+// pt_gc_laizi_not CopyTo
+void CopyTo(const pt_gc_laizi_not& pt, proto_gc_laizi_not& proto) {
+	proto.set_card_value(pt.card_value);
+}
+
+// pt_gc_laizi_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_laizi_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_laizi_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_laizi_not& msg) {
+	proto_gc_laizi_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_game_model CopyFrom
+void CopyFrom(pt_gc_game_model& pt , const proto_gc_game_model& proto) {
+	pt.cModelType = proto.cmodeltype();
+}
+
+// pt_gc_game_model CopyTo
+void CopyTo(const pt_gc_game_model& pt, proto_gc_game_model& proto) {
+	proto.set_cmodeltype(pt.cModelType);
+}
+
+// pt_gc_game_model serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_game_model& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_game_model proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_game_model& msg) {
+	proto_gc_game_model proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_double_score_ack CopyFrom
+void CopyFrom(pt_cg_double_score_ack& pt , const proto_cg_double_score_ack& proto) {
+	pt.nScore = proto.nscore();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_cg_double_score_ack CopyTo
+void CopyTo(const pt_cg_double_score_ack& pt, proto_cg_double_score_ack& proto) {
+	proto.set_nscore(pt.nScore);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_cg_double_score_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_double_score_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_double_score_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_double_score_ack& msg) {
+	proto_cg_double_score_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_magic_emoji_config_not CopyFrom
+void CopyFrom(pt_gc_magic_emoji_config_not& pt , const proto_gc_magic_emoji_config_not& proto) {
+	pt.emojiConfigs.resize(proto.emojiconfigs_size());
+	for (int idx = 0; idx < proto.emojiconfigs_size(); ++idx) {
+		CopyFrom(pt.emojiConfigs[idx], proto.emojiconfigs(idx));
+	}
+}
+
+// pt_gc_magic_emoji_config_not CopyTo
+void CopyTo(const pt_gc_magic_emoji_config_not& pt, proto_gc_magic_emoji_config_not& proto) {
+	for (size_t idx = 0; idx < pt.emojiConfigs.size(); ++idx) {
+		CopyTo(pt.emojiConfigs[idx], *(proto.add_emojiconfigs()));
+	}
+}
+
+// pt_gc_magic_emoji_config_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_magic_emoji_config_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_magic_emoji_config_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_magic_emoji_config_not& msg) {
+	proto_gc_magic_emoji_config_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_sic_bet_begin_not CopyFrom
+void CopyFrom(pt_sic_bet_begin_not& pt , const proto_sic_bet_begin_not& proto) {
+}
+
+// pt_sic_bet_begin_not CopyTo
+void CopyTo(const pt_sic_bet_begin_not& pt, proto_sic_bet_begin_not& proto) {
+}
+
+// pt_sic_bet_begin_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_begin_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_sic_bet_begin_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_begin_not& msg) {
+	proto_sic_bet_begin_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// emojiConfig CopyFrom
+void CopyFrom(emojiConfig& pt , const proto_emojiConfig& proto) {
+	pt.cEmojiIndex = proto.cemojiindex();
+	pt.cCostType = proto.ccosttype();
+	pt.cCostValue = proto.ccostvalue();
+	pt.nTenItemIndex = proto.ntenitemindex();
+	pt.nTenItemNum = proto.ntenitemnum();
+	pt.nTenEmojiNum = proto.ntenemojinum();
+}
+
+// emojiConfig CopyTo
+void CopyTo(const emojiConfig& pt, proto_emojiConfig& proto) {
+	proto.set_cemojiindex(pt.cEmojiIndex);
+	proto.set_ccosttype(pt.cCostType);
+	proto.set_ccostvalue(pt.cCostValue);
+	proto.set_ntenitemindex(pt.nTenItemIndex);
+	proto.set_ntenitemnum(pt.nTenItemNum);
+	proto.set_ntenemojinum(pt.nTenEmojiNum);
+}
+
+// emojiConfig serialization
+void ReadPacketFromProto(CInputStream& is,emojiConfig& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_emojiConfig proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const emojiConfig& msg) {
+	proto_emojiConfig proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_show_card_req CopyFrom
+void CopyFrom(pt_gc_show_card_req& pt , const proto_gc_show_card_req& proto) {
+	pt.nSerialID = proto.nserialid();
+	pt.nShowCardType = proto.nshowcardtype();
+	pt.nShowCardBet = proto.nshowcardbet();
+}
+
+// pt_gc_show_card_req CopyTo
+void CopyTo(const pt_gc_show_card_req& pt, proto_gc_show_card_req& proto) {
+	proto.set_nserialid(pt.nSerialID);
+	proto.set_nshowcardtype(pt.nShowCardType);
+	proto.set_nshowcardbet(pt.nShowCardBet);
+}
+
+// pt_gc_show_card_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_show_card_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_show_card_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_show_card_req& msg) {
+	proto_gc_show_card_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_svr_my_ack CopyFrom
+void CopyFrom(pt_svr_my_ack& pt , const proto_svr_my_ack& proto) {
+	pt.b = proto.b();
+}
+
+// pt_svr_my_ack CopyTo
+void CopyTo(const pt_svr_my_ack& pt, proto_svr_my_ack& proto) {
+	proto.set_b(pt.b);
+}
+
+// pt_svr_my_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_svr_my_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_svr_my_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_svr_my_ack& msg) {
+	proto_svr_my_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_auto_not CopyFrom
+void CopyFrom(pt_gc_auto_not& pt , const proto_gc_auto_not& proto) {
+	pt.cChairID = proto.cchairid();
+	pt.cAuto = proto.cauto();
+}
+
+// pt_gc_auto_not CopyTo
+void CopyTo(const pt_gc_auto_not& pt, proto_gc_auto_not& proto) {
+	proto.set_cchairid(pt.cChairID);
+	proto.set_cauto(pt.cAuto);
+}
+
+// pt_gc_auto_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_auto_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_auto_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_auto_not& msg) {
+	proto_gc_auto_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_play_card_req CopyFrom
+void CopyFrom(pt_gc_play_card_req& pt , const proto_gc_play_card_req& proto) {
+	pt.cAuto = proto.cauto();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_gc_play_card_req CopyTo
+void CopyTo(const pt_gc_play_card_req& pt, proto_gc_play_card_req& proto) {
+	proto.set_cauto(pt.cAuto);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_gc_play_card_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_play_card_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_play_card_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_play_card_req& msg) {
+	proto_gc_play_card_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_mj_completedata_req CopyFrom
+void CopyFrom(pt_mj_completedata_req& pt , const proto_mj_completedata_req& proto) {
+}
+
+// pt_mj_completedata_req CopyTo
+void CopyTo(const pt_mj_completedata_req& pt, proto_mj_completedata_req& proto) {
+}
+
+// pt_mj_completedata_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_mj_completedata_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_mj_completedata_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_mj_completedata_req& msg) {
+	proto_mj_completedata_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_three_draw_ack_data CopyFrom
+void CopyFrom(pt_gc_three_draw_ack_data& pt , const proto_gc_three_draw_ack_data& proto) {
+	pt.ret_ = proto.ret();
+	pt.vecMoneyDiZhus.resize(proto.vecmoneydizhus_size());
+	for (int idx = 0; idx < proto.vecmoneydizhus_size(); ++idx) {
+		CopyFrom(pt.vecMoneyDiZhus[idx], proto.vecmoneydizhus(idx));
+	}
+	pt.vecKindRates.resize(proto.veckindrates_size());
+	for (int idx = 0; idx < proto.veckindrates_size(); ++idx) {
+		CopyFrom(pt.vecKindRates[idx], proto.veckindrates(idx));
+	}
+	pt.nBaoDiMoney = proto.nbaodimoney();
+	pt.nBaoDiRate = proto.nbaodirate();
+	pt.fMinRate = proto.fminrate();
+}
+
+// pt_gc_three_draw_ack_data CopyTo
+void CopyTo(const pt_gc_three_draw_ack_data& pt, proto_gc_three_draw_ack_data& proto) {
+	proto.set_ret(pt.ret_);
+	for (size_t idx = 0; idx < pt.vecMoneyDiZhus.size(); ++idx) {
+		CopyTo(pt.vecMoneyDiZhus[idx], *(proto.add_vecmoneydizhus()));
+	}
+	for (size_t idx = 0; idx < pt.vecKindRates.size(); ++idx) {
+		CopyTo(pt.vecKindRates[idx], *(proto.add_veckindrates()));
+	}
+	proto.set_nbaodimoney(pt.nBaoDiMoney);
+	proto.set_nbaodirate(pt.nBaoDiRate);
+	proto.set_fminrate(pt.fMinRate);
+}
+
+// pt_gc_three_draw_ack_data serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_three_draw_ack_data& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_three_draw_ack_data proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_three_draw_ack_data& msg) {
+	proto_gc_three_draw_ack_data proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// stUserResult1 CopyFrom
+void CopyFrom(stUserResult1& pt , const proto_stUserResult1& proto) {
+	pt.nChairID = proto.nchairid();
+	pt.nScore = proto.nscore();
+	pt.nJifen = proto.njifen();
+}
+
+// stUserResult1 CopyTo
+void CopyTo(const stUserResult1& pt, proto_stUserResult1& proto) {
+	proto.set_nchairid(pt.nChairID);
+	proto.set_nscore(pt.nScore);
+	proto.set_njifen(pt.nJifen);
+}
+
+// stUserResult1 serialization
+void ReadPacketFromProto(CInputStream& is,stUserResult1& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_stUserResult1 proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const stUserResult1& msg) {
+	proto_stUserResult1 proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_rob_lord_req CopyFrom
+void CopyFrom(pt_gc_rob_lord_req& pt , const proto_gc_rob_lord_req& proto) {
+	pt.cDefaultLord = proto.cdefaultlord();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_gc_rob_lord_req CopyTo
+void CopyTo(const pt_gc_rob_lord_req& pt, proto_gc_rob_lord_req& proto) {
+	proto.set_cdefaultlord(pt.cDefaultLord);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_gc_rob_lord_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_rob_lord_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_rob_lord_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_rob_lord_req& msg) {
+	proto_gc_rob_lord_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_get_redpackets_newbie_award_not CopyFrom
+void CopyFrom(pt_gc_get_redpackets_newbie_award_not& pt , const proto_gc_get_redpackets_newbie_award_not& proto) {
+	pt.nRet = proto.nret();
+	pt.nAmount = proto.namount();
+}
+
+// pt_gc_get_redpackets_newbie_award_not CopyTo
+void CopyTo(const pt_gc_get_redpackets_newbie_award_not& pt, proto_gc_get_redpackets_newbie_award_not& proto) {
+	proto.set_nret(pt.nRet);
+	proto.set_namount(pt.nAmount);
+}
+
+// pt_gc_get_redpackets_newbie_award_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_get_redpackets_newbie_award_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_get_redpackets_newbie_award_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_get_redpackets_newbie_award_not& msg) {
+	proto_gc_get_redpackets_newbie_award_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_rob_lord_ack CopyFrom
+void CopyFrom(pt_cg_rob_lord_ack& pt , const proto_cg_rob_lord_ack& proto) {
+	pt.cRob = proto.crob();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_cg_rob_lord_ack CopyTo
+void CopyTo(const pt_cg_rob_lord_ack& pt, proto_cg_rob_lord_ack& proto) {
+	proto.set_crob(pt.cRob);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_cg_rob_lord_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_rob_lord_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_rob_lord_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_rob_lord_ack& msg) {
+	proto_cg_rob_lord_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_sic_bet_clear_req CopyFrom
+void CopyFrom(pt_sic_bet_clear_req& pt , const proto_sic_bet_clear_req& proto) {
+}
+
+// pt_sic_bet_clear_req CopyTo
+void CopyTo(const pt_sic_bet_clear_req& pt, proto_sic_bet_clear_req& proto) {
+}
+
+// pt_sic_bet_clear_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_sic_bet_clear_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_sic_bet_clear_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_sic_bet_clear_req& msg) {
+	proto_sic_bet_clear_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_look_lord_card_req CopyFrom
+void CopyFrom(pt_cg_look_lord_card_req& pt , const proto_cg_look_lord_card_req& proto) {
+}
+
+// pt_cg_look_lord_card_req CopyTo
+void CopyTo(const pt_cg_look_lord_card_req& pt, proto_cg_look_lord_card_req& proto) {
+}
+
+// pt_cg_look_lord_card_req serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_look_lord_card_req& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_look_lord_card_req proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_look_lord_card_req& msg) {
+	proto_cg_look_lord_card_req proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_gc_task_complete_not CopyFrom
+void CopyFrom(pt_gc_task_complete_not& pt , const proto_gc_task_complete_not& proto) {
+	pt.chair_id_ = proto.chair_id();
+	pt.task_status_ = proto.task_status();
+}
+
+// pt_gc_task_complete_not CopyTo
+void CopyTo(const pt_gc_task_complete_not& pt, proto_gc_task_complete_not& proto) {
+	proto.set_chair_id(pt.chair_id_);
+	proto.set_task_status(pt.task_status_);
+}
+
+// pt_gc_task_complete_not serialization
+void ReadPacketFromProto(CInputStream& is,pt_gc_task_complete_not& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_gc_task_complete_not proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_gc_task_complete_not& msg) {
+	proto_gc_task_complete_not proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// pt_cg_call_score_ack CopyFrom
+void CopyFrom(pt_cg_call_score_ack& pt , const proto_cg_call_score_ack& proto) {
+	pt.nScore = proto.nscore();
+	pt.nSerialID = proto.nserialid();
+}
+
+// pt_cg_call_score_ack CopyTo
+void CopyTo(const pt_cg_call_score_ack& pt, proto_cg_call_score_ack& proto) {
+	proto.set_nscore(pt.nScore);
+	proto.set_nserialid(pt.nSerialID);
+}
+
+// pt_cg_call_score_ack serialization
+void ReadPacketFromProto(CInputStream& is,pt_cg_call_score_ack& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_cg_call_score_ack proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const pt_cg_call_score_ack& msg) {
+	proto_cg_call_score_ack proto;
+	CopyTo(msg, proto);
+	short msg_code = htons(msg.opcode);
+	os.WriteData(&msg_code, sizeof(msg_code));
+	int length = proto.ByteSize();
+	char* buff = new char[length];
+	proto.SerializeToArray(buff, length);
+	os.WriteData(buff, length);
+	delete [] buff;
+}
+// TaskItem CopyFrom
+void CopyFrom(TaskItem& pt , const proto_TaskItem& proto) {
+	pt.task_id_ = proto.task_id();
+	pt.task_desc_ = proto.task_desc();
+	pt.task_mission_ = proto.task_mission();
+	pt.task_money_type_ = proto.task_money_type();
+	pt.task_money_ = proto.task_money();
+	pt.task_rate_ = proto.task_rate();
+}
+
+// TaskItem CopyTo
+void CopyTo(const TaskItem& pt, proto_TaskItem& proto) {
+	proto.set_task_id(pt.task_id_);
+	proto.set_task_desc(pt.task_desc_);
+	proto.set_task_mission(pt.task_mission_);
+	proto.set_task_money_type(pt.task_money_type_);
+	proto.set_task_money(pt.task_money_);
+	proto.set_task_rate(pt.task_rate_);
+}
+
+// TaskItem serialization
+void ReadPacketFromProto(CInputStream& is,TaskItem& msg) {
+	short msg_code = 0;
+	is.ReadData(&msg_code, sizeof(msg_code));
+	msg_code = ntohs(msg_code);
+	proto_TaskItem proto;
+	proto.ParseFromArray(is.RawData(), is.ByteSize());
+	CopyFrom(msg, proto);
+	msg.opcode = msg_code;
+}
+
+void SendPacketToProto(COutputStream& os, const TaskItem& msg) {
+	proto_TaskItem proto;
 	CopyTo(msg, proto);
 	short msg_code = htons(msg.opcode);
 	os.WriteData(&msg_code, sizeof(msg_code));
